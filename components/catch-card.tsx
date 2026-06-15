@@ -18,7 +18,13 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
 
   if (variant === 'list') {
     return (
-      <TouchableOpacity style={styles.listCard} onPress={() => onPress(catchItem.id)}>
+      <TouchableOpacity
+        style={styles.listCard}
+        onPress={() => onPress(catchItem.id)}
+        accessibilityLabel={`${speciesName}${weight ? `, ${weight}` : ''}, ${date}${catchItem.location_name ? `, at ${catchItem.location_name}` : ''}${catchItem.is_released ? ', released' : ''}`}
+        accessibilityRole="button"
+        accessibilityHint="Double tap to view catch details"
+      >
         <View style={styles.listThumb}>
           {catchItem.photo_thumbnail_url ? (
             <Image source={{ uri: catchItem.photo_thumbnail_url }} style={styles.thumbImage} />
@@ -43,7 +49,13 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
   }
 
   return (
-    <TouchableOpacity style={styles.gridCard} onPress={() => onPress(catchItem.id)}>
+    <TouchableOpacity
+      style={styles.gridCard}
+      onPress={() => onPress(catchItem.id)}
+      accessibilityLabel={`${speciesName}${weight ? `, ${weight}` : ''}, ${date}`}
+      accessibilityRole="button"
+      accessibilityHint="Double tap to view catch details"
+    >
       <View style={styles.gridImageContainer}>
         {catchItem.photo_thumbnail_url ? (
           <Image source={{ uri: catchItem.photo_thumbnail_url }} style={styles.gridImage} />

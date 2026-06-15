@@ -64,11 +64,53 @@ export async function scheduleCatchReminder(days: number = 7) {
       title: '🐟 Missing the water?',
       body: "It's been a while since your last catch. Time to get back out there!",
       sound: true,
+      data: { type: 'catch_reminder', screen: '/(tabs)/camera' },
       ...(Platform.OS === 'android' ? { channelId: 'reminders' } : {}),
     },
     trigger: {
       type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
       seconds: days * 24 * 60 * 60,
+    },
+  });
+}
+
+export async function scheduleWeatherAlert(hour: number = 6) {
+  const hasPermission = await requestNotificationPermission();
+  if (!hasPermission) return;
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: '🎣 Prime Fishing Conditions!',
+      body: 'Conditions look great for fishing today. Check the bite forecast!',
+      sound: true,
+      data: { type: 'weather_alert', screen: '/(tabs)' },
+      ...(Platform.OS === 'android' ? { channelId: 'reminders' } : {}),
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.DAILY,
+      hour,
+      minute: 0,
+    },
+  });
+}
+
+export async function scheduleWeeklyRecap() {
+  const hasPermission = await requestNotificationPermission();
+  if (!hasPermission) return;
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: '📊 Weekly Fishing Recap',
+      body: 'Check out your stats from this week. How many species did you catch?',
+      sound: true,
+      data: { type: 'weekly_recap', screen: '/(tabs)/profile' },
+      ...(Platform.OS === 'android' ? { channelId: 'reminders' } : {}),
+    },
+    trigger: {
+      type: Notifications.SchedulableTriggerInputTypes.WEEKLY,
+      weekday: 1,
+      hour: 9,
+      minute: 0,
     },
   });
 }

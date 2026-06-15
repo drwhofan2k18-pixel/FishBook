@@ -28,6 +28,7 @@ import PhotoCapture from '@/components/photo-capture';
 import SpeciesPicker from '@/components/species-picker';
 import RegulationBadge from '@/components/regulation-badge';
 import TackleSuggestion from '@/components/tackle-suggestion';
+import CoachMark, { CAMERA_COACH_STEPS, hasSeenCoachMarks } from '@/components/coach-mark';
 
 export default function CameraScreen() {
   const { user } = useAuth();
@@ -35,6 +36,13 @@ export default function CameraScreen() {
   const saveCatch = useSaveCatch();
   const [showLengthTool, setShowLengthTool] = useState(false);
   const [selectedRef, setSelectedRef] = useState<ReferenceObject>(REFERENCE_OBJECTS[0]);
+  const [showCoachMark, setShowCoachMark] = useState(false);
+
+  useEffect(() => {
+    hasSeenCoachMarks(CAMERA_COACH_STEPS.map(s => s.id)).then(seen => {
+      if (!seen) setShowCoachMark(true);
+    });
+  }, []);
 
   // Auto-detect location on mount
   useEffect(() => {
@@ -366,6 +374,12 @@ export default function CameraScreen() {
         onSelect={(species) => {
           store.setIdentification(species, [species, ...store.allMatches]);
         }}
+      />
+
+      <CoachMark
+        steps={CAMERA_COACH_STEPS}
+        visible={showCoachMark}
+        onComplete={() => setShowCoachMark(false)}
       />
     </SafeAreaView>
   );

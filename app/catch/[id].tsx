@@ -14,6 +14,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useCatch, useUpdateCatch, useDeleteCatch, type CatchRecord } from '@/lib/catches';
 import { shareCatch } from '@/lib/share-catch';
+import { shareDeepLink } from '@/lib/deep-linking';
 import { formatWeight, formatLength, useUnitStore } from '@/lib/units';
 
 export default function CatchDetailScreen() {

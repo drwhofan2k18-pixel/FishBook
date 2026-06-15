@@ -16,6 +16,7 @@ import { useUnitStore, type WeightUnit, type LengthUnit, type TemperatureUnit } 
 import { isModelDownloaded, deleteModel, onDownloadProgress, type DownloadProgress } from '@/lib/model-downloader';
 import { downloadOnDeviceModel } from '@/lib/ondevice-id';
 import { exportAndShareCSV } from '@/lib/export-data';
+import { exportAnonymizedData, exportToGBIF } from '@/lib/citizen-science';
 import { requestNotificationPermission, cancelAllNotifications } from '@/lib/notifications';
 import { router } from 'expo-router';
 
@@ -181,6 +182,23 @@ export default function SettingsScreen() {
             <View style={styles.rowLeft}>
               <Ionicons name="download-outline" size={20} color="#007AFF" />
               <Text style={styles.rowLabel}>Export Catches (CSV)</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+          </TouchableOpacity>
+          <View style={styles.divider} />
+          <TouchableOpacity style={styles.row} onPress={async () => {
+            try {
+              const data = await exportAnonymizedData();
+              const gbif = exportToGBIF(data);
+              const { Share } = require('react-native');
+              await Share.share({ message: JSON.stringify(gbif, null, 2).substring(0, 5000) });
+            } catch (err) {
+              Alert.alert('Export Failed', err instanceof Error ? err.message : 'Unknown error');
+            }
+          }}>
+            <View style={styles.rowLeft}>
+              <Ionicons name="earth-outline" size={20} color="#34C759" />
+              <Text style={styles.rowLabel}>Export for Citizen Science (GBIF)</Text>
             </View>
             <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
           </TouchableOpacity>
