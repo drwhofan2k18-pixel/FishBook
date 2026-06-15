@@ -1,0 +1,551 @@
+[
+  {
+    "common_name": "Peacock Bass",
+    "scientific_name": "Cichla ocellaris",
+    "family": "Cichlidae",
+    "order_name": "Cichliformes",
+    "description": "Vibrantly colored freshwater fish native to South America. Greenish-gold body with three dark vertical bars and a distinctive eye spot on the tail. Aggressive predator popular among sport anglers.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 6,
+    "min_length_cm": 15,
+    "max_length_cm": 60,
+    "lw_a": 0.000014,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Amazon and Orinoco basins",
+        "Introduced in Florida and Hawaii"
+      ],
+      "continents": [
+        "South America",
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Golden Dorado",
+    "scientific_name": "Salminus brasiliensis",
+    "family": "Bryconidae",
+    "order_name": "Characiformes",
+    "description": "Large golden-colored predatory fish native to south-central South America. One of the most powerful freshwater game fish, known for explosive strikes and acrobatic jumps.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 25,
+    "min_length_cm": 25,
+    "max_length_cm": 100,
+    "lw_a": 0.00001,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Amazon, Paraguay, and Paraná River basins",
+        "Uruguay and Bolivia rivers"
+      ],
+      "continents": [
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Arapaima",
+    "scientific_name": "Arapaima gigas",
+    "family": "Arapaimidae",
+    "order_name": "Osteoglossiformes",
+    "description": "One of the largest freshwater fish in the world, native to the Amazon basin. Can reach over 3 meters in length. Breathes air using its modified swim bladder.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 10,
+    "max_weight_kg": 200,
+    "min_length_cm": 60,
+    "max_length_cm": 300,
+    "lw_a": 0.000007,
+    "lw_b": 3.15,
+    "region_ranges": {
+      "regions": [
+        "Amazon River basin",
+        "Introduced in Southeast Asia"
+      ],
+      "continents": [
+        "South America",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Data Deficient"
+  },
+  {
+    "common_name": "Giant Trevally",
+    "scientific_name": "Caranx ignobilis",
+    "family": "Carangidae",
+    "order_name": "Carangiformes",
+    "description": "Large powerful predatory fish found in tropical oceans. Also known as GT, it is one of the most sought-after saltwater game fish for its incredible strength and aggression.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 60,
+    "min_length_cm": 30,
+    "max_length_cm": 170,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Indo-Pacific region",
+        "Hawaii",
+        "Red Sea",
+        "Eastern Africa to French Polynesia"
+      ],
+      "continents": [
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Roosterfish",
+    "scientific_name": "Nematistius pectoralis",
+    "family": "Nematistiidae",
+    "order_name": "Carangiformes",
+    "description": "Distinctive coastal fish with long dorsal fin rays that resemble a rooster's comb. Found in the tropical Eastern Pacific. Highly prized by sport anglers for its fighting ability.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 25,
+    "min_length_cm": 30,
+    "max_length_cm": 130,
+    "lw_a": 0.000011,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Eastern Pacific from Mexico to Peru",
+        "Gulf of California"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Taimen",
+    "scientific_name": "Hucho taimen",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "The largest member of the salmon family, found in Siberian and Mongolian rivers. Known as the 'river wolf' for its predatory nature. Can live over 50 years and reach massive sizes.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 50,
+    "min_length_cm": 30,
+    "max_length_cm": 150,
+    "lw_a": 0.000007,
+    "lw_b": 3.12,
+    "region_ranges": {
+      "regions": [
+        "Siberian rivers",
+        "Mongolia",
+        "Russian Far East"
+      ],
+      "continents": [
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Endangered"
+  },
+  {
+    "common_name": "Alligator Gar",
+    "scientific_name": "Atractosteus spatula",
+    "family": "Lepisosteidae",
+    "order_name": "Lepisosteiformes",
+    "description": "One of the largest freshwater fish in North America, with an elongated body and distinctive broad snout filled with sharp teeth. Named for its resemblance to an alligator.",
+    "habitat": [
+      "freshwater",
+      "estuary"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 100,
+    "min_length_cm": 50,
+    "max_length_cm": 200,
+    "lw_a": 0.000005,
+    "lw_b": 3.2,
+    "region_ranges": {
+      "regions": [
+        "Southern US",
+        "Mississippi River basin",
+        "Gulf Coast"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "White Sturgeon",
+    "scientific_name": "Acipenser transmontanus",
+    "family": "Acipenseridae",
+    "order_name": "Acipenseriformes",
+    "description": "The largest freshwater fish in North America, found along the Pacific coast. Primitive fish with rows of bony plates instead of scales. Can live over 100 years.",
+    "habitat": [
+      "freshwater",
+      "estuary"
+    ],
+    "min_weight_kg": 10,
+    "max_weight_kg": 500,
+    "min_length_cm": 60,
+    "max_length_cm": 400,
+    "lw_a": 0.000006,
+    "lw_b": 3.15,
+    "region_ranges": {
+      "regions": [
+        "Pacific coast from Alaska to California",
+        "Columbia and Snake River systems"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Wahoo",
+    "scientific_name": "Acanthocybium solandri",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "Extremely fast pelagic fish found in tropical and subtropical oceans. Streamlined body with vertical blue stripes. Known for blistering runs and excellent table fare.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 3,
+    "max_weight_kg": 60,
+    "min_length_cm": 40,
+    "max_length_cm": 180,
+    "lw_a": 0.000013,
+    "lw_b": 2.97,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical oceans worldwide"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Sailfish",
+    "scientific_name": "Istiophorus platypterus",
+    "family": "Istiophoridae",
+    "order_name": "Istiophoriformes",
+    "description": "One of the fastest fish in the ocean, recognized by its large sail-like dorsal fin. Deep blue body with silver sides. Highly prized by sport anglers for its spectacular jumps.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 15,
+    "max_weight_kg": 80,
+    "min_length_cm": 80,
+    "max_length_cm": 280,
+    "lw_a": 0.000011,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical Atlantic, Pacific, and Indian Oceans"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "White Marlin",
+    "scientific_name": "Kajikia albida",
+    "family": "Istiophoridae",
+    "order_name": "Istiophoriformes",
+    "description": "Smaller billfish species found in the tropical and subtropical Atlantic. White belly with blue-black back and pale spots on the dorsal fin. Popular light-tackle game fish.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 10,
+    "max_weight_kg": 60,
+    "min_length_cm": 60,
+    "max_length_cm": 250,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical Atlantic Ocean",
+        "Caribbean",
+        "Mediterranean"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Spanish Mackerel",
+    "scientific_name": "Scomberomorus maculatus",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "Medium-sized coastal mackerel with silver sides and yellow-brown spots. Found in the western Atlantic. Popular inshore game fish and excellent table fare.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 0.3,
+    "max_weight_kg": 5,
+    "min_length_cm": 15,
+    "max_length_cm": 60,
+    "lw_a": 0.000011,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from Massachusetts to Mexico",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Atlantic Halibut",
+    "scientific_name": "Hippoglossus hippoglossus",
+    "family": "Pleuronectidae",
+    "order_name": "Pleuronectiformes",
+    "description": "Very large flatfish found in the North Atlantic. Dark brown on the eyed side and white on the blind side. One of the largest bony fish species, highly valued for its meat.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 250,
+    "min_length_cm": 40,
+    "max_length_cm": 300,
+    "lw_a": 0.000008,
+    "lw_b": 3.1,
+    "region_ranges": {
+      "regions": [
+        "North Atlantic Ocean",
+        "Baltic Sea",
+        "Barents Sea"
+      ],
+      "continents": [
+        "North America",
+        "Europe"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Endangered"
+  },
+  {
+    "common_name": "Mutton Snapper",
+    "scientific_name": "Lutjanus analis",
+    "family": "Lutjanidae",
+    "order_name": "Perciformes",
+    "description": "Colorful reef fish with a reddish body and a distinctive black spot on the side. Found in the western Atlantic. Considered one of the best-tasting snapper species.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 12,
+    "min_length_cm": 15,
+    "max_length_cm": 70,
+    "lw_a": 0.000013,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from Florida to Brazil",
+        "Caribbean",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Cubera Snapper",
+    "scientific_name": "Lutjanus cyanopterus",
+    "family": "Lutjanidae",
+    "order_name": "Perciformes",
+    "description": "The largest snapper species found in the western Atlantic. Dark gray to reddish-brown body with thick lips and robust teeth. Powerful game fish that inhabits rocky reefs.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 40,
+    "min_length_cm": 25,
+    "max_length_cm": 120,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from Florida to Brazil",
+        "Caribbean",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Greater Amberjack",
+    "scientific_name": "Seriola dumerili",
+    "family": "Carangidae",
+    "order_name": "Carangiformes",
+    "description": "Large predatory fish found in tropical and temperate oceans worldwide. Bronze to amber body with a distinctive dark stripe through the eye. Strong fighter popular among offshore anglers.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 3,
+    "max_weight_kg": 50,
+    "min_length_cm": 30,
+    "max_length_cm": 150,
+    "lw_a": 0.000014,
+    "lw_b": 2.96,
+    "region_ranges": {
+      "regions": [
+        "Tropical and temperate oceans worldwide"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Barramundi",
+    "scientific_name": "Lates calcarifer",
+    "family": "Latidae",
+    "order_name": "Perciformes",
+    "description": "Iconic Australian fish found in coastal waters and rivers. Silver body with a concave forehead. Catadromous, spawning in saltwater but living in freshwater. Highly prized by anglers.",
+    "habitat": [
+      "freshwater",
+      "saltwater",
+      "estuary"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 30,
+    "min_length_cm": 20,
+    "max_length_cm": 120,
+    "lw_a": 0.00001,
+    "lw_b": 3.04,
+    "region_ranges": {
+      "regions": [
+        "Northern Australia",
+        "Southeast Asia",
+        "India",
+        "Papua New Guinea"
+      ],
+      "continents": [
+        "Australia/Oceania",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Murray Cod",
+    "scientific_name": "Maccullochella peelii",
+    "family": "Percichthyidae",
+    "order_name": "Perciformes",
+    "description": "Large freshwater fish native to the Murray-Darling River system in Australia. Greenish body with dark mottling. Australia's largest freshwater fish and a premier sport fish.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 80,
+    "min_length_cm": 30,
+    "max_length_cm": 150,
+    "lw_a": 0.000009,
+    "lw_b": 3.06,
+    "region_ranges": {
+      "regions": [
+        "Murray-Darling River system, Australia"
+      ],
+      "continents": [
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Critically Endangered"
+  },
+  {
+    "common_name": "Steelhead Trout",
+    "scientific_name": "Oncorhynchus mykiss irideus",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Anadromous form of rainbow trout that migrates to the ocean. Silvery body with a pinkish lateral stripe. Known for powerful runs and acrobatic jumps. Popular among fly anglers.",
+    "habitat": [
+      "freshwater",
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 15,
+    "min_length_cm": 25,
+    "max_length_cm": 80,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Pacific coast of North America",
+        "Great Lakes (landlocked)"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  }
+]

@@ -1,0 +1,593 @@
+[
+  {
+    "common_name": "Atlantic Bluefin Tuna",
+    "scientific_name": "Thunnus thynnus",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "One of the largest, fastest, and most majestic fish in the world. Deep blue back and silver sides. Highly prized in commercial and sport fishing, especially for sushi markets.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 50,
+    "max_weight_kg": 680,
+    "min_length_cm": 100,
+    "max_length_cm": 450,
+    "lw_a": 0.000015,
+    "lw_b": 2.95,
+    "region_ranges": {
+      "regions": [
+        "Western and Eastern Atlantic Ocean",
+        "Mediterranean Sea",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Endangered"
+  },
+  {
+    "common_name": "Yellowfin Tuna",
+    "scientific_name": "Thunnus albacares",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "Medium to large tuna species with distinctive bright yellow dorsal and anal fins. Streamlined body built for speed. Major commercial and game fish in tropical oceans worldwide.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 180,
+    "min_length_cm": 40,
+    "max_length_cm": 200,
+    "lw_a": 0.000014,
+    "lw_b": 2.97,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical Atlantic, Pacific, and Indian Oceans"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Near Threatened"
+  },
+  {
+    "common_name": "Skipjack Tuna",
+    "scientific_name": "Katsuwonus pelamis",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "Small widely distributed tuna species. Streamlined body with distinctive dark horizontal stripes on the belly. The most abundant tuna species and a major commercial fishery resource.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 20,
+    "min_length_cm": 20,
+    "max_length_cm": 80,
+    "lw_a": 0.000016,
+    "lw_b": 2.93,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical oceans worldwide"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Striped Bass",
+    "scientific_name": "Morone saxatilis",
+    "family": "Moronidae",
+    "order_name": "Perciformes",
+    "description": "Anadromous fish native to the Atlantic coast of North America. Silver body with dark horizontal stripes. Highly prized game fish that can also thrive in freshwater reservoirs.",
+    "habitat": [
+      "saltwater",
+      "freshwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 35,
+    "min_length_cm": 30,
+    "max_length_cm": 120,
+    "lw_a": 0.00001,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast of North America",
+        "Introduced in inland reservoirs and Pacific coast"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Red Drum",
+    "scientific_name": "Sciaenops ocellatus",
+    "family": "Sciaenidae",
+    "order_name": "Perciformes",
+    "description": "Coastal saltwater fish found along the Atlantic and Gulf coasts. Copper-bronze body with one or more distinctive dark spots near the tail. Popular game fish named for the drumming sound males make.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 40,
+    "min_length_cm": 25,
+    "max_length_cm": 110,
+    "lw_a": 0.000011,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast of US",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Spotted Seatrout",
+    "scientific_name": "Cynoscion nebulosus",
+    "family": "Sciaenidae",
+    "order_name": "Perciformes",
+    "description": "Silver-gray coastal fish with prominent black spots on the upper body and tail. Found in estuaries and seagrass beds along the Atlantic and Gulf coasts. Popular inshore game fish.",
+    "habitat": [
+      "saltwater",
+      "estuary"
+    ],
+    "min_weight_kg": 0.2,
+    "max_weight_kg": 5,
+    "min_length_cm": 15,
+    "max_length_cm": 65,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast of US",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Common Snook",
+    "scientific_name": "Centropomus undecimalis",
+    "family": "Centropomidae",
+    "order_name": "Perciformes",
+    "description": "Large coastal fish with a distinctive black lateral line and sloping forehead. Found in tropical and subtropical waters of the Americas. Highly sought after for its fighting ability and table quality.",
+    "habitat": [
+      "saltwater",
+      "freshwater",
+      "estuary"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 25,
+    "min_length_cm": 20,
+    "max_length_cm": 120,
+    "lw_a": 0.00001,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast of Florida to Brazil",
+        "Gulf of Mexico",
+        "Caribbean"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Tarpon",
+    "scientific_name": "Megalops atlanticus",
+    "family": "Megalopidae",
+    "order_name": "Elopiformes",
+    "description": "Large silver coastal fish known for its spectacular leaping ability. One of the premier game fish sought by anglers worldwide. Can breathe air using its swim bladder as a lung.",
+    "habitat": [
+      "saltwater",
+      "freshwater",
+      "estuary"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 160,
+    "min_length_cm": 50,
+    "max_length_cm": 250,
+    "lw_a": 0.000008,
+    "lw_b": 3.08,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast from Virginia to Brazil",
+        "Gulf of Mexico",
+        "Caribbean",
+        "West Africa"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Vulnerable"
+  },
+  {
+    "common_name": "Bonefish",
+    "scientific_name": "Albula vulpes",
+    "family": "Albulidae",
+    "order_name": "Albuliformes",
+    "description": "Silvery coastal fish found in shallow tropical waters. Named for its bony mouth, known for incredible speed and wariness. A premier flats game fish among fly anglers.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 7,
+    "min_length_cm": 20,
+    "max_length_cm": 90,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Tropical Atlantic",
+        "Caribbean",
+        "Pacific Islands",
+        "Indian Ocean"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Near Threatened"
+  },
+  {
+    "common_name": "Permit",
+    "scientific_name": "Trachinotus falcatus",
+    "family": "Carangidae",
+    "order_name": "Carangiformes",
+    "description": "Deep-bodied silver fish with a forked tail and long dorsal fin. Inhabits tropical coastal waters and flats. One of the most challenging and prized flats game fish.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 25,
+    "min_length_cm": 25,
+    "max_length_cm": 110,
+    "lw_a": 0.000015,
+    "lw_b": 2.95,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from Massachusetts to Brazil",
+        "Caribbean",
+        "Gulf of Mexico"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Mahi-Mahi",
+    "scientific_name": "Coryphaena hippurus",
+    "family": "Coryphaenidae",
+    "order_name": "Carangiformes",
+    "description": "Brilliantly colored oceanic fish with iridescent blue, green, and gold hues. Also known as dorado or dolphin fish. Fast-growing and found in tropical and subtropical waters worldwide.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 30,
+    "min_length_cm": 30,
+    "max_length_cm": 150,
+    "lw_a": 0.000013,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical oceans worldwide"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Swordfish",
+    "scientific_name": "Xiphias gladius",
+    "family": "Xiphiidae",
+    "order_name": "Istiophoriformes",
+    "description": "Large highly migratory predatory fish with a distinctive long, flat bill. One of the fastest fish in the ocean. Highly prized both commercially and as a sport fish.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 20,
+    "max_weight_kg": 500,
+    "min_length_cm": 80,
+    "max_length_cm": 450,
+    "lw_a": 0.000009,
+    "lw_b": 3.08,
+    "region_ranges": {
+      "regions": [
+        "Tropical and temperate Atlantic, Pacific, and Indian Oceans"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Blue Marlin",
+    "scientific_name": "Makaira nigricans",
+    "family": "Istiophoridae",
+    "order_name": "Istiophoriformes",
+    "description": "One of the largest billfish, with a deep blue back and silver sides. Known for powerful runs and spectacular aerial displays. The ultimate trophy fish for offshore anglers.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 20,
+    "max_weight_kg": 600,
+    "min_length_cm": 100,
+    "max_length_cm": 400,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical Atlantic Ocean"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Africa"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Vulnerable"
+  },
+  {
+    "common_name": "Atlantic Cod",
+    "scientific_name": "Gadus morhua",
+    "family": "Gadidae",
+    "order_name": "Gadiformes",
+    "description": "Medium to large coldwater fish with three dorsal fins and a barbel on the chin. Historically one of the most important commercial fish species in the North Atlantic.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 40,
+    "min_length_cm": 20,
+    "max_length_cm": 120,
+    "lw_a": 0.00001,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "North Atlantic Ocean",
+        "Baltic Sea",
+        "Barents Sea"
+      ],
+      "continents": [
+        "North America",
+        "Europe"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Vulnerable"
+  },
+  {
+    "common_name": "Pacific Halibut",
+    "scientific_name": "Hippoglossus stenolepis",
+    "family": "Pleuronectidae",
+    "order_name": "Pleuronectiformes",
+    "description": "The largest flatfish species, found on the continental shelf of the North Pacific. Both eyes on the right side of the body. Valued for its thick white fillets.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 5,
+    "max_weight_kg": 200,
+    "min_length_cm": 40,
+    "max_length_cm": 250,
+    "lw_a": 0.000008,
+    "lw_b": 3.1,
+    "region_ranges": {
+      "regions": [
+        "North Pacific Ocean",
+        "Bering Sea",
+        "Gulf of Alaska"
+      ],
+      "continents": [
+        "North America",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Red Snapper",
+    "scientific_name": "Lutjanus campechanus",
+    "family": "Lutjanidae",
+    "order_name": "Perciformes",
+    "description": "Popular reef fish with bright red coloration and a sloping forehead. Found in the Gulf of Mexico and southeastern Atlantic. One of the most sought-after saltwater table fish.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 15,
+    "min_length_cm": 15,
+    "max_length_cm": 85,
+    "lw_a": 0.000013,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Gulf of Mexico",
+        "Southeastern Atlantic coast of US"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Gag Grouper",
+    "scientific_name": "Mycteroperca microlepis",
+    "family": "Serranidae",
+    "order_name": "Perciformes",
+    "description": "Large reef fish found in the western Atlantic. Olive-brown body with faint darker markings. One of the most important grouper species for both commercial and recreational fishing.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 30,
+    "min_length_cm": 20,
+    "max_length_cm": 110,
+    "lw_a": 0.000011,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from North Carolina to Brazil",
+        "Gulf of Mexico",
+        "Caribbean"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Summer Flounder",
+    "scientific_name": "Paralichthys dentatus",
+    "family": "Paralichthyidae",
+    "order_name": "Pleuronectiformes",
+    "description": "Left-eyed flatfish found in coastal waters of the western Atlantic. Brown body with scattered eye-like spots. Also known as fluke, a popular game and food fish.",
+    "habitat": [
+      "saltwater",
+      "estuary"
+    ],
+    "min_weight_kg": 0.3,
+    "max_weight_kg": 8,
+    "min_length_cm": 15,
+    "max_length_cm": 75,
+    "lw_a": 0.000013,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Atlantic coast of US from Florida to Massachusetts"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Cobia",
+    "scientific_name": "Rachycentron canadum",
+    "family": "Rachycentridae",
+    "order_name": "Carangiformes",
+    "description": "Large coastal fish with an elongated body and a dark brown lateral stripe. Found worldwide in tropical and subtropical waters. Excellent table fare and popular sport fish.",
+    "habitat": [
+      "saltwater",
+      "estuary"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 50,
+    "min_length_cm": 30,
+    "max_length_cm": 150,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Tropical and subtropical oceans worldwide except Eastern Pacific"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Africa",
+        "Asia",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "King Mackerel",
+    "scientific_name": "Scomberomorus cavalla",
+    "family": "Scombridae",
+    "order_name": "Scombriformes",
+    "description": "Streamlined, fast-swimming fish found in the western Atlantic. Silver body with a greenish back. Also known as kingfish, popular among offshore anglers for its speed and strength.",
+    "habitat": [
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 35,
+    "min_length_cm": 25,
+    "max_length_cm": 120,
+    "lw_a": 0.00001,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Western Atlantic from Massachusetts to Brazil",
+        "Gulf of Mexico",
+        "Caribbean"
+      ],
+      "continents": [
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  }
+]

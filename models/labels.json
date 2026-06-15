@@ -1,0 +1,19 @@
+{
+  "model_name": "FishBook Fish Classifier",
+  "model_version": "0.1.0",
+  "input_size": [224, 224, 3],
+  "output_size": 10,
+  "normalization": "imagenet",
+  "labels": [
+    { "index": 0, "common_name": "Largemouth Bass", "scientific_name": "Micropterus salmoides", "family": "Centrarchidae" },
+    { "index": 1, "common_name": "Smallmouth Bass", "scientific_name": "Micropterus dolomieu", "family": "Centrarchidae" },
+    { "index": 2, "common_name": "Bluegill", "scientific_name": "Lepomis macrochirus", "family": "Centrarchidae" },
+    { "index": 3, "common_name": "Channel Catfish", "scientific_name": "Ictalurus punctatus", "family": "Ictaluridae" },
+    { "index": 4, "common_name": "Rainbow Trout", "scientific_name": "Oncorhynchus mykiss", "family": "Salmonidae" },
+    { "index": 5, "common_name": "Northern Pike", "scientific_name": "Esox lucius", "family": "Esocidae" },
+    { "index": 6, "common_name": "Common Carp", "scientific_name": "Cyprinus carpio", "family": "Cyprinidae" },
+    { "index": 7, "common_name": "Walleye", "scientific_name": "Sander vitreus", "family": "Percidae" },
+    { "index": 8, "common_name": "Yellow Perch", "scientific_name": "Perca flavescens", "family": "Percidae" },
+    { "index": 9, "common_name": "Atlantic Bluefin Tuna", "scientific_name": "Thunnus thynnus", "family": "Scombridae" }
+  ]
+}

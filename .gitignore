@@ -32,6 +32,8 @@ yarn-error.*
 
 # local env files
 .env*.local
+.env
+.env.production
 
 # typescript
 *.tsbuildinfo
@@ -39,3 +41,7 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# TFLite models (too large for git)
+*.tflite
+.tmp-build/

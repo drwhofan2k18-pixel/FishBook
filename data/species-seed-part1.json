@@ -1,0 +1,586 @@
+[
+  {
+    "common_name": "Largemouth Bass",
+    "scientific_name": "Micropterus salmoides",
+    "family": "Centrarchidae",
+    "order_name": "Perciformes",
+    "description": "Large predatory freshwater fish native to North America, known for its large mouth that extends past the eye. Popular sport fish found in lakes, rivers, and reservoirs.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 10,
+    "min_length_cm": 20,
+    "max_length_cm": 75,
+    "lw_a": 0.000011,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Eastern and Central North America",
+        "Introduced worldwide"
+      ],
+      "continents": [
+        "North America",
+        "Europe",
+        "Asia",
+        "Africa",
+        "South America",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Smallmouth Bass",
+    "scientific_name": "Micropterus dolomieu",
+    "family": "Centrarchidae",
+    "order_name": "Perciformes",
+    "description": "Bronze-colored freshwater fish native to eastern North America. Prefers clear, cool waters with rocky bottoms. Highly sought after by anglers for its fighting ability.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.3,
+    "max_weight_kg": 5,
+    "min_length_cm": 15,
+    "max_length_cm": 65,
+    "lw_a": 0.000012,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Eastern and Central North America",
+        "Introduced in Western US and Canada"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Bluegill",
+    "scientific_name": "Lepomis macrochirus",
+    "family": "Centrarchidae",
+    "order_name": "Perciformes",
+    "description": "Small freshwater fish native to North America. Deep-bodied with a distinctive dark spot on the dorsal fin. Common panfish and popular for beginner anglers.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.05,
+    "max_weight_kg": 0.5,
+    "min_length_cm": 8,
+    "max_length_cm": 30,
+    "lw_a": 0.000018,
+    "lw_b": 2.95,
+    "region_ranges": {
+      "regions": [
+        "Eastern and Central North America",
+        "Introduced worldwide"
+      ],
+      "continents": [
+        "North America",
+        "Europe",
+        "Asia",
+        "Africa",
+        "South America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Channel Catfish",
+    "scientific_name": "Ictalurus punctatus",
+    "family": "Ictaluridae",
+    "order_name": "Siluriformes",
+    "description": "North America's most abundant catfish species. Olive-brown to slate blue body with a forked tail. Favored by anglers for its taste and size.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 18,
+    "min_length_cm": 25,
+    "max_length_cm": 100,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Central and Eastern North America",
+        "Introduced in Europe and Asia"
+      ],
+      "continents": [
+        "North America",
+        "Europe",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Northern Pike",
+    "scientific_name": "Esox lucius",
+    "family": "Esocidae",
+    "order_name": "Esociformes",
+    "description": "Large predatory freshwater fish with an elongated body and duckbill-shaped snout. Found in slow-moving waters across the Northern Hemisphere. Ambush predator.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 25,
+    "min_length_cm": 40,
+    "max_length_cm": 130,
+    "lw_a": 0.000007,
+    "lw_b": 3.1,
+    "region_ranges": {
+      "regions": [
+        "Northern North America",
+        "Europe",
+        "Northern Asia"
+      ],
+      "continents": [
+        "North America",
+        "Europe",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Muskellunge",
+    "scientific_name": "Esox masquinongy",
+    "family": "Esocidae",
+    "order_name": "Esociformes",
+    "description": "The largest member of the pike family, native to North America. Known as the 'fish of ten thousand casts' for its elusive nature. Can reach impressive sizes.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 30,
+    "min_length_cm": 50,
+    "max_length_cm": 150,
+    "lw_a": 0.000006,
+    "lw_b": 3.15,
+    "region_ranges": {
+      "regions": [
+        "Northern and Eastern North America",
+        "Great Lakes region"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Walleye",
+    "scientific_name": "Sander vitreus",
+    "family": "Percidae",
+    "order_name": "Perciformes",
+    "description": "Popular freshwater game fish native to Canada and the northern United States. Named for its distinct glassy eyes adapted for low-light hunting. Highly prized for table fare.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 8,
+    "min_length_cm": 25,
+    "max_length_cm": 80,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Central and Northern North America"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Yellow Perch",
+    "scientific_name": "Perca flavescens",
+    "family": "Percidae",
+    "order_name": "Perciformes",
+    "description": "Small freshwater fish with distinctive yellow-green body and dark vertical bars. Native to North America. Popular panfish with excellent white flesh.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.02,
+    "max_weight_kg": 0.3,
+    "min_length_cm": 6,
+    "max_length_cm": 25,
+    "lw_a": 0.000015,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Northern and Eastern North America"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Rainbow Trout",
+    "scientific_name": "Oncorhynchus mykiss",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Colorful freshwater fish native to cold-water tributaries of the Pacific Ocean. Recognized by pinkish-red stripe along the lateral line. Widely introduced for sport fishing.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.2,
+    "max_weight_kg": 8,
+    "min_length_cm": 15,
+    "max_length_cm": 75,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "Western North America",
+        "Introduced worldwide"
+      ],
+      "continents": [
+        "North America",
+        "South America",
+        "Europe",
+        "Asia",
+        "Africa",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Brown Trout",
+    "scientific_name": "Salmo trutta",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Medium to large freshwater fish native to Europe and western Asia. Golden-brown body with dark spots and red-orange markings. Highly regarded by anglers.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.2,
+    "max_weight_kg": 15,
+    "min_length_cm": 15,
+    "max_length_cm": 90,
+    "lw_a": 0.000008,
+    "lw_b": 3.08,
+    "region_ranges": {
+      "regions": [
+        "Europe",
+        "Western Asia",
+        "Introduced worldwide"
+      ],
+      "continents": [
+        "Europe",
+        "Asia",
+        "North America",
+        "South America",
+        "Africa",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Brook Trout",
+    "scientific_name": "Salvelinus fontinalis",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Native freshwater fish of eastern North America. Distinctive worm-like markings on back and red spots with blue halos on sides. Prefers clean, cold streams.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.1,
+    "max_weight_kg": 3,
+    "min_length_cm": 10,
+    "max_length_cm": 50,
+    "lw_a": 0.00001,
+    "lw_b": 3.03,
+    "region_ranges": {
+      "regions": [
+        "Eastern North America",
+        "Introduced in Western US and Europe"
+      ],
+      "continents": [
+        "North America",
+        "Europe"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Lake Trout",
+    "scientific_name": "Salvelinus namaycush",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Large freshwater char native to cold, deep lakes of northern North America. Light-colored spots on dark background. Can live over 40 years and reach substantial sizes.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.5,
+    "max_weight_kg": 45,
+    "min_length_cm": 25,
+    "max_length_cm": 120,
+    "lw_a": 0.000008,
+    "lw_b": 3.1,
+    "region_ranges": {
+      "regions": [
+        "Northern North America",
+        "Great Lakes region"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Chinook Salmon",
+    "scientific_name": "Oncorhynchus tshawytscha",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Largest species of Pacific salmon, also known as King Salmon. Silver body with black spots on back and tail. Highly prized by commercial and sport fishermen.",
+    "habitat": [
+      "freshwater",
+      "saltwater"
+    ],
+    "min_weight_kg": 2,
+    "max_weight_kg": 50,
+    "min_length_cm": 40,
+    "max_length_cm": 150,
+    "lw_a": 0.00001,
+    "lw_b": 3.02,
+    "region_ranges": {
+      "regions": [
+        "Northern Pacific Ocean",
+        "Coastal rivers from California to Alaska",
+        "Introduced in Great Lakes"
+      ],
+      "continents": [
+        "North America",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Coho Salmon",
+    "scientific_name": "Oncorhynchus kisutch",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Medium-sized Pacific salmon with silver sides and light spots on back. Known as Silver Salmon. Valued for its firm orange-red flesh and acrobatic fights.",
+    "habitat": [
+      "freshwater",
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 14,
+    "min_length_cm": 30,
+    "max_length_cm": 90,
+    "lw_a": 0.000011,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Northern Pacific Ocean",
+        "Coastal rivers from California to Alaska"
+      ],
+      "continents": [
+        "North America",
+        "Asia"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Atlantic Salmon",
+    "scientific_name": "Salmo salar",
+    "family": "Salmonidae",
+    "order_name": "Salmoniformes",
+    "description": "Anadromous fish native to the North Atlantic. Silvery body with small X-shaped spots above the lateral line. Both wild and farmed populations are economically important.",
+    "habitat": [
+      "freshwater",
+      "saltwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 35,
+    "min_length_cm": 30,
+    "max_length_cm": 120,
+    "lw_a": 0.000009,
+    "lw_b": 3.05,
+    "region_ranges": {
+      "regions": [
+        "North Atlantic Ocean",
+        "Coastal rivers of Europe and Eastern North America"
+      ],
+      "continents": [
+        "North America",
+        "Europe"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Common Carp",
+    "scientific_name": "Cyprinus carpio",
+    "family": "Cyprinidae",
+    "order_name": "Cypriniformes",
+    "description": "Large freshwater fish native to Europe and Asia. Deep-bodied with large scales and two barbels on each side of the mouth. Widely introduced and considered invasive in many areas.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 35,
+    "min_length_cm": 25,
+    "max_length_cm": 100,
+    "lw_a": 0.000015,
+    "lw_b": 2.97,
+    "region_ranges": {
+      "regions": [
+        "Europe",
+        "Asia",
+        "Introduced worldwide"
+      ],
+      "continents": [
+        "Europe",
+        "Asia",
+        "North America",
+        "South America",
+        "Africa",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Grass Carp",
+    "scientific_name": "Ctenopharyngodon idella",
+    "family": "Cyprinidae",
+    "order_name": "Cypriniformes",
+    "description": "Large herbivorous freshwater fish native to East Asia. Elongated body with moderate-sized scales. Used for aquatic vegetation control in many parts of the world.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 1,
+    "max_weight_kg": 30,
+    "min_length_cm": 30,
+    "max_length_cm": 120,
+    "lw_a": 0.000012,
+    "lw_b": 3,
+    "region_ranges": {
+      "regions": [
+        "Eastern Asia",
+        "Introduced worldwide for weed control"
+      ],
+      "continents": [
+        "Asia",
+        "North America",
+        "Europe",
+        "South America",
+        "Australia/Oceania"
+      ]
+    },
+    "is_game_fish": false,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Nile Tilapia",
+    "scientific_name": "Oreochromis niloticus",
+    "family": "Cichlidae",
+    "order_name": "Cichliformes",
+    "description": "Medium-sized cichlid fish native to Africa. Compressed body with interrupted vertical bars. One of the most important aquaculture species worldwide.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.2,
+    "max_weight_kg": 4,
+    "min_length_cm": 10,
+    "max_length_cm": 60,
+    "lw_a": 0.000016,
+    "lw_b": 2.95,
+    "region_ranges": {
+      "regions": [
+        "Africa",
+        "Middle East",
+        "Introduced worldwide for aquaculture"
+      ],
+      "continents": [
+        "Africa",
+        "Asia",
+        "North America",
+        "South America"
+      ]
+    },
+    "is_game_fish": false,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "Black Crappie",
+    "scientific_name": "Pomoxis nigromaculatus",
+    "family": "Centrarchidae",
+    "order_name": "Perciformes",
+    "description": "Deep-bodied freshwater fish native to eastern North America. Silver body with irregular black spots. Popular panfish known for its flaky white meat.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.05,
+    "max_weight_kg": 0.5,
+    "min_length_cm": 10,
+    "max_length_cm": 35,
+    "lw_a": 0.000016,
+    "lw_b": 2.97,
+    "region_ranges": {
+      "regions": [
+        "Eastern and Central North America",
+        "Introduced in Western US"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  },
+  {
+    "common_name": "White Crappie",
+    "scientific_name": "Pomoxis annularis",
+    "family": "Centrarchidae",
+    "order_name": "Perciformes",
+    "description": "Silver-colored freshwater fish native to eastern North America. Similar to black crappie but with vertical bars instead of spots. Prefers larger, silty waters.",
+    "habitat": [
+      "freshwater"
+    ],
+    "min_weight_kg": 0.05,
+    "max_weight_kg": 0.5,
+    "min_length_cm": 10,
+    "max_length_cm": 35,
+    "lw_a": 0.000015,
+    "lw_b": 2.98,
+    "region_ranges": {
+      "regions": [
+        "Eastern and Central North America"
+      ],
+      "continents": [
+        "North America"
+      ]
+    },
+    "is_game_fish": true,
+    "conservation_status": "Least Concern"
+  }
+]

@@ -1,0 +1,93 @@
+[
+  {
+    "species": "Largemouth Bass",
+    "scientific_name": "Micropterus salmoides",
+    "recommendations": [
+      { "lure_name": "Texas Rig Worm", "lure_type": "Soft Plastic", "color": "Green Pumpkin", "technique": "Drag along bottom, pause at cover", "depth": "Bottom", "priority": "primary", "reason": "Year-round producer" },
+      { "lure_name": "Spinnerbait", "lure_type": "Spinnerbait", "color": "White/Chartreuse", "technique": "Steady retrieve near cover", "depth": "Mid-water", "priority": "primary", "reason": "Triggers reaction strikes" },
+      { "lure_name": "Topwater Frog", "lure_type": "Topwater", "color": "Black/Green", "technique": "Walk-the-dog over vegetation", "depth": "Surface", "priority": "secondary", "reason": "Best in warm months over pads" },
+      { "lure_name": "Jig", "lure_type": "Jig", "color": "Brown/Black", "technique": "Pitch to cover, hop bottom", "depth": "Bottom", "priority": "secondary", "reason": "Big fish bait for heavy cover" },
+      { "lure_name": "Crankbait", "lure_type": "Hard Bait", "color": "Crawfish", "technique": "Reel and deflect off structure", "depth": "Mid-depth", "priority": "situational", "reason": "Covers water quickly" }
+    ]
+  },
+  {
+    "species": "Smallmouth Bass",
+    "scientific_name": "Micropterus dolomieu",
+    "recommendations": [
+      { "lure_name": "Ned Rig", "lure_type": "Soft Plastic", "color": "Green Pumpkin", "technique": "Drag along rocky bottom", "depth": "Bottom", "priority": "primary", "reason": "Smallmouth love finesse on rock" },
+      { "lure_name": "Tube Jig", "lure_type": "Soft Plastic", "color": "Crawfish", "technique": "Hop bottom, erratic twitches", "depth": "Bottom", "priority": "primary", "reason": "Mimics crawfish, primary forage" },
+      { "lure_name": "Drop Shot", "lure_type": "Finesse", "color": "Natural", "technique": "Hover over structure, shake", "depth": "Variable", "priority": "secondary", "reason": "Precision for pressured fish" },
+      { "lure_name": "Spybait", "lure_type": "Hard Bait", "color": "Natural Shad", "technique": "Slow straight retrieve", "depth": "Mid-water", "priority": "situational", "reason": "Clear water finesse" }
+    ]
+  },
+  {
+    "species": "Rainbow Trout",
+    "scientific_name": "Oncorhynchus mykiss",
+    "recommendations": [
+      { "lure_name": "Inline Spinner", "lure_type": "Spinner", "color": "Gold/Silver", "technique": "Cast upstream, retrieve with current", "depth": "Mid-water", "priority": "primary", "reason": "Flash triggers trout strikes" },
+      { "lure_name": "PowerBait", "lure_type": "Bait", "color": "Chartreuse", "technique": "Bottom rig, small treble hook", "depth": "Bottom", "priority": "primary", "reason": "Stocked trout love it" },
+      { "lure_name": "Worm", "lure_type": "Live Bait", "color": "Natural", "technique": "Drift under bobber", "depth": "Variable", "priority": "secondary", "reason": "Reliable natural bait" },
+      { "lure_name": "Spoons", "lure_type": "Spoon", "color": "Gold", "technique": "Flutter and retrieve", "depth": "Mid-water", "priority": "situational", "reason": "Great for lakes" }
+    ]
+  },
+  {
+    "species": "Channel Catfish",
+    "scientific_name": "Ictalurus punctatus",
+    "recommendations": [
+      { "lure_name": "Chicken Liver", "lure_type": "Bait", "color": "Natural", "technique": "Bottom rig, let it soak", "depth": "Bottom", "priority": "primary", "reason": "Strong scent attracts cats" },
+      { "lure_name": "Stink Bait", "lure_type": "Prepared Bait", "color": "N/A", "technique": "Dip bait on treble hook", "depth": "Bottom", "priority": "primary", "reason": "Channel cats hunt by scent" },
+      { "lure_name": "Cut Shad", "lure_type": "Cut Bait", "color": "Natural", "technique": "Bottom rig near structure", "depth": "Bottom", "priority": "secondary", "reason": "Great for bigger cats" },
+      { "lure_name": "Nightcrawler", "lure_type": "Live Bait", "color": "Natural", "technique": "Carolina rig on bottom", "depth": "Bottom", "priority": "situational", "reason": "Universal bait" }
+    ]
+  },
+  {
+    "species": "Walleye",
+    "scientific_name": "Sander vitreus",
+    "recommendations": [
+      { "lure_name": "Jig + Minnow", "lure_type": "Jig", "color": "Chartreuse/Orange", "technique": "Slow hop along bottom", "depth": "Bottom", "priority": "primary", "reason": "Number one walleye presentation" },
+      { "lure_name": "Crankbait", "lure_type": "Hard Bait", "color": "Crawfish/Perch", "technique": "Troll along drop-offs", "depth": "Mid-depth", "priority": "primary", "reason": "Covers water, reaction bites" },
+      { "lure_name": "Blade Bait", "lure_type": "Metal Jig", "color": "Silver/Gold", "technique": "Vertical jig deep water", "depth": "Deep", "priority": "secondary", "reason": "Cold water walleye staple" },
+      { "lure_name": "Lipless Crankbait", "lure_type": "Hard Bait", "color": "Chrome/Blue", "technique": "Yo-yo over weed tops", "depth": "Mid-water", "priority": "situational", "reason": "Aggressive walleye" }
+    ]
+  },
+  {
+    "species": "Northern Pike",
+    "scientific_name": "Esox lucius",
+    "recommendations": [
+      { "lure_name": "Spinnerbait", "lure_type": "Spinnerbait", "color": "White/Red", "technique": "Fast retrieve near weeds", "depth": "Mid-water", "priority": "primary", "reason": "Speed triggers reaction bites" },
+      { "lure_name": "Spoons", "lure_type": "Spoon", "color": "Silver/Red", "technique": "Flutter, pause and jerk", "depth": "Mid-water", "priority": "primary", "reason": "Imitates injured baitfish" },
+      { "lure_name": "Swimbaits", "lure_type": "Soft Plastic", "color": "Perch/Shad", "technique": "Slow roll through veg", "depth": "Mid-water", "priority": "secondary", "reason": "Realistic for pressured pike" },
+      { "lure_name": "Bucktail Jig", "lure_type": "Jig", "color": "White/Yellow", "technique": "Steady retrieve with pops", "depth": "Variable", "priority": "situational", "reason": "Old-school, very durable" }
+    ]
+  },
+  {
+    "species": "Red Drum",
+    "scientific_name": "Sciaenops ocellatus",
+    "recommendations": [
+      { "lure_name": "Gold Spoon", "lure_type": "Spoon", "color": "Gold", "technique": "Slow retrieve over flats", "depth": "Shallow", "priority": "primary", "reason": "Flash attracts redfish" },
+      { "lure_name": "Soft Plastic Shrimp", "lure_type": "Soft Plastic", "color": "New Penny", "technique": "Twitch-pause along bottom", "depth": "Bottom", "priority": "primary", "reason": "Mimics shrimp and crabs" },
+      { "lure_name": "Live Shrimp", "lure_type": "Live Bait", "color": "Natural", "technique": "Popping cork or free-line", "depth": "Shallow", "priority": "secondary", "reason": "Irresistible to redfish" },
+      { "lure_name": "Topwater", "lure_type": "Topwater", "color": "Bone/Chrome", "technique": "Walk-the-dog at dawn/dusk", "depth": "Surface", "priority": "situational", "reason": "Explosive surface strikes" }
+    ]
+  },
+  {
+    "species": "Common Snook",
+    "scientific_name": "Centropomus undecimalis",
+    "recommendations": [
+      { "lure_name": "Bucktail Jig", "lure_type": "Jig", "color": "White", "technique": "Sharp twitches near pilings", "depth": "Mid-water", "priority": "primary", "reason": "Snook love structure" },
+      { "lure_name": "Swimbait", "lure_type": "Soft Plastic", "color": "White/Silver", "technique": "Retrieve along current edges", "depth": "Mid-water", "priority": "primary", "reason": "Realistic baitfish imitation" },
+      { "lure_name": "Live Pilchard", "lure_type": "Live Bait", "color": "Natural", "technique": "Free-line near structure", "depth": "Variable", "priority": "secondary", "reason": "Snook's favorite forage" },
+      { "lure_name": "Shrimp Fly", "lure_type": "Fly", "color": "Pink/White", "technique": "Dead drift in current", "depth": "Bottom", "priority": "situational", "reason": "Great for sight-fishing" }
+    ]
+  },
+  {
+    "species": "Muskellunge",
+    "scientific_name": "Esox masquinongy",
+    "recommendations": [
+      { "lure_name": "Bucktail Spinner", "lure_type": "Spinnerbait", "color": "Black/Red", "technique": "Fast figure-eight at boat", "depth": "Mid-water", "priority": "primary", "reason": "The muskie classic" },
+      { "lure_name": "Glide Bait", "lure_type": "Hard Bait", "color": "Perch/Pike", "technique": "Slow side-to-side glide", "depth": "Mid-water", "priority": "primary", "reason": "Big bait for big fish" },
+      { "lure_name": "Bull Dawg", "lure_type": "Soft Plastic", "color": "Black", "technique": "Pull-pause retrieve", "depth": "Variable", "priority": "secondary", "reason": "Large profile triggers trophy strikes" },
+      { "lure_name": "Topwater Prop", "lure_type": "Topwater", "color": "Black/Natural", "technique": "Slow prop over structure", "depth": "Surface", "priority": "situational", "reason": "Heart-stopping surface blowups" }
+    ]
+  }
+]
