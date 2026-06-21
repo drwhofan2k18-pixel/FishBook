@@ -3,6 +3,7 @@ import { getForecast, getCurrentWeather, type ForecastDay, type WeatherCondition
 import { getUserStats } from './stats-aggregation';
 import { supabase } from './supabase';
 import { colors } from './theme';
+import { getSolunarPeriods, getMoonPhase, isInSolunarPeriod, type SolunarDay } from './moon-phase';
 
 export type TimeWindow = 'early_morning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
@@ -30,6 +31,7 @@ export interface SpeciesBiteScore {
   light_score: number;
   wind_score: number;
   pressure_score: number;
+  solunar_score: number;
   rating: 'excellent' | 'good' | 'fair' | 'poor';
 }
 
@@ -41,6 +43,9 @@ export interface BiteForecast {
   temp_c: number;
   wind_kph: number;
   sky: string;
+  moon_phase: string;
+  solunar_active: boolean;
+  solunar_strength: number;
 }
 
 export interface DayBiteForecast {
@@ -116,13 +121,15 @@ function computeSpeciesScore(
   window: TimeWindow,
   tempC: number,
   windKph: number,
+  solunarBonus: number,
 ): SpeciesBiteScore {
   const temp = scoreTemperature(tempC, profile);
   const light = scoreLight(window, profile);
   const wind = scoreWind(windKph, profile);
   const pressure = scorePressure(profile);
+  const solunar = Math.min(1, solunarBonus);
 
-  const overall = temp * 0.35 + light * 0.30 + wind * 0.20 + pressure * 0.15;
+  const overall = temp * 0.25 + light * 0.25 + wind * 0.15 + pressure * 0.10 + solunar * 0.25;
 
   return {
     species_name: profile.common_name,
@@ -132,6 +139,7 @@ function computeSpeciesScore(
     light_score: light,
     wind_score: wind,
     pressure_score: pressure,
+    solunar_score: solunar,
     rating: computeRating(overall),
   };
 }
@@ -174,6 +182,9 @@ export async function generateBiteForecast(
     getForecast(latitude, longitude),
   ]);
 
+  const moonPhase = getMoonPhase();
+  const solunar = getSolunarPeriods(new Date(), longitude);
+
   const days: DayBiteForecast[] = [];
   const now = new Date();
 
@@ -196,8 +207,14 @@ export async function generateBiteForecast(
 
       const weather = getWeatherForHour(current, forecast, actualHour);
 
+      const windowDate = new Date(dayDate);
+      windowDate.setHours(Math.floor(actualHour));
+      const solunarForWindow = getSolunarPeriods(windowDate, longitude);
+      const solunarStatus = isInSolunarPeriod(windowDate, solunarForWindow);
+      const solunarBonus = solunarStatus.strength;
+
       const speciesScores = SPECIES_BEHAVIORS.map((profile) =>
-        computeSpeciesScore(profile, tw.key, weather.temp, weather.wind),
+        computeSpeciesScore(profile, tw.key, weather.temp, weather.wind, solunarBonus),
       ).sort((a, b) => b.overall_score - a.overall_score);
 
       const topSpecies = speciesScores.slice(0, 5);
@@ -211,6 +228,9 @@ export async function generateBiteForecast(
         temp_c: weather.temp,
         wind_kph: weather.wind,
         sky: weather.sky,
+        moon_phase: `${moonPhase.emoji} ${moonPhase.phase}`,
+        solunar_active: solunarStatus.inMajor || solunarStatus.inMinor,
+        solunar_strength: solunarBonus,
       });
     }
 
