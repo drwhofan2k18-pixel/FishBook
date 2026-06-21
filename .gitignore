@@ -45,3 +45,4 @@ yarn-error.*
 # TFLite models (too large for git)
 *.tflite
 .tmp-build/
+FishBook.tar.gz
