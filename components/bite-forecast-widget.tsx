@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '@/lib/theme';
 import {
   type DayBiteForecast,
   type BiteForecast,
@@ -20,9 +21,9 @@ export default function BiteForecastWidget({ forecast }: BiteForecastWidgetProps
   if (!today) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessibilityLabel="Bite forecast" accessibilityRole="summary">
       <View style={styles.header}>
-        <Ionicons name="flash" size={20} color="#FF9500" />
+        <Ionicons name="flash" size={20} color={colors.warning} />
         <Text style={styles.title}>Bite Forecast</Text>
       </View>
 
@@ -122,7 +123,7 @@ function TomorrowPreview({ tomorrow }: { tomorrow: DayBiteForecast }) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
@@ -141,7 +142,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 17,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   todaySection: {
     marginBottom: 14,
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: 12,
   },
@@ -159,19 +160,19 @@ const styles = StyleSheet.create({
   },
   bestLabel: {
     fontSize: 11,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '600',
     textTransform: 'uppercase',
   },
   bestTime: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 2,
   },
   bestTemp: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   bestSpeciesTag: {
@@ -190,7 +191,7 @@ const styles = StyleSheet.create({
   },
   windowCard: {
     width: 120,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: colors.cardSurface,
     borderRadius: 10,
     padding: 10,
     borderLeftWidth: 3,
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
   windowTime: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 6,
   },
   ratingBadge: {
@@ -211,12 +212,12 @@ const styles = StyleSheet.create({
   ratingText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     textTransform: 'uppercase',
   },
   windowWeather: {
     fontSize: 11,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   speciesRow: {
@@ -232,18 +233,18 @@ const styles = StyleSheet.create({
   },
   speciesName: {
     fontSize: 11,
-    color: '#3C3C43',
+    color: colors.textBody,
   },
   tomorrowSection: {
     borderTopWidth: 1,
-    borderTopColor: '#F2F2F7',
+    borderTopColor: colors.surface,
     paddingTop: 12,
     marginTop: 4,
   },
   tomorrowLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   tomorrowRow: {
@@ -253,7 +254,7 @@ const styles = StyleSheet.create({
   },
   tomorrowText: {
     fontSize: 14,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   tomorrowBold: {
     fontWeight: '700',

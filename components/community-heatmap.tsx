@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import MapView, { Circle, type Region } from 'react-native-maps';
 import { fetchCommunityHeatmap, getHeatColor, getHeatOpacity, type HeatmapCell, type HeatmapBounds } from '@/lib/community-map';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '@/lib/theme';
 
 interface CommunityHeatmapProps {
   initialRegion?: Region;
@@ -51,7 +52,7 @@ export default function CommunityHeatmap({ initialRegion, speciesFilter, height 
   }, [loadCells]);
 
   return (
-    <View style={[styles.container, { height }]}>
+    <View style={[styles.container, { height }]} accessibilityLabel="Community fishing heatmap" accessibilityRole="image">
       <MapView
         style={styles.map}
         initialRegion={initialRegion ?? DEFAULT_REGION}
@@ -72,7 +73,7 @@ export default function CommunityHeatmap({ initialRegion, speciesFilter, height 
 
       {loading && (
         <View style={styles.loadingOverlay}>
-          <ActivityIndicator size="small" color="#007AFF" />
+          <ActivityIndicator size="small" color={colors.primary} />
         </View>
       )}
 
@@ -102,7 +103,7 @@ export default function CommunityHeatmap({ initialRegion, speciesFilter, height 
 
       {cells.length === 0 && !loading && (
         <View style={styles.emptyOverlay}>
-          <Ionicons name="globe-outline" size={32} color="#C7C7CC" />
+          <Ionicons name="globe-outline" size={32} color={colors.textTertiary} />
           <Text style={styles.emptyText}>No community data in this area</Text>
         </View>
       )}
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     right: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 20,
     padding: 8,
     shadowColor: '#000',
@@ -151,7 +152,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     left: 12,
     right: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 14,
     shadowColor: '#000',
@@ -169,21 +170,21 @@ const styles = StyleSheet.create({
   infoTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   infoSpecies: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 2,
   },
   infoWeight: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 6,
   },
   privacyNote: {
     fontSize: 11,
-    color: '#C7C7CC',
+    color: colors.textTertiary,
     fontStyle: 'italic',
   },
   emptyOverlay: {
@@ -195,6 +196,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
 });

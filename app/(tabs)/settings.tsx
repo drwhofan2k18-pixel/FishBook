@@ -19,6 +19,7 @@ import { exportAndShareCSV } from '@/lib/export-data';
 import { exportAnonymizedData, exportToGBIF } from '@/lib/citizen-science';
 import { requestNotificationPermission, cancelAllNotifications } from '@/lib/notifications';
 import { router } from 'expo-router';
+import { colors } from '@/lib/theme';
 
 export default function SettingsScreen() {
   const { user } = useAuth();
@@ -95,7 +96,7 @@ export default function SettingsScreen() {
             <React.Fragment key={lang}>
               <TouchableOpacity style={styles.row} onPress={() => setLanguage(lang)}>
                 <Text style={styles.rowLabel}>{languageNames[lang] ?? lang}</Text>
-                {language === lang && <Ionicons name="checkmark" size={20} color="#007AFF" />}
+                {language === lang && <Ionicons name="checkmark" size={20} color={colors.primary} />}
               </TouchableOpacity>
               {i < supportedLanguages.length - 1 && <View style={styles.divider} />}
             </React.Fragment>
@@ -130,7 +131,7 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <View style={styles.row}>
             <View style={styles.rowLeft}>
-              <Ionicons name="cube-outline" size={20} color="#007AFF" />
+              <Ionicons name="cube-outline" size={20} color={colors.primary} />
               <Text style={styles.rowLabel}>On-Device Fish ID</Text>
             </View>
             <Text style={styles.rowValue}>
@@ -148,13 +149,13 @@ export default function SettingsScreen() {
           <View style={styles.divider} />
           {modelDownloaded ? (
             <TouchableOpacity style={styles.row} onPress={handleDeleteModel}>
-              <Ionicons name="trash-outline" size={20} color="#FF3B30" />
-              <Text style={[styles.rowLabel, { color: '#FF3B30' }]}>Delete Model</Text>
+              <Ionicons name="trash-outline" size={20} color={colors.danger} />
+              <Text style={[styles.rowLabel, { color: colors.danger }]}>Delete Model</Text>
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.row} onPress={handleDownloadModel} disabled={downloading}>
-              <Ionicons name="download-outline" size={20} color="#007AFF" />
-              <Text style={[styles.rowLabel, { color: '#007AFF' }]}>
+              <Ionicons name="download-outline" size={20} color={colors.primary} />
+              <Text style={[styles.rowLabel, { color: colors.primary }]}>
                 {downloading ? 'Downloading...' : 'Download Model (~5MB)'}
               </Text>
             </TouchableOpacity>
@@ -165,13 +166,13 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <TouchableOpacity style={styles.row} onPress={handleToggleNotifications}>
             <View style={styles.rowLeft}>
-              <Ionicons name="notifications-outline" size={20} color="#007AFF" />
+              <Ionicons name="notifications-outline" size={20} color={colors.primary} />
               <Text style={styles.rowLabel}>Push Notifications</Text>
             </View>
             <Ionicons
               name={notifEnabled ? 'toggle' : 'toggle-outline'}
               size={32}
-              color={notifEnabled ? '#34C759' : '#C7C7CC'}
+              color={notifEnabled ? colors.success : colors.textTertiary}
             />
           </TouchableOpacity>
         </View>
@@ -180,10 +181,10 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <TouchableOpacity style={styles.row} onPress={handleExportCSV}>
             <View style={styles.rowLeft}>
-              <Ionicons name="download-outline" size={20} color="#007AFF" />
+              <Ionicons name="download-outline" size={20} color={colors.primary} />
               <Text style={styles.rowLabel}>Export Catches (CSV)</Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+            <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
           </TouchableOpacity>
           <View style={styles.divider} />
           <TouchableOpacity style={styles.row} onPress={async () => {
@@ -197,10 +198,10 @@ export default function SettingsScreen() {
             }
           }}>
             <View style={styles.rowLeft}>
-              <Ionicons name="earth-outline" size={20} color="#34C759" />
+              <Ionicons name="earth-outline" size={20} color={colors.success} />
               <Text style={styles.rowLabel}>Export for Citizen Science (GBIF)</Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+            <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
           </TouchableOpacity>
         </View>
 
@@ -208,18 +209,18 @@ export default function SettingsScreen() {
         <View style={styles.card}>
           <TouchableOpacity style={styles.row} onPress={() => router.push('/privacy-policy')}>
             <View style={styles.rowLeft}>
-              <Ionicons name="shield-checkmark-outline" size={20} color="#007AFF" />
+              <Ionicons name="shield-checkmark-outline" size={20} color={colors.primary} />
               <Text style={styles.rowLabel}>Privacy Policy</Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+            <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
           </TouchableOpacity>
           <View style={styles.divider} />
           <TouchableOpacity style={styles.row} onPress={() => router.push('/terms-of-service')}>
             <View style={styles.rowLeft}>
-              <Ionicons name="document-text-outline" size={20} color="#007AFF" />
+              <Ionicons name="document-text-outline" size={20} color={colors.primary} />
               <Text style={styles.rowLabel}>Terms of Service</Text>
             </View>
-            <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+            <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
           </TouchableOpacity>
         </View>
 
@@ -261,25 +262,25 @@ function UnitRow({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
+  container: { flex: 1, backgroundColor: colors.surface },
   scrollContent: { padding: 16 },
-  screenTitle: { fontSize: 28, fontWeight: '700', color: '#1C1C1E', marginBottom: 20 },
-  sectionLabel: { fontSize: 13, fontWeight: '600', color: '#8E8E93', textTransform: 'uppercase', marginBottom: 8, marginTop: 20, marginLeft: 4 },
-  card: { backgroundColor: '#FFFFFF', borderRadius: 12, overflow: 'hidden' },
+  screenTitle: { fontSize: 28, fontWeight: '700', color: colors.textPrimary, marginBottom: 20 },
+  sectionLabel: { fontSize: 13, fontWeight: '600', color: colors.textSecondary, textTransform: 'uppercase', marginBottom: 8, marginTop: 20, marginLeft: 4 },
+  card: { backgroundColor: colors.background, borderRadius: 12, overflow: 'hidden' },
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 14 },
   rowLeft: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  rowLabel: { fontSize: 16, color: '#1C1C1E' },
-  rowValue: { fontSize: 14, color: '#8E8E93' },
-  divider: { height: 1, backgroundColor: '#F2F2F7', marginLeft: 52 },
+  rowLabel: { fontSize: 16, color: colors.textPrimary },
+  rowValue: { fontSize: 14, color: colors.textSecondary },
+  divider: { height: 1, backgroundColor: colors.surface, marginLeft: 52 },
   unitRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 10 },
   unitOptions: { flexDirection: 'row', gap: 4 },
-  unitOption: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 8, backgroundColor: '#E5E5EA' },
-  unitOptionActive: { backgroundColor: '#007AFF' },
-  unitOptionText: { fontSize: 13, fontWeight: '600', color: '#8E8E93' },
-  unitOptionTextActive: { color: '#FFFFFF' },
+  unitOption: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 8, backgroundColor: colors.divider },
+  unitOptionActive: { backgroundColor: colors.primary },
+  unitOptionText: { fontSize: 13, fontWeight: '600', color: colors.textSecondary },
+  unitOptionTextActive: { color: colors.textOnPrimary },
   progressContainer: { paddingHorizontal: 16, paddingBottom: 12, flexDirection: 'row', alignItems: 'center', gap: 8 },
-  progressBar: { flex: 1, height: 6, backgroundColor: '#E5E5EA', borderRadius: 3, overflow: 'hidden' },
-  progressFill: { height: '100%', backgroundColor: '#007AFF', borderRadius: 3 },
-  progressText: { fontSize: 12, color: '#8E8E93', width: 36, textAlign: 'right' },
-  version: { textAlign: 'center', fontSize: 13, color: '#C7C7CC', marginTop: 24, marginBottom: 40 },
+  progressBar: { flex: 1, height: 6, backgroundColor: colors.divider, borderRadius: 3, overflow: 'hidden' },
+  progressFill: { height: '100%', backgroundColor: colors.primary, borderRadius: 3 },
+  progressText: { fontSize: 12, color: colors.textSecondary, width: 36, textAlign: 'right' },
+  version: { textAlign: 'center', fontSize: 13, color: colors.textTertiary, marginTop: 24, marginBottom: 40 },
 });

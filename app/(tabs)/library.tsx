@@ -17,6 +17,7 @@ import CatchCard from '@/components/catch-card';
 import { getPendingSyncCount } from '@/lib/offline-db';
 import { clusterCatchLocations, getUserCatchLocations, type SpotCluster } from '@/lib/recommendations';
 import { useAuth } from '@/lib/auth-context';
+import { colors } from '@/lib/theme';
 
 type SortOption = 'date' | 'weight' | 'species';
 
@@ -86,7 +87,7 @@ export default function LibraryScreen() {
     <View>
       {pendingSync > 0 && (
         <View style={styles.syncBanner}>
-          <Ionicons name="cloud-upload-outline" size={16} color="#FF9500" />
+          <Ionicons name="cloud-upload-outline" size={16} color={colors.warning} />
           <Text style={styles.syncBannerText}>
             {pendingSync} catch{pendingSync > 1 ? 'es' : ''} pending sync
           </Text>
@@ -99,7 +100,7 @@ export default function LibraryScreen() {
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.hotSpotsScroll}>
             {hotSpots.map((spot, i) => (
               <View key={i} style={styles.hotSpotCard}>
-                <Ionicons name="flame" size={16} color="#FF9500" />
+                <Ionicons name="flame" size={16} color={colors.warning} />
                 <Text style={styles.hotSpotText}>{spot.water_body || 'Unamed Water'}</Text>
                 <Text style={styles.hotSpotCount}>{spot.catch_count} catches</Text>
               </View>
@@ -109,17 +110,17 @@ export default function LibraryScreen() {
       )}
 
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#8E8E93" />
+        <Ionicons name="search" size={20} color={colors.textSecondary} />
         <TextInput
           style={styles.searchInput}
           placeholder="Search catches..."
-          placeholderTextColor="#8E8E93"
+          placeholderTextColor={colors.textSecondary}
           value={search}
           onChangeText={setSearch}
         />
         {search.length > 0 && (
           <TouchableOpacity onPress={() => setSearch('')}>
-            <Ionicons name="close-circle" size={20} color="#C7C7CC" />
+            <Ionicons name="close-circle" size={20} color={colors.textTertiary} />
           </TouchableOpacity>
         )}
       </View>
@@ -145,20 +146,20 @@ export default function LibraryScreen() {
             style={styles.sortButton}
             onPress={() => setShowSortPicker(!showSortPicker)}
           >
-            <Ionicons name="funnel-outline" size={18} color="#007AFF" />
+            <Ionicons name="funnel-outline" size={18} color={colors.primary} />
           </TouchableOpacity>
           <View style={styles.viewToggle}>
             <TouchableOpacity
               style={[styles.viewButton, viewMode === 'grid' && styles.viewButtonActive]}
               onPress={() => setViewMode('grid')}
             >
-              <Ionicons name="grid-outline" size={18} color={viewMode === 'grid' ? '#007AFF' : '#8E8E93'} />
+              <Ionicons name="grid-outline" size={18} color={viewMode === 'grid' ? colors.primary : colors.textSecondary} />
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.viewButton, viewMode === 'list' && styles.viewButtonActive]}
               onPress={() => setViewMode('list')}
             >
-              <Ionicons name="list-outline" size={18} color={viewMode === 'list' ? '#007AFF' : '#8E8E93'} />
+              <Ionicons name="list-outline" size={18} color={viewMode === 'list' ? colors.primary : colors.textSecondary} />
             </TouchableOpacity>
           </View>
         </View>
@@ -175,7 +176,7 @@ export default function LibraryScreen() {
               <Text style={[styles.sortOptionText, sortBy === opt.key && styles.sortOptionTextActive]}>
                 {opt.label}
               </Text>
-              {sortBy === opt.key && <Ionicons name="checkmark" size={18} color="#007AFF" />}
+              {sortBy === opt.key && <Ionicons name="checkmark" size={18} color={colors.primary} />}
             </TouchableOpacity>
           ))}
         </View>
@@ -191,7 +192,7 @@ export default function LibraryScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          <ActivityIndicator size="large" color={colors.primary} />
           <Text style={styles.loadingText}>Loading catches...</Text>
         </View>
       </SafeAreaView>
@@ -202,7 +203,7 @@ export default function LibraryScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.centerContent}>
-          <Ionicons name="alert-circle-outline" size={48} color="#FF3B30" />
+          <Ionicons name="alert-circle-outline" size={48} color={colors.danger} />
           <Text style={styles.errorText}>Failed to load catches</Text>
           <TouchableOpacity style={styles.retryButton} onPress={() => refetch()}>
             <Text style={styles.retryText}>Retry</Text>
@@ -227,7 +228,7 @@ export default function LibraryScreen() {
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={
           <View style={styles.emptyState}>
-            <Ionicons name="fish-outline" size={56} color="#C7C7CC" />
+            <Ionicons name="fish-outline" size={56} color={colors.textTertiary} />
             <Text style={styles.emptyTitle}>No catches yet</Text>
             <Text style={styles.emptySubtext}>
               {debouncedSearch
@@ -239,7 +240,7 @@ export default function LibraryScreen() {
                 style={styles.logCatchButton}
                 onPress={() => router.push('/(tabs)/camera')}
               >
-                <Ionicons name="camera-outline" size={18} color="#FFFFFF" />
+                <Ionicons name="camera-outline" size={18} color={colors.textOnPrimary} />
                 <Text style={styles.logCatchText}>Log Your First Catch</Text>
               </TouchableOpacity>
             )}
@@ -254,7 +255,7 @@ export default function LibraryScreen() {
         ListFooterComponent={
           isFetchingNextPage ? (
             <View style={styles.footerLoader}>
-              <ActivityIndicator size="small" color="#007AFF" />
+              <ActivityIndicator size="small" color={colors.primary} />
             </View>
           ) : null
         }
@@ -269,7 +270,7 @@ export default function LibraryScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   centerContent: {
     flex: 1,
@@ -279,23 +280,23 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 15,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   errorText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   retryButton: {
     marginTop: 16,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 24,
     paddingVertical: 10,
     borderRadius: 10,
   },
   retryText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontWeight: '600',
   },
   listContent: {
@@ -306,7 +307,7 @@ const styles = StyleSheet.create({
   syncBanner: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFF3E0',
+    backgroundColor: 'colors.infoBg',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
   },
   syncBannerText: {
     fontSize: 13,
-    color: '#E65100',
+    color: 'colors.infoText',
     fontWeight: '500',
   },
   hotSpotsSection: {
@@ -323,7 +324,7 @@ const styles = StyleSheet.create({
   hotSpotsTitle: {
     fontSize: 15,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 10,
     marginLeft: 4,
   },
@@ -332,7 +333,7 @@ const styles = StyleSheet.create({
     paddingRight: 16,
   },
   hotSpotCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 12,
     flexDirection: 'row',
@@ -347,16 +348,16 @@ const styles = StyleSheet.create({
   hotSpotText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   hotSpotCount: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     paddingHorizontal: 14,
     height: 44,
@@ -366,7 +367,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   toolbar: {
     flexDirection: 'row',
@@ -382,18 +383,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   filterChipActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
   },
   filterChipText: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   filterChipTextActive: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
   },
   toolActions: {
     flexDirection: 'row',
@@ -403,7 +404,7 @@ const styles = StyleSheet.create({
   sortButton: {
     padding: 8,
     borderRadius: 8,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   viewToggle: {
     flexDirection: 'row',
@@ -412,13 +413,13 @@ const styles = StyleSheet.create({
   viewButton: {
     padding: 8,
     borderRadius: 8,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   viewButtonActive: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
   },
   sortPicker: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 10,
     marginBottom: 10,
     overflow: 'hidden',
@@ -430,22 +431,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#F2F2F7',
+    borderBottomColor: colors.surface,
   },
   sortOptionActive: {
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
   },
   sortOptionText: {
     fontSize: 15,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   sortOptionTextActive: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '600',
   },
   resultCount: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   gridRow: {
@@ -459,19 +460,19 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#C7C7CC',
+    color: colors.textTertiary,
     marginTop: 4,
     textAlign: 'center',
   },
   logCatchButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 20,
     paddingVertical: 12,
     borderRadius: 24,
@@ -479,7 +480,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   logCatchText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontWeight: '600',
     fontSize: 15,
   },

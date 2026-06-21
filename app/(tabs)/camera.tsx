@@ -29,6 +29,7 @@ import SpeciesPicker from '@/components/species-picker';
 import RegulationBadge from '@/components/regulation-badge';
 import TackleSuggestion from '@/components/tackle-suggestion';
 import CoachMark, { CAMERA_COACH_STEPS, hasSeenCoachMarks } from '@/components/coach-mark';
+import { colors } from '@/lib/theme';
 
 export default function CameraScreen() {
   const { user } = useAuth();
@@ -182,7 +183,7 @@ export default function CameraScreen() {
           {/* Identifying spinner */}
           {store.isIdentifying && (
             <View style={styles.identifyingRow}>
-              <ActivityIndicator size="small" color="#007AFF" />
+              <ActivityIndicator size="small" color={colors.primary} />
               <Text style={styles.identifyingText}>Identifying species...</Text>
             </View>
           )}
@@ -235,7 +236,7 @@ export default function CameraScreen() {
                   style={styles.manualPickButton}
                   onPress={() => store.setSpeciesPickerOpen(true)}
                 >
-                  <Ionicons name="search" size={18} color="#007AFF" />
+                  <Ionicons name="search" size={18} color={colors.primary} />
                   <Text style={styles.manualPickText}>
                     {store.selectedSpeciesId ? 'Change species' : 'Search species...'}
                   </Text>
@@ -259,11 +260,11 @@ export default function CameraScreen() {
                 <Text style={styles.cardTitle}>Measurements</Text>
 
                 <View style={styles.inputRow}>
-                  <Ionicons name="resize-outline" size={20} color="#34C759" />
+                  <Ionicons name="resize-outline" size={20} color={colors.success} />
                   <TextInput
                     style={styles.input}
                     placeholder="Length (cm)"
-                    placeholderTextColor="#C7C7CC"
+                    placeholderTextColor={colors.textTertiary}
                     value={store.lengthCm}
                     onChangeText={handleLengthChange}
                     keyboardType="decimal-pad"
@@ -272,16 +273,16 @@ export default function CameraScreen() {
                     style={styles.toolButton}
                     onPress={() => setShowLengthTool(true)}
                   >
-                    <Ionicons name="expand-outline" size={20} color="#007AFF" />
+                    <Ionicons name="expand-outline" size={20} color={colors.primary} />
                   </TouchableOpacity>
                 </View>
 
                 <View style={styles.inputRow}>
-                  <Ionicons name="scale-outline" size={20} color="#FF9500" />
+                  <Ionicons name="scale-outline" size={20} color={colors.warning} />
                   <TextInput
                     style={styles.input}
                     placeholder="Weight (kg)"
-                    placeholderTextColor="#C7C7CC"
+                    placeholderTextColor={colors.textTertiary}
                     value={store.weightKg}
                     onChangeText={store.setWeightKg}
                     keyboardType="decimal-pad"
@@ -307,16 +308,16 @@ export default function CameraScreen() {
                 <TextInput
                   style={styles.textInput}
                   placeholder="Location name"
-                  placeholderTextColor="#C7C7CC"
+                  placeholderTextColor={colors.textTertiary}
                   value={store.locationName}
-                  onChangeText={store.setLocation as any}
+                  onChangeText={store.setLocationName}
                 />
                 <TextInput
                   style={styles.textInput}
                   placeholder="Water body (lake, river, ocean)"
-                  placeholderTextColor="#C7C7CC"
+                  placeholderTextColor={colors.textTertiary}
                   value={store.waterBody}
-                  onChangeText={store.setLocation as any}
+                  onChangeText={store.setWaterBody}
                 />
               </View>
 
@@ -326,7 +327,7 @@ export default function CameraScreen() {
                 <TextInput
                   style={[styles.textInput, styles.notesInput]}
                   placeholder="Add notes about your catch..."
-                  placeholderTextColor="#C7C7CC"
+                  placeholderTextColor={colors.textTertiary}
                   value={store.notes}
                   onChangeText={store.setNotes}
                   multiline
@@ -343,7 +344,7 @@ export default function CameraScreen() {
                 <Switch
                   value={store.isReleased}
                   onValueChange={store.setIsReleased}
-                  trackColor={{ false: '#E5E5EA', true: '#34C759' }}
+                  trackColor={{ false: colors.divider, true: colors.success }}
                 />
               </View>
 
@@ -354,10 +355,10 @@ export default function CameraScreen() {
                 disabled={store.isSaving}
               >
                 {store.isSaving ? (
-                  <ActivityIndicator color="#FFFFFF" />
+                  <ActivityIndicator color={colors.textOnPrimary} />
                 ) : (
                   <>
-                    <Ionicons name="save-outline" size={20} color="#FFFFFF" />
+                    <Ionicons name="save-outline" size={20} color={colors.textOnPrimary} />
                     <Text style={styles.saveButtonText}>Save Catch</Text>
                   </>
                 )}
@@ -388,7 +389,7 @@ export default function CameraScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   flex: { flex: 1 },
   scrollContent: {
@@ -404,14 +405,14 @@ const styles = StyleSheet.create({
   },
   identifyingText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   formSection: {
     gap: 12,
     marginTop: 12,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     shadowColor: '#000',
@@ -423,13 +424,13 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 12,
   },
   matchCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
     borderRadius: 10,
     padding: 12,
     marginBottom: 8,
@@ -438,28 +439,28 @@ const styles = StyleSheet.create({
   matchName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   matchSciName: {
     fontSize: 13,
     fontStyle: 'italic',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   confidenceBadge: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
   },
   confidenceText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 13,
     fontWeight: '600',
   },
   otherLabel: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   otherMatchRow: {
@@ -468,16 +469,16 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 4,
     borderBottomWidth: 1,
-    borderBottomColor: '#F2F2F7',
+    borderBottomColor: colors.surface,
   },
   otherMatchName: {
     flex: 1,
     fontSize: 14,
-    color: '#3C3C43',
+    color: colors.textBody,
   },
   otherMatchConf: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   manualPickButton: {
@@ -488,19 +489,19 @@ const styles = StyleSheet.create({
     marginTop: 8,
     gap: 6,
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: colors.primary,
     borderRadius: 10,
     borderStyle: 'dashed',
   },
   manualPickText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '500',
   },
   inputRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 10,
     paddingHorizontal: 12,
     height: 44,
@@ -510,31 +511,31 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   toolButton: {
     padding: 8,
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
     borderRadius: 8,
   },
   estBadge: {
-    backgroundColor: '#FFF3E0',
+    backgroundColor: 'colors.infoBg',
     paddingHorizontal: 8,
     paddingVertical: 2,
     borderRadius: 8,
   },
   estBadgeText: {
     fontSize: 11,
-    color: '#E65100',
+    color: 'colors.infoText',
     fontWeight: '500',
   },
   textInput: {
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 10,
     paddingHorizontal: 12,
     height: 44,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 8,
   },
   notesInput: {
@@ -544,14 +545,14 @@ const styles = StyleSheet.create({
   },
   locationCoords: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   releaseRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     shadowColor: '#000',
@@ -563,18 +564,18 @@ const styles = StyleSheet.create({
   releaseLabel: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   releaseHint: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   saveButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     padding: 16,
     gap: 8,
@@ -583,7 +584,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   saveButtonText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 17,
     fontWeight: '600',
   },

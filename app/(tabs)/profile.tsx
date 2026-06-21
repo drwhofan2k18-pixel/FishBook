@@ -23,6 +23,8 @@ import { checkAchievements, seedAchievements, type AchievementProgress } from '@
 import { getUserCatchLocations, type CatchLocation } from '@/lib/recommendations';
 import StatsChart from '@/components/stats-chart';
 import CatchMap from '@/components/map-view';
+import { captureError } from '@/lib/crash-reporting';
+import { colors } from '@/lib/theme';
 
 export default function ProfileScreen() {
   const { user, signOut } = useAuth();
@@ -58,7 +60,7 @@ export default function ProfileScreen() {
       setAchievements(achiev);
       setCatchLocations(locs);
     } catch (err) {
-      console.error('Failed to load profile data:', err);
+      captureError(err instanceof Error ? err : new Error(String(err)), { context: 'profile-load' });
     } finally {
       setLoading(false);
     }
@@ -136,7 +138,7 @@ export default function ProfileScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#007AFF" />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       </SafeAreaView>
     );
@@ -150,14 +152,14 @@ export default function ProfileScreen() {
         <View style={styles.profileHeader}>
           <TouchableOpacity style={styles.avatar} onPress={handlePickAvatar} disabled={uploadingAvatar} accessibilityLabel="Change profile photo" accessibilityRole="button">
             {uploadingAvatar ? (
-              <ActivityIndicator size="large" color="#FFFFFF" />
+              <ActivityIndicator size="large" color={colors.textOnPrimary} />
             ) : avatarUrl ? (
               <Image source={{ uri: avatarUrl }} style={{ width: 80, height: 80, borderRadius: 40 }} />
             ) : (
               <Text style={styles.avatarText}>{initial}</Text>
             )}
-            <View style={{ position: 'absolute', bottom: 0, right: 0, backgroundColor: '#007AFF', borderRadius: 12, padding: 4 }}>
-              <Ionicons name="camera" size={14} color="#FFFFFF" />
+            <View style={{ position: 'absolute', bottom: 0, right: 0, backgroundColor: colors.primary, borderRadius: 12, padding: 4 }}>
+              <Ionicons name="camera" size={14} color={colors.textOnPrimary} />
             </View>
           </TouchableOpacity>
           <Text style={styles.displayName}>
@@ -175,7 +177,7 @@ export default function ProfileScreen() {
               setEditModal(true);
             }}
           >
-            <Ionicons name="create-outline" size={16} color="#007AFF" />
+            <Ionicons name="create-outline" size={16} color={colors.primary} />
             <Text style={styles.editProfileText}>Edit Profile</Text>
           </TouchableOpacity>
         </View>
@@ -201,7 +203,7 @@ export default function ProfileScreen() {
 
         {stats?.biggestFishSpecies && (
           <View style={styles.recordCard}>
-            <Ionicons name="trophy-outline" size={24} color="#FF9500" />
+            <Ionicons name="trophy-outline" size={24} color={colors.warning} />
             <View style={styles.recordInfo}>
               <Text style={styles.recordLabel}>Biggest Catch</Text>
               <Text style={styles.recordValue}>
@@ -237,7 +239,7 @@ export default function ProfileScreen() {
               <Ionicons
                 name={ap.earned ? 'trophy' : 'lock-closed'}
                 size={24}
-                color={ap.earned ? '#FF9500' : '#C7C7CC'}
+                color={ap.earned ? colors.warning : colors.textTertiary}
               />
               <Text style={[styles.achievementName, ap.earned && styles.achievementNameEarned]} numberOfLines={2}>
                 {ap.achievement.name}
@@ -263,7 +265,7 @@ export default function ProfileScreen() {
         </View>
 
         <TouchableOpacity style={styles.signOutButton} onPress={handleSignOut}>
-          <Ionicons name="log-out-outline" size={20} color="#FF3B30" />
+          <Ionicons name="log-out-outline" size={20} color={colors.danger} />
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -273,7 +275,7 @@ export default function ProfileScreen() {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Edit Profile</Text>
             <TouchableOpacity onPress={() => setEditModal(false)}>
-              <Ionicons name="close" size={24} color="#1C1C1E" />
+              <Ionicons name="close" size={24} color={colors.textPrimary} />
             </TouchableOpacity>
           </View>
           <ScrollView contentContainerStyle={styles.modalContent}>
@@ -283,7 +285,7 @@ export default function ProfileScreen() {
               value={displayName}
               onChangeText={setDisplayName}
               placeholder="Your name"
-              placeholderTextColor="#C7C7CC"
+              placeholderTextColor={colors.textTertiary}
             />
             <Text style={styles.fieldLabel}>Bio</Text>
             <TextInput
@@ -291,7 +293,7 @@ export default function ProfileScreen() {
               value={bio}
               onChangeText={setBio}
               placeholder="Tell us about yourself"
-              placeholderTextColor="#C7C7CC"
+              placeholderTextColor={colors.textTertiary}
               multiline
               numberOfLines={3}
             />
@@ -301,7 +303,7 @@ export default function ProfileScreen() {
               value={homeWaters}
               onChangeText={setHomeWaters}
               placeholder="Your favorite fishing spot"
-              placeholderTextColor="#C7C7CC"
+              placeholderTextColor={colors.textTertiary}
             />
             <TouchableOpacity style={styles.saveProfileButton} onPress={handleSaveProfile}>
               <Text style={styles.saveProfileText}>Save</Text>
@@ -316,56 +318,56 @@ export default function ProfileScreen() {
 function SettingsRow({ icon, label, onPress }: { icon: keyof typeof Ionicons.glyphMap; label: string; onPress?: () => void }) {
   return (
     <TouchableOpacity style={styles.settingsRow} onPress={onPress}>
-      <Ionicons name={icon} size={22} color="#007AFF" />
+      <Ionicons name={icon} size={22} color={colors.primary} />
       <Text style={styles.settingsLabel}>{label}</Text>
-      <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+      <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
     </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
+  container: { flex: 1, backgroundColor: colors.surface },
   loadingContainer: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   scrollContent: { padding: 16 },
   profileHeader: { alignItems: 'center', paddingVertical: 20 },
-  avatar: { width: 80, height: 80, borderRadius: 40, backgroundColor: '#007AFF', justifyContent: 'center', alignItems: 'center', marginBottom: 12 },
-  avatarText: { fontSize: 36, fontWeight: '700', color: '#FFFFFF' },
-  displayName: { fontSize: 24, fontWeight: '700', color: '#1C1C1E' },
-  bio: { fontSize: 14, color: '#8E8E93', marginTop: 4 },
+  avatar: { width: 80, height: 80, borderRadius: 40, backgroundColor: colors.primary, justifyContent: 'center', alignItems: 'center', marginBottom: 12 },
+  avatarText: { fontSize: 36, fontWeight: '700', color: colors.textOnPrimary },
+  displayName: { fontSize: 24, fontWeight: '700', color: colors.textPrimary },
+  bio: { fontSize: 14, color: colors.textSecondary, marginTop: 4 },
   editProfileButton: { flexDirection: 'row', alignItems: 'center', marginTop: 8, gap: 4 },
-  editProfileText: { fontSize: 14, color: '#007AFF', fontWeight: '500' },
+  editProfileText: { fontSize: 14, color: colors.primary, fontWeight: '500' },
   statsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 16 },
-  statItem: { width: '47%', backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
-  statNumber: { fontSize: 28, fontWeight: '700', color: '#007AFF' },
-  statLabel: { fontSize: 13, color: '#8E8E93', marginTop: 4 },
-  recordCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFF3E0', borderRadius: 12, padding: 14, marginBottom: 16, gap: 12 },
+  statItem: { width: '47%', backgroundColor: colors.background, borderRadius: 12, padding: 16, alignItems: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
+  statNumber: { fontSize: 28, fontWeight: '700', color: colors.primary },
+  statLabel: { fontSize: 13, color: colors.textSecondary, marginTop: 4 },
+  recordCard: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'colors.infoBg', borderRadius: 12, padding: 14, marginBottom: 16, gap: 12 },
   recordInfo: { flex: 1 },
-  recordLabel: { fontSize: 12, color: '#E65100', fontWeight: '500' },
-  recordValue: { fontSize: 15, fontWeight: '600', color: '#1C1C1E', marginTop: 2 },
+  recordLabel: { fontSize: 12, color: 'colors.infoText', fontWeight: '500' },
+  recordValue: { fontSize: 15, fontWeight: '600', color: colors.textPrimary, marginTop: 2 },
   contentHeader: { marginTop: 20, marginBottom: 10 },
-  sectionTitle: { fontSize: 16, fontWeight: '600', color: '#1C1C1E' },
+  sectionTitle: { fontSize: 16, fontWeight: '600', color: colors.textPrimary },
   achievementsGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  achievementItem: { width: '23%', backgroundColor: '#FFFFFF', borderRadius: 10, padding: 10, alignItems: 'center', opacity: 0.5 },
-  achievementEarned: { opacity: 1, borderWidth: 1, borderColor: '#FFD700' },
-  achievementName: { fontSize: 10, color: '#8E8E93', textAlign: 'center', marginTop: 6 },
-  achievementNameEarned: { color: '#1C1C1E', fontWeight: '500' },
-  progressBar: { width: '100%', height: 3, backgroundColor: '#F2F2F7', borderRadius: 2, marginTop: 6, overflow: 'hidden' },
-  progressFill: { height: '100%', backgroundColor: '#007AFF', borderRadius: 2 },
+  achievementItem: { width: '23%', backgroundColor: colors.background, borderRadius: 10, padding: 10, alignItems: 'center', opacity: 0.5 },
+  achievementEarned: { opacity: 1, borderWidth: 1, borderColor: 'colors.goldAccent' },
+  achievementName: { fontSize: 10, color: colors.textSecondary, textAlign: 'center', marginTop: 6 },
+  achievementNameEarned: { color: colors.textPrimary, fontWeight: '500' },
+  progressBar: { width: '100%', height: 3, backgroundColor: colors.surface, borderRadius: 2, marginTop: 6, overflow: 'hidden' },
+  progressFill: { height: '100%', backgroundColor: colors.primary, borderRadius: 2 },
   settingsSection: { marginTop: 24 },
-  sectionHeader: { fontSize: 13, fontWeight: '600', color: '#8E8E93', textTransform: 'uppercase', marginBottom: 8, marginLeft: 4 },
-  settingsCard: { backgroundColor: '#FFFFFF', borderRadius: 12, overflow: 'hidden' },
-  divider: { height: 1, backgroundColor: '#F2F2F7', marginLeft: 52 },
+  sectionHeader: { fontSize: 13, fontWeight: '600', color: colors.textSecondary, textTransform: 'uppercase', marginBottom: 8, marginLeft: 4 },
+  settingsCard: { backgroundColor: colors.background, borderRadius: 12, overflow: 'hidden' },
+  divider: { height: 1, backgroundColor: colors.surface, marginLeft: 52 },
   settingsRow: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 14, gap: 12 },
   settingsLabel: { flex: 1, fontSize: 16 },
-  signOutButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: '#FFFFFF', borderRadius: 12, padding: 16, marginTop: 16, gap: 8 },
-  signOutText: { fontSize: 16, fontWeight: '600', color: '#FF3B30' },
-  modalContainer: { flex: 1, backgroundColor: '#F2F2F7' },
-  modalHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#FFFFFF', paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
-  modalTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
+  signOutButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background, borderRadius: 12, padding: 16, marginTop: 16, gap: 8 },
+  signOutText: { fontSize: 16, fontWeight: '600', color: colors.danger },
+  modalContainer: { flex: 1, backgroundColor: colors.surface },
+  modalHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: colors.background, paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: colors.divider },
+  modalTitle: { fontSize: 17, fontWeight: '600', color: colors.textPrimary },
   modalContent: { padding: 16 },
-  fieldLabel: { fontSize: 14, fontWeight: '500', color: '#3C3C43', marginBottom: 6, marginTop: 12 },
-  textInput: { backgroundColor: '#FFFFFF', borderRadius: 10, paddingHorizontal: 14, height: 44, fontSize: 16, color: '#1C1C1E' },
+  fieldLabel: { fontSize: 14, fontWeight: '500', color: colors.textBody, marginBottom: 6, marginTop: 12 },
+  textInput: { backgroundColor: colors.background, borderRadius: 10, paddingHorizontal: 14, height: 44, fontSize: 16, color: colors.textPrimary },
   textArea: { height: 80, paddingTop: 12, textAlignVertical: 'top' },
-  saveProfileButton: { backgroundColor: '#007AFF', borderRadius: 12, padding: 14, alignItems: 'center', marginTop: 20 },
-  saveProfileText: { color: '#FFFFFF', fontSize: 16, fontWeight: '600' },
+  saveProfileButton: { backgroundColor: colors.primary, borderRadius: 12, padding: 14, alignItems: 'center', marginTop: 20 },
+  saveProfileText: { color: colors.textOnPrimary, fontSize: 16, fontWeight: '600' },
 });

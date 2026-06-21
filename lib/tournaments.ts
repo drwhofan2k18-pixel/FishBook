@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { colors } from './theme';
 
 export interface Tournament {
   id: string;
@@ -188,8 +189,8 @@ export function getScoringLabel(scoring: Tournament['scoring']): string {
 
 export function getStatusColor(status: Tournament['status']): string {
   switch (status) {
-    case 'upcoming': return '#007AFF';
-    case 'active': return '#34C759';
-    case 'completed': return '#8E8E93';
+    case 'upcoming': return colors.primary;
+    case 'active': return colors.success;
+    case 'completed': return colors.textSecondary;
   }
 }

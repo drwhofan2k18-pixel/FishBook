@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { checkCompliance, getRegulation, getDailyCatchCount, type ComplianceResult } from '@/lib/regulations';
 import { useAuth } from '@/lib/auth-context';
+import { colors } from '@/lib/theme';
 
 interface RegulationBadgeProps {
   speciesName: string;
@@ -49,7 +50,7 @@ export default function RegulationBadge({ speciesName, lengthCm, isReleased }: R
   if (loading) {
     return (
       <View style={styles.badge}>
-        <ActivityIndicator size="small" color="#8E8E93" />
+        <ActivityIndicator size="small" color={colors.textSecondary} />
         <Text style={styles.loadingText}>Checking regs...</Text>
       </View>
     );
@@ -58,7 +59,7 @@ export default function RegulationBadge({ speciesName, lengthCm, isReleased }: R
   if (!result) return null;
 
   return (
-    <View style={[styles.badge, { backgroundColor: result.color + '15' }]}>
+    <View style={[styles.badge, { backgroundColor: result.color + '15' }]} accessibilityLabel={result.message} accessibilityRole="summary">
       <Ionicons
         name={result.icon as keyof typeof Ionicons.glyphMap}
         size={16}
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   },
   loadingText: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   badgeText: {
     fontSize: 14,

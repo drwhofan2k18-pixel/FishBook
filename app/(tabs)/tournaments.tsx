@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/lib/auth-context';
+import { colors } from '@/lib/theme';
 import {
   getTournaments,
   createTournament,
@@ -69,7 +70,7 @@ export default function TournamentsScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>Tournaments</Text>
         <TouchableOpacity style={styles.createButton} onPress={() => setShowCreate(true)}>
-          <Ionicons name="add" size={20} color="#FFFFFF" />
+          <Ionicons name="add" size={20} color={colors.textOnPrimary} />
           <Text style={styles.createText}>Create</Text>
         </TouchableOpacity>
       </View>
@@ -81,14 +82,14 @@ export default function TournamentsScreen() {
             style={[styles.tab, activeTab === t.key && styles.tabActive]}
             onPress={() => setActiveTab(t.key)}
           >
-            <Ionicons name={t.icon} size={16} color={activeTab === t.key ? '#007AFF' : '#8E8E93'} />
+            <Ionicons name={t.icon} size={16} color={activeTab === t.key ? colors.primary : colors.textSecondary} />
             <Text style={[styles.tabText, activeTab === t.key && styles.tabTextActive]}>{t.label}</Text>
           </TouchableOpacity>
         ))}
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} />
+        <ActivityIndicator size="large" color={colors.primary} style={{ marginTop: 40 }} />
       ) : (
         <FlatList
           data={tournaments}
@@ -102,11 +103,11 @@ export default function TournamentsScreen() {
               </View>
               <View style={styles.cardMeta}>
                 <View style={styles.metaItem}>
-                  <Ionicons name="trophy-outline" size={14} color="#8E8E93" />
+                  <Ionicons name="trophy-outline" size={14} color={colors.textSecondary} />
                   <Text style={styles.metaText}>{getScoringLabel(item.scoring)}</Text>
                 </View>
                 <View style={styles.metaItem}>
-                  <Ionicons name="calendar-outline" size={14} color="#8E8E93" />
+                  <Ionicons name="calendar-outline" size={14} color={colors.textSecondary} />
                   <Text style={styles.metaText}>
                     {formatTournamentDate(item.start_date)} - {formatTournamentDate(item.end_date)}
                   </Text>
@@ -114,7 +115,7 @@ export default function TournamentsScreen() {
               </View>
               {item.species_target && (
                 <View style={styles.targetRow}>
-                  <Ionicons name="fish-outline" size={14} color="#007AFF" />
+                  <Ionicons name="fish-outline" size={14} color={colors.primary} />
                   <Text style={styles.targetText}>{item.species_target}</Text>
                 </View>
               )}
@@ -125,7 +126,7 @@ export default function TournamentsScreen() {
           )}
           ListEmptyComponent={
             <View style={styles.emptyState}>
-              <Ionicons name="trophy-outline" size={48} color="#C7C7CC" />
+              <Ionicons name="trophy-outline" size={48} color={colors.textTertiary} />
               <Text style={styles.emptyText}>No {activeTab} tournaments</Text>
             </View>
           }
@@ -138,7 +139,7 @@ export default function TournamentsScreen() {
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Leaderboard</Text>
             <TouchableOpacity onPress={() => setSelectedTournament(null)}>
-              <Ionicons name="close" size={24} color="#1C1C1E" />
+              <Ionicons name="close" size={24} color={colors.textPrimary} />
             </TouchableOpacity>
           </View>
           <FlatList
@@ -159,7 +160,7 @@ export default function TournamentsScreen() {
             )}
             ListEmptyComponent={
               <View style={styles.emptyState}>
-                <Ionicons name="podium-outline" size={48} color="#C7C7CC" />
+                <Ionicons name="podium-outline" size={48} color={colors.textTertiary} />
                 <Text style={styles.emptyText}>No entries yet</Text>
               </View>
             }
@@ -225,15 +226,15 @@ function CreateTournamentModal({
         <View style={styles.modalHeader}>
           <Text style={styles.modalTitle}>Create Tournament</Text>
           <TouchableOpacity onPress={onClose}>
-            <Ionicons name="close" size={24} color="#1C1C1E" />
+            <Ionicons name="close" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
         </View>
         <ScrollView contentContainerStyle={styles.createForm}>
           <Text style={styles.fieldLabel}>Tournament Name</Text>
-          <TextInput style={styles.textInput} value={name} onChangeText={setName} placeholder="Summer Bass Classic" placeholderTextColor="#C7C7CC" />
+          <TextInput style={styles.textInput} value={name} onChangeText={setName} placeholder="Summer Bass Classic" placeholderTextColor={colors.textTertiary} />
 
           <Text style={styles.fieldLabel}>Description (optional)</Text>
-          <TextInput style={[styles.textInput, styles.textArea]} value={description} onChangeText={setDescription} placeholder="Rules, prizes, etc." placeholderTextColor="#C7C7CC" multiline numberOfLines={3} />
+          <TextInput style={[styles.textInput, styles.textArea]} value={description} onChangeText={setDescription} placeholder="Rules, prizes, etc." placeholderTextColor={colors.textTertiary} multiline numberOfLines={3} />
 
           <Text style={styles.fieldLabel}>Scoring Method</Text>
           <View style={styles.scoringRow}>
@@ -249,13 +250,13 @@ function CreateTournamentModal({
           </View>
 
           <Text style={styles.fieldLabel}>Start Date (YYYY-MM-DD)</Text>
-          <TextInput style={styles.textInput} value={startDate} onChangeText={setStartDate} placeholder="2026-07-01" placeholderTextColor="#C7C7CC" />
+          <TextInput style={styles.textInput} value={startDate} onChangeText={setStartDate} placeholder="2026-07-01" placeholderTextColor={colors.textTertiary} />
 
           <Text style={styles.fieldLabel}>End Date (YYYY-MM-DD)</Text>
-          <TextInput style={styles.textInput} value={endDate} onChangeText={setEndDate} placeholder="2026-07-03" placeholderTextColor="#C7C7CC" />
+          <TextInput style={styles.textInput} value={endDate} onChangeText={setEndDate} placeholder="2026-07-03" placeholderTextColor={colors.textTertiary} />
 
           <TouchableOpacity style={[styles.createSubmitButton, creating && styles.buttonDisabled]} onPress={handleCreate} disabled={creating}>
-            {creating ? <ActivityIndicator color="#FFFFFF" /> : <Text style={styles.createSubmitText}>Create Tournament</Text>}
+            {creating ? <ActivityIndicator color={colors.textOnPrimary} /> : <Text style={styles.createSubmitText}>Create Tournament</Text>}
           </TouchableOpacity>
         </ScrollView>
       </SafeAreaView>
@@ -264,48 +265,48 @@ function CreateTournamentModal({
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
+  container: { flex: 1, backgroundColor: colors.surface },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12 },
-  title: { fontSize: 28, fontWeight: '700', color: '#1C1C1E' },
-  createButton: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#007AFF', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, gap: 4 },
-  createText: { color: '#FFFFFF', fontWeight: '600', fontSize: 14 },
+  title: { fontSize: 28, fontWeight: '700', color: colors.textPrimary },
+  createButton: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.primary, paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, gap: 4 },
+  createText: { color: colors.textOnPrimary, fontWeight: '600', fontSize: 14 },
   tabRow: { flexDirection: 'row', paddingHorizontal: 16, gap: 8, marginBottom: 12 },
-  tab: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: '#E5E5EA', gap: 6 },
-  tabActive: { backgroundColor: '#E8F0FE' },
-  tabText: { fontSize: 13, color: '#8E8E93', fontWeight: '500' },
-  tabTextActive: { color: '#007AFF', fontWeight: '600' },
+  tab: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, backgroundColor: colors.divider, gap: 6 },
+  tabActive: { backgroundColor: colors.cardBg },
+  tabText: { fontSize: 13, color: colors.textSecondary, fontWeight: '500' },
+  tabTextActive: { color: colors.primary, fontWeight: '600' },
   listContent: { padding: 16, paddingTop: 4 },
-  tournamentCard: { backgroundColor: '#FFFFFF', borderRadius: 12, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
+  tournamentCard: { backgroundColor: colors.background, borderRadius: 12, padding: 14, marginBottom: 10, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2 },
   cardHeader: { flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 },
   statusDot: { width: 8, height: 8, borderRadius: 4 },
-  tournamentName: { fontSize: 16, fontWeight: '600', color: '#1C1C1E', flex: 1 },
+  tournamentName: { fontSize: 16, fontWeight: '600', color: colors.textPrimary, flex: 1 },
   cardMeta: { gap: 4, marginBottom: 6 },
   metaItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  metaText: { fontSize: 13, color: '#8E8E93' },
+  metaText: { fontSize: 13, color: colors.textSecondary },
   targetRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 4 },
-  targetText: { fontSize: 13, color: '#007AFF', fontWeight: '500' },
-  description: { fontSize: 13, color: '#8E8E93', marginTop: 6, lineHeight: 18 },
+  targetText: { fontSize: 13, color: colors.primary, fontWeight: '500' },
+  description: { fontSize: 13, color: colors.textSecondary, marginTop: 6, lineHeight: 18 },
   emptyState: { alignItems: 'center', paddingVertical: 60 },
-  emptyText: { fontSize: 16, color: '#8E8E93', marginTop: 12 },
-  modalContainer: { flex: 1, backgroundColor: '#F2F2F7' },
-  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#FFFFFF', paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
-  modalTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
-  leaderRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#FFFFFF', borderRadius: 10, padding: 12, marginBottom: 8, gap: 12 },
-  rank: { fontSize: 18, fontWeight: '700', color: '#007AFF', width: 36 },
+  emptyText: { fontSize: 16, color: colors.textSecondary, marginTop: 12 },
+  modalContainer: { flex: 1, backgroundColor: colors.surface },
+  modalHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: colors.background, paddingHorizontal: 16, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: colors.divider },
+  modalTitle: { fontSize: 17, fontWeight: '600', color: colors.textPrimary },
+  leaderRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: colors.background, borderRadius: 10, padding: 12, marginBottom: 8, gap: 12 },
+  rank: { fontSize: 18, fontWeight: '700', color: colors.primary, width: 36 },
   leaderInfo: { flex: 1 },
-  leaderName: { fontSize: 15, fontWeight: '600', color: '#1C1C1E' },
-  leaderMeta: { fontSize: 12, color: '#8E8E93', marginTop: 2 },
-  leaderScore: { fontSize: 16, fontWeight: '700', color: '#34C759' },
+  leaderName: { fontSize: 15, fontWeight: '600', color: colors.textPrimary },
+  leaderMeta: { fontSize: 12, color: colors.textSecondary, marginTop: 2 },
+  leaderScore: { fontSize: 16, fontWeight: '700', color: colors.success },
   createForm: { padding: 16 },
-  fieldLabel: { fontSize: 13, fontWeight: '500', color: '#3C3C43', marginBottom: 6, marginTop: 12 },
-  textInput: { backgroundColor: '#FFFFFF', borderRadius: 10, paddingHorizontal: 14, height: 44, fontSize: 16, color: '#1C1C1E' },
+  fieldLabel: { fontSize: 13, fontWeight: '500', color: colors.textBody, marginBottom: 6, marginTop: 12 },
+  textInput: { backgroundColor: colors.background, borderRadius: 10, paddingHorizontal: 14, height: 44, fontSize: 16, color: colors.textPrimary },
   textArea: { height: 80, paddingTop: 12, textAlignVertical: 'top' },
   scoringRow: { flexDirection: 'row', gap: 8 },
-  scoringOption: { flex: 1, paddingHorizontal: 12, paddingVertical: 10, borderRadius: 10, backgroundColor: '#E5E5EA', alignItems: 'center' },
-  scoringOptionActive: { backgroundColor: '#007AFF' },
-  scoringText: { fontSize: 12, color: '#8E8E93', fontWeight: '500', textAlign: 'center' },
-  scoringTextActive: { color: '#FFFFFF' },
-  createSubmitButton: { backgroundColor: '#007AFF', borderRadius: 12, padding: 16, alignItems: 'center', marginTop: 20 },
-  createSubmitText: { color: '#FFFFFF', fontSize: 17, fontWeight: '600' },
+  scoringOption: { flex: 1, paddingHorizontal: 12, paddingVertical: 10, borderRadius: 10, backgroundColor: colors.divider, alignItems: 'center' },
+  scoringOptionActive: { backgroundColor: colors.primary },
+  scoringText: { fontSize: 12, color: colors.textSecondary, fontWeight: '500', textAlign: 'center' },
+  scoringTextActive: { color: colors.textOnPrimary },
+  createSubmitButton: { backgroundColor: colors.primary, borderRadius: 12, padding: 16, alignItems: 'center', marginTop: 20 },
+  createSubmitText: { color: colors.textOnPrimary, fontSize: 17, fontWeight: '600' },
   buttonDisabled: { opacity: 0.6 },
 });

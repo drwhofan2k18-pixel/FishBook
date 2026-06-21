@@ -1,14 +1,15 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import type { SpeciesCount } from '@/lib/stats-aggregation';
+import { colors } from '@/lib/theme';
 
 interface StatsChartProps {
   data: SpeciesCount[];
 }
 
 const BAR_COLORS: Record<string, string> = {
-  freshwater: '#007AFF',
-  saltwater: '#34C759',
+  freshwater: colors.primary,
+  saltwater: colors.success,
 };
 
 export default function StatsChart({ data }: StatsChartProps) {
@@ -24,11 +25,11 @@ export default function StatsChart({ data }: StatsChartProps) {
   const maxCount = Math.max(...topSpecies.map((s) => s.count), 1);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessibilityLabel={`Species breakdown: ${topSpecies.length} species`} accessibilityRole="summary">
       <Text style={styles.title}>Species Breakdown</Text>
       {topSpecies.map((item, index) => {
         const barWidth = (item.count / maxCount) * 100;
-        const color = BAR_COLORS[item.habitat] ?? '#007AFF';
+        const color = BAR_COLORS[item.habitat] ?? colors.primary;
 
         return (
           <View key={item.species_id || index} style={styles.row}>
@@ -48,14 +49,14 @@ export default function StatsChart({ data }: StatsChartProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
   },
   title: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 12,
   },
   emptyContainer: {
@@ -64,7 +65,7 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   row: {
     flexDirection: 'row',
@@ -75,7 +76,7 @@ const styles = StyleSheet.create({
   label: {
     width: 90,
     fontSize: 12,
-    color: '#3C3C43',
+    color: colors.textBody,
     textAlign: 'right',
   },
   barContainer: {
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     height: 20,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 4,
     overflow: 'hidden',
   },
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 6,
     fontSize: 11,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '600',
   },
 });

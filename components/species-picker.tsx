@@ -12,6 +12,8 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '@/lib/supabase';
 import type { IdentificationMatch } from '@/lib/catch-store';
+import { captureError } from '@/lib/crash-reporting';
+import { colors } from '@/lib/theme';
 
 interface Species {
   id: number;
@@ -46,13 +48,13 @@ export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPic
         .limit(30);
 
       if (error) {
-        console.error('Species search failed:', error.message);
+        captureError(error, { context: 'species-search' });
         return;
       }
 
       setResults(data ?? []);
     } catch (err) {
-      console.error('Species search error:', err);
+      captureError(err instanceof Error ? err : new Error(String(err)), { context: 'species-search-unknown' });
     } finally {
       setIsLoading(false);
     }
@@ -82,17 +84,17 @@ export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPic
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.title}>Select Species</Text>
-          <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <Ionicons name="close" size={24} color="#1C1C1E" />
+          <TouchableOpacity onPress={onClose} style={styles.closeButton} accessibilityLabel="Close species picker" accessibilityRole="button">
+            <Ionicons name="close" size={24} color={colors.textPrimary} />
           </TouchableOpacity>
         </View>
 
         <View style={styles.searchContainer}>
-          <Ionicons name="search" size={20} color="#8E8E93" style={styles.searchIcon} />
+          <Ionicons name="search" size={20} color={colors.textSecondary} style={styles.searchIcon} />
           <TextInput
             style={styles.searchInput}
             placeholder="Search species..."
-            placeholderTextColor="#8E8E93"
+            placeholderTextColor={colors.textSecondary}
             value={query}
             onChangeText={setQuery}
             autoFocus
@@ -101,14 +103,14 @@ export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPic
           />
           {query.length > 0 && (
             <TouchableOpacity onPress={() => setQuery('')}>
-              <Ionicons name="close-circle" size={20} color="#C7C7CC" />
+              <Ionicons name="close-circle" size={20} color={colors.textTertiary} />
             </TouchableOpacity>
           )}
         </View>
 
         {isLoading ? (
           <View style={styles.centerContent}>
-            <ActivityIndicator size="large" color="#007AFF" />
+            <ActivityIndicator size="large" color={colors.primary} />
           </View>
         ) : results.length > 0 ? (
           <FlatList
@@ -117,26 +119,26 @@ export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPic
             renderItem={({ item }) => (
               <TouchableOpacity style={styles.speciesItem} onPress={() => handleSelect(item)}>
                 <View style={styles.speciesIcon}>
-                  <Ionicons name="fish-outline" size={24} color="#007AFF" />
+                  <Ionicons name="fish-outline" size={24} color={colors.primary} />
                 </View>
                 <View style={styles.speciesInfo}>
                   <Text style={styles.commonName}>{item.common_name}</Text>
                   <Text style={styles.scientificName}>{item.scientific_name}</Text>
                   <Text style={styles.family}>{item.family}</Text>
                 </View>
-                <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+                <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
               </TouchableOpacity>
             )}
           />
         ) : query.length > 0 ? (
           <View style={styles.centerContent}>
-            <Ionicons name="search-outline" size={48} color="#C7C7CC" />
+            <Ionicons name="search-outline" size={48} color={colors.textTertiary} />
             <Text style={styles.noResults}>No species found</Text>
             <Text style={styles.noResultsHint}>Try a different search term</Text>
           </View>
         ) : (
           <View style={styles.centerContent}>
-            <Ionicons name="fish-outline" size={48} color="#C7C7CC" />
+            <Ionicons name="fish-outline" size={48} color={colors.textTertiary} />
             <Text style={styles.noResults}>Type to search species</Text>
             <Text style={styles.noResultsHint}>
               Search by common name or scientific name
@@ -151,7 +153,7 @@ export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPic
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   header: {
     flexDirection: 'row',
@@ -159,14 +161,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 14,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderBottomWidth: 1,
-    borderBottomColor: '#E5E5EA',
+    borderBottomColor: colors.divider,
   },
   title: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   closeButton: {
     padding: 4,
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     marginHorizontal: 16,
     marginTop: 12,
     marginBottom: 8,
@@ -188,7 +190,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   centerContent: {
     flex: 1,
@@ -199,17 +201,17 @@ const styles = StyleSheet.create({
   speciesItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     paddingHorizontal: 16,
     paddingVertical: 14,
     borderBottomWidth: 1,
-    borderBottomColor: '#F2F2F7',
+    borderBottomColor: colors.surface,
   },
   speciesIcon: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -220,28 +222,28 @@ const styles = StyleSheet.create({
   commonName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   scientificName: {
     fontSize: 14,
     fontStyle: 'italic',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   family: {
     fontSize: 12,
-    color: '#C7C7CC',
+    color: colors.textTertiary,
     marginTop: 1,
   },
   noResults: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   noResultsHint: {
     fontSize: 14,
-    color: '#C7C7CC',
+    color: colors.textTertiary,
     marginTop: 4,
   },
 });

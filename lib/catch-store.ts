@@ -42,6 +42,8 @@ interface CatchStore extends CatchFormData {
   setWeightMethod: (v: 'measured' | 'estimated_species') => void;
   setLengthCm: (v: string) => void;
   setLocation: (lat: number, lng: number, name: string, water: string) => void;
+  setLocationName: (v: string) => void;
+  setWaterBody: (v: string) => void;
   setNotes: (v: string) => void;
   setIsReleased: (v: boolean) => void;
   setIsSaving: (v: boolean) => void;
@@ -105,6 +107,10 @@ export const useCatchStore = create<CatchStore>((set) => ({
       locationName: name,
       waterBody: water,
     }),
+
+  setLocationName: (v) => set({ locationName: v }),
+
+  setWaterBody: (v) => set({ waterBody: v }),
 
   setNotes: (v) => set({ notes: v }),
 

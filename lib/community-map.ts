@@ -1,5 +1,7 @@
 import { supabase } from './supabase';
 import NetInfo from '@react-native-community/netinfo';
+import { captureError } from './crash-reporting';
+import { colors } from './theme';
 
 export interface HeatmapCell {
   grid_lat: number;
@@ -46,7 +48,7 @@ export async function fetchCommunityHeatmap(
     });
 
     if (error) {
-      console.error('Community heatmap error:', error.message);
+      captureError(error, { context: 'community-heatmap' });
       return [];
     }
 
@@ -57,11 +59,11 @@ export async function fetchCommunityHeatmap(
 }
 
 export function getHeatColor(rating: number): string {
-  if (rating >= 0.8) return '#FF3B30';
-  if (rating >= 0.6) return '#FF9500';
-  if (rating >= 0.4) return '#FFD60A';
-  if (rating >= 0.2) return '#34C759';
-  return '#8E8E93';
+  if (rating >= 0.8) return colors.danger;
+  if (rating >= 0.6) return colors.warning;
+  if (rating >= 0.4) return 'colors.gold';
+  if (rating >= 0.2) return colors.success;
+  return colors.textSecondary;
 }
 
 export function getHeatOpacity(rating: number): number {

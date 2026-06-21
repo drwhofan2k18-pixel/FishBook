@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { formatWeight, formatLength, useUnitStore } from '@/lib/units';
+import { colors } from '@/lib/theme';
 
 interface SpeciesData {
   id: number;
@@ -76,7 +77,7 @@ export default function SpeciesDetailScreen() {
   if (loading) {
     return (
       <View style={styles.centerContent}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
@@ -84,7 +85,7 @@ export default function SpeciesDetailScreen() {
   if (!species) {
     return (
       <View style={styles.centerContent}>
-        <Ionicons name="alert-circle-outline" size={48} color="#FF3B30" />
+        <Ionicons name="alert-circle-outline" size={48} color={colors.danger} />
         <Text style={styles.errorText}>Species not found</Text>
         <TouchableOpacity style={styles.retryButton} onPress={() => router.back()}>
           <Text style={styles.retryText}>Go Back</Text>
@@ -97,12 +98,12 @@ export default function SpeciesDetailScreen() {
 
   const getStatusColor = (status: string | null) => {
     switch (status) {
-      case 'Least Concern': return '#34C759';
-      case 'Near Threatened': return '#FF9500';
-      case 'Vulnerable': return '#FF3B30';
-      case 'Endangered': return '#FF2D55';
-      case 'Critically Endangered': return '#AF52DE';
-      default: return '#8E8E93';
+      case 'Least Concern': return colors.success;
+      case 'Near Threatened': return colors.warning;
+      case 'Vulnerable': return colors.danger;
+      case 'Endangered': return 'colors.pink';
+      case 'Critically Endangered': return 'colors.purple';
+      default: return colors.textSecondary;
     }
   };
 
@@ -110,14 +111,14 @@ export default function SpeciesDetailScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#007AFF" />
+          <Ionicons name="arrow-back" size={24} color={colors.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle} numberOfLines={1}>{species.common_name}</Text>
         <View style={styles.backButton} />
       </View>
 
       <View style={styles.imagePlaceholder}>
-        <Ionicons name="fish-outline" size={64} color="#C7C7CC" />
+        <Ionicons name="fish-outline" size={64} color={colors.textTertiary} />
       </View>
 
       <Text style={styles.scientificName}>{species.scientific_name}</Text>
@@ -139,8 +140,8 @@ export default function SpeciesDetailScreen() {
           </View>
         )}
         {species.is_game_fish && (
-          <View style={[styles.pill, { backgroundColor: '#FFD60A20' }]}>
-            <Text style={[styles.pillText, { color: '#B8860B' }]}>Game Fish</Text>
+          <View style={[styles.pill, { backgroundColor: 'colors.gold20' }]}>
+            <Text style={[styles.pillText, { color: 'colors.goldDark' }]}>Game Fish</Text>
           </View>
         )}
       </View>
@@ -149,7 +150,7 @@ export default function SpeciesDetailScreen() {
         <Text style={styles.cardTitle}>Size & Weight</Text>
         <View style={styles.sizeRow}>
           <View style={styles.sizeItem}>
-            <Ionicons name="resize-outline" size={20} color="#007AFF" />
+            <Ionicons name="resize-outline" size={20} color={colors.primary} />
             <Text style={styles.sizeLabel}>Length</Text>
             <Text style={styles.sizeValue}>
               {species.min_length_cm != null && species.max_length_cm != null
@@ -159,7 +160,7 @@ export default function SpeciesDetailScreen() {
           </View>
           <View style={styles.sizeDivider} />
           <View style={styles.sizeItem}>
-            <Ionicons name="scale-outline" size={20} color="#FF9500" />
+            <Ionicons name="scale-outline" size={20} color={colors.warning} />
             <Text style={styles.sizeLabel}>Weight</Text>
             <Text style={styles.sizeValue}>
               {species.min_weight_kg != null && species.max_weight_kg != null
@@ -180,7 +181,7 @@ export default function SpeciesDetailScreen() {
       <View style={styles.card}>
         <Text style={styles.cardTitle}>Your Catches</Text>
         <View style={styles.yourCatchesRow}>
-          <Ionicons name="fish" size={24} color="#007AFF" />
+          <Ionicons name="fish" size={24} color={colors.primary} />
           <Text style={styles.yourCatchesText}>
             You've caught <Text style={styles.yourCatchesBold}>{userCatches.length}</Text> of this species
           </Text>
@@ -199,7 +200,7 @@ export default function SpeciesDetailScreen() {
               {c.length_cm ? ` · ${formatLength(c.length_cm, units.length)}` : ''}
               {c.location_name ? ` · ${c.location_name}` : ''}
             </Text>
-            <Ionicons name="chevron-forward" size={16} color="#C7C7CC" />
+            <Ionicons name="chevron-forward" size={16} color={colors.textTertiary} />
           </TouchableOpacity>
         ))}
       </View>
@@ -208,7 +209,7 @@ export default function SpeciesDetailScreen() {
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Range</Text>
           <View style={styles.mapPlaceholder}>
-            <Ionicons name="globe-outline" size={40} color="#8E8E93" />
+            <Ionicons name="globe-outline" size={40} color={colors.textSecondary} />
             <Text style={styles.mapText}>Range Map</Text>
           </View>
           <Text style={styles.rangeDetail}>
@@ -223,7 +224,7 @@ export default function SpeciesDetailScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   scrollContent: {
     paddingBottom: 32,
@@ -234,7 +235,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
   },
   backButton: {
     width: 40,
@@ -242,21 +243,21 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     flex: 1,
     textAlign: 'center',
   },
   imagePlaceholder: {
     width: '100%',
     height: 250,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
     justifyContent: 'center',
     alignItems: 'center',
   },
   scientificName: {
     fontSize: 16,
     fontStyle: 'italic',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
     paddingVertical: 12,
   },
@@ -273,21 +274,21 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   pillBlue: {
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
   },
   pillGreen: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: 'colors.positiveBg',
   },
   pillOrange: {
-    backgroundColor: '#FFF3E0',
+    backgroundColor: 'colors.infoBg',
   },
   pillText: {
     fontSize: 12,
     fontWeight: '500',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
@@ -301,7 +302,7 @@ const styles = StyleSheet.create({
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 12,
   },
   sizeRow: {
@@ -315,21 +316,21 @@ const styles = StyleSheet.create({
   },
   sizeLabel: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   sizeValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   sizeDivider: {
     width: 1,
     height: 50,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   description: {
     fontSize: 15,
-    color: '#3C3C43',
+    color: colors.textBody,
     lineHeight: 24,
   },
   yourCatchesRow: {
@@ -340,15 +341,15 @@ const styles = StyleSheet.create({
   yourCatchesText: {
     flex: 1,
     fontSize: 15,
-    color: '#3C3C43',
+    color: colors.textBody,
   },
   yourCatchesBold: {
     fontWeight: '700',
-    color: '#007AFF',
+    color: colors.primary,
   },
   mapPlaceholder: {
     height: 160,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -356,12 +357,12 @@ const styles = StyleSheet.create({
   },
   mapText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 6,
   },
   rangeDetail: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
   },
   centerContent: {
@@ -369,22 +370,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   errorText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   retryButton: {
     marginTop: 16,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 24,
     paddingVertical: 10,
     borderRadius: 10,
   },
   retryText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontWeight: '600',
   },
   userCatchRow: {
@@ -392,19 +393,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     borderTopWidth: 1,
-    borderTopColor: '#F2F2F7',
+    borderTopColor: colors.surface,
     marginTop: 8,
     gap: 8,
   },
   userCatchDate: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     width: 90,
   },
   userCatchMeta: {
     flex: 1,
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
 });

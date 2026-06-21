@@ -16,6 +16,7 @@ import { getCurrentWeather, type WeatherConditions, fishingRatingColor, fishingR
 import { getCurrentPosition } from '@/lib/location';
 import { generateBiteForecast, type DayBiteForecast } from '@/lib/bite-forecast';
 import BiteForecastWidget from '@/components/bite-forecast-widget';
+import { colors } from '@/lib/theme';
 
 export default function HomeScreen() {
   const { user } = useAuth();
@@ -64,13 +65,13 @@ export default function HomeScreen() {
             style={styles.quickLogButton}
             onPress={() => router.push('/(tabs)/camera')}
           >
-            <Ionicons name="camera" size={18} color="#FFFFFF" />
+            <Ionicons name="camera" size={18} color={colors.textOnPrimary} />
             <Text style={styles.quickLogText}>Quick Log</Text>
           </TouchableOpacity>
         </View>
 
         {loading ? (
-          <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} />
+          <ActivityIndicator size="large" color={colors.primary} style={{ marginTop: 40 }} />
         ) : (
           <>
             {weather && (
@@ -80,19 +81,19 @@ export default function HomeScreen() {
                     <Text style={styles.weatherRating}>{fishingRatingLabel(weather.fishing_rating)}</Text>
                     <Text style={styles.weatherTemp}>{Math.round(weather.temp_c)}°C · {weather.sky_conditions}</Text>
                   </View>
-                  <Ionicons name="sunny-outline" size={32} color="#FFD60A" />
+                  <Ionicons name="sunny-outline" size={32} color="colors.gold" />
                 </View>
                 <View style={styles.weatherDetails}>
                   <View style={styles.weatherDetailItem}>
-                    <Ionicons name="leaf-outline" size={14} color="#8E8E93" />
+                    <Ionicons name="leaf-outline" size={14} color={colors.textSecondary} />
                     <Text style={styles.weatherDetailText}>{Math.round(weather.wind_kph)} km/h {weather.wind_dir}</Text>
                   </View>
                   <View style={styles.weatherDetailItem}>
-                    <Ionicons name="water-outline" size={14} color="#8E8E93" />
+                    <Ionicons name="water-outline" size={14} color={colors.textSecondary} />
                     <Text style={styles.weatherDetailText}>{weather.humidity_pct}% Humid</Text>
                   </View>
                   <View style={styles.weatherDetailItem}>
-                    <Ionicons name="speedometer-outline" size={14} color="#8E8E93" />
+                    <Ionicons name="speedometer-outline" size={14} color={colors.textSecondary} />
                     <Text style={styles.weatherDetailText}>{weather.pressure_mb} hPa</Text>
                   </View>
                 </View>
@@ -103,17 +104,17 @@ export default function HomeScreen() {
 
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
-                <Ionicons name="fish-outline" size={24} color="#007AFF" />
+                <Ionicons name="fish-outline" size={24} color={colors.primary} />
                 <Text style={styles.statNumber}>{stats?.totalCatches ?? 0}</Text>
                 <Text style={styles.statLabel}>Total Catches</Text>
               </View>
               <View style={styles.statCard}>
-                <Ionicons name="grid-outline" size={24} color="#34C759" />
+                <Ionicons name="grid-outline" size={24} color={colors.success} />
                 <Text style={styles.statNumber}>{stats?.uniqueSpecies ?? 0}</Text>
                 <Text style={styles.statLabel}>Species</Text>
               </View>
               <View style={styles.statCard}>
-                <Ionicons name="trophy-outline" size={24} color="#FF9500" />
+                <Ionicons name="trophy-outline" size={24} color={colors.warning} />
                 <Text style={styles.statNumber}>{stats?.biggestFishKg ? `${stats.biggestFishKg} kg` : '0 kg'}</Text>
                 <Text style={styles.statLabel}>Biggest Fish</Text>
               </View>
@@ -128,7 +129,7 @@ export default function HomeScreen() {
 
             {recentCatches.length === 0 ? (
               <View style={styles.emptyState}>
-                <Ionicons name="fish-outline" size={48} color="#C7C7CC" />
+                <Ionicons name="fish-outline" size={48} color={colors.textTertiary} />
                 <Text style={styles.emptyText}>No catches yet</Text>
                 <Text style={styles.emptySubtext}>Go to the Catch tab to log your first one!</Text>
               </View>
@@ -142,7 +143,7 @@ export default function HomeScreen() {
                     onPress={() => router.push(`/catch/${c.id}`)}
                   >
                     <View style={styles.catchIconContainer}>
-                      <Ionicons name="fish-outline" size={28} color="#007AFF" />
+                      <Ionicons name="fish-outline" size={28} color={colors.primary} />
                     </View>
                     <View style={styles.catchInfo}>
                       <Text style={styles.catchSpecies}>{species?.common_name ?? 'Unknown'}</Text>
@@ -151,7 +152,7 @@ export default function HomeScreen() {
                         {c.caught_at ? new Date(c.caught_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''}
                       </Text>
                     </View>
-                    <Ionicons name="chevron-forward" size={20} color="#C7C7CC" />
+                    <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
                   </TouchableOpacity>
                 );
               })
@@ -166,7 +167,7 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   scrollContent: {
     padding: 16,
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-start',
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
@@ -186,22 +187,22 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   quickLogText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 14,
     fontWeight: '600',
   },
   greeting: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   tagline: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 4,
   },
   weatherCard: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 16,
     padding: 16,
     marginBottom: 20,
@@ -221,18 +222,18 @@ const styles = StyleSheet.create({
   weatherRating: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   weatherTemp: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   weatherDetails: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     borderTopWidth: 1,
-    borderTopColor: '#F2F2F7',
+    borderTopColor: colors.surface,
     paddingTop: 12,
   },
   weatherDetailItem: {
@@ -242,7 +243,7 @@ const styles = StyleSheet.create({
   },
   weatherDetailText: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   statsRow: {
     flexDirection: 'row',
@@ -251,7 +252,7 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
@@ -264,12 +265,12 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 8,
   },
   statLabel: {
     fontSize: 11,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
     textAlign: 'center',
   },
@@ -279,17 +280,17 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   seeAllText: {
     fontSize: 14,
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '500',
   },
   catchCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 14,
     marginBottom: 8,
@@ -303,7 +304,7 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -314,11 +315,11 @@ const styles = StyleSheet.create({
   catchSpecies: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   catchMeta: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   emptyState: {
@@ -328,12 +329,12 @@ const styles = StyleSheet.create({
   emptyText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#C7C7CC',
+    color: colors.textTertiary,
     marginTop: 4,
     textAlign: 'center',
   },

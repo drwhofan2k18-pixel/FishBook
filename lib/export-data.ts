@@ -1,6 +1,7 @@
 import { File, Paths } from 'expo-file-system';
 import { Share } from 'react-native';
 import { supabase } from './supabase';
+import { captureError } from './crash-reporting';
 
 interface ExportRow {
   date: string;
@@ -76,7 +77,7 @@ export async function exportCatchesToCSV(userId: string): Promise<string | null>
 
     return rows.join('\n');
   } catch (err) {
-    console.error('CSV export failed:', err);
+    captureError(err instanceof Error ? err : new Error(String(err)), { context: 'csv-export' });
     return null;
   }
 }

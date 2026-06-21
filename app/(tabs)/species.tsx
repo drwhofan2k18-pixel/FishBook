@@ -12,6 +12,7 @@ import {
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '@/lib/supabase';
+import { colors } from '@/lib/theme';
 
 interface Species {
   id: number;
@@ -66,12 +67,12 @@ export default function SpeciesGuideScreen() {
 
   const getStatusColor = (status: string | null) => {
     switch (status) {
-      case 'Least Concern': return '#34C759';
-      case 'Near Threatened': return '#FF9500';
-      case 'Vulnerable': return '#FF3B30';
-      case 'Endangered': return '#FF2D55';
-      case 'Critically Endangered': return '#AF52DE';
-      default: return '#8E8E93';
+      case 'Least Concern': return colors.success;
+      case 'Near Threatened': return colors.warning;
+      case 'Vulnerable': return colors.danger;
+      case 'Endangered': return 'colors.pink';
+      case 'Critically Endangered': return 'colors.purple';
+      default: return colors.textSecondary;
     }
   };
 
@@ -83,17 +84,17 @@ export default function SpeciesGuideScreen() {
       </View>
 
       <View style={styles.searchContainer}>
-        <Ionicons name="search" size={20} color="#8E8E93" />
+        <Ionicons name="search" size={20} color={colors.textSecondary} />
         <TextInput
           style={styles.searchInput}
           placeholder="Search by name..."
-          placeholderTextColor="#8E8E93"
+          placeholderTextColor={colors.textSecondary}
           value={query}
           onChangeText={setQuery}
         />
         {query.length > 0 && (
           <TouchableOpacity onPress={() => setQuery('')}>
-            <Ionicons name="close-circle" size={20} color="#C7C7CC" />
+            <Ionicons name="close-circle" size={20} color={colors.textTertiary} />
           </TouchableOpacity>
         )}
       </View>
@@ -113,7 +114,7 @@ export default function SpeciesGuideScreen() {
       </View>
 
       {loading ? (
-        <ActivityIndicator size="large" color="#007AFF" style={{ marginTop: 40 }} />
+        <ActivityIndicator size="large" color={colors.primary} style={{ marginTop: 40 }} />
       ) : (
         <FlatList
           data={species}
@@ -125,7 +126,7 @@ export default function SpeciesGuideScreen() {
               onPress={() => router.push(`/species/${item.id}`)}
             >
               <View style={styles.speciesIcon}>
-                <Ionicons name="fish-outline" size={28} color="#007AFF" />
+                <Ionicons name="fish-outline" size={28} color={colors.primary} />
               </View>
               <View style={styles.speciesInfo}>
                 <Text style={styles.commonName}>{item.common_name}</Text>
@@ -144,18 +145,18 @@ export default function SpeciesGuideScreen() {
                     </View>
                   )}
                   {item.is_game_fish && (
-                    <View style={[styles.tag, { backgroundColor: '#FFD60A20' }]}>
-                      <Text style={[styles.tagText, { color: '#B8860B' }]}>Game Fish</Text>
+                    <View style={[styles.tag, { backgroundColor: 'colors.gold20' }]}>
+                      <Text style={[styles.tagText, { color: 'colors.goldDark' }]}>Game Fish</Text>
                     </View>
                   )}
                 </View>
               </View>
-              <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+              <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
             </TouchableOpacity>
           )}
           ListEmptyComponent={
             <View style={styles.emptyState}>
-              <Ionicons name="search-outline" size={48} color="#C7C7CC" />
+              <Ionicons name="search-outline" size={48} color={colors.textTertiary} />
               <Text style={styles.emptyText}>No species found</Text>
             </View>
           }
@@ -166,37 +167,37 @@ export default function SpeciesGuideScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
+  container: { flex: 1, backgroundColor: colors.surface },
   header: { paddingHorizontal: 16, paddingTop: 8, paddingBottom: 4 },
-  title: { fontSize: 28, fontWeight: '700', color: '#1C1C1E' },
-  subtitle: { fontSize: 13, color: '#8E8E93', marginTop: 2 },
+  title: { fontSize: 28, fontWeight: '700', color: colors.textPrimary },
+  subtitle: { fontSize: 13, color: colors.textSecondary, marginTop: 2 },
   searchContainer: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 12,
+    backgroundColor: colors.background, borderRadius: 12,
     paddingHorizontal: 14, height: 44, margin: 16, marginBottom: 8, gap: 8,
   },
-  searchInput: { flex: 1, fontSize: 16, color: '#1C1C1E' },
+  searchInput: { flex: 1, fontSize: 16, color: colors.textPrimary },
   filterRow: { flexDirection: 'row', paddingHorizontal: 16, gap: 8, marginBottom: 8 },
-  filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: '#E5E5EA' },
-  filterChipActive: { backgroundColor: '#007AFF' },
-  filterText: { fontSize: 13, color: '#8E8E93', fontWeight: '500' },
-  filterTextActive: { color: '#FFFFFF' },
+  filterChip: { paddingHorizontal: 14, paddingVertical: 6, borderRadius: 16, backgroundColor: colors.divider },
+  filterChipActive: { backgroundColor: colors.primary },
+  filterText: { fontSize: 13, color: colors.textSecondary, fontWeight: '500' },
+  filterTextActive: { color: colors.textOnPrimary },
   listContent: { padding: 16, paddingTop: 4 },
   speciesCard: {
     flexDirection: 'row', alignItems: 'center',
-    backgroundColor: '#FFFFFF', borderRadius: 12, padding: 14, marginBottom: 8,
+    backgroundColor: colors.background, borderRadius: 12, padding: 14, marginBottom: 8,
     shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 4, elevation: 2,
   },
   speciesIcon: {
-    width: 48, height: 48, borderRadius: 24, backgroundColor: '#E8F0FE',
+    width: 48, height: 48, borderRadius: 24, backgroundColor: colors.cardBg,
     justifyContent: 'center', alignItems: 'center', marginRight: 12,
   },
   speciesInfo: { flex: 1 },
-  commonName: { fontSize: 16, fontWeight: '600', color: '#1C1C1E' },
-  scientificName: { fontSize: 13, fontStyle: 'italic', color: '#8E8E93', marginTop: 1 },
+  commonName: { fontSize: 16, fontWeight: '600', color: colors.textPrimary },
+  scientificName: { fontSize: 13, fontStyle: 'italic', color: colors.textSecondary, marginTop: 1 },
   tagRow: { flexDirection: 'row', gap: 4, marginTop: 6, flexWrap: 'wrap' },
-  tag: { backgroundColor: '#F2F2F7', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 8 },
-  tagText: { fontSize: 11, color: '#3C3C43', fontWeight: '500' },
+  tag: { backgroundColor: colors.surface, paddingHorizontal: 8, paddingVertical: 2, borderRadius: 8 },
+  tagText: { fontSize: 11, color: colors.textBody, fontWeight: '500' },
   emptyState: { alignItems: 'center', paddingVertical: 60 },
-  emptyText: { fontSize: 16, color: '#8E8E93', marginTop: 12 },
+  emptyText: { fontSize: 16, color: colors.textSecondary, marginTop: 12 },
 });

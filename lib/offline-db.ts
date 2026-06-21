@@ -109,7 +109,7 @@ export function insertCatchOffline(catchData: Omit<OfflineCatch, 'synced' | 'syn
 export function updateCatchOffline(id: string, updates: Partial<OfflineCatch>) {
   const d = getDb();
   const fields: string[] = [];
-  const values: unknown[] = [];
+  const values: SQLite.SQLiteBindValue[] = [];
 
   if (updates.weight_kg !== undefined) { fields.push('weight_kg = ?'); values.push(updates.weight_kg); }
   if (updates.length_cm !== undefined) { fields.push('length_cm = ?'); values.push(updates.length_cm); }
@@ -125,7 +125,7 @@ export function updateCatchOffline(id: string, updates: Partial<OfflineCatch>) {
 
   d.runSync(
     `UPDATE catches_offline SET ${fields.join(', ')} WHERE id = ?`,
-    ...(values as any[]),
+    ...values,
   );
 }
 

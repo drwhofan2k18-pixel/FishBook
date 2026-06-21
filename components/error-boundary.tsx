@@ -1,6 +1,8 @@
 import React, { type ErrorInfo, type ReactNode } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { captureError } from '@/lib/crash-reporting';
+import { colors } from '@/lib/theme';
 
 interface Props {
   children: ReactNode;
@@ -24,7 +26,7 @@ export default class ErrorBoundary extends React.Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('ErrorBoundary caught:', error, errorInfo);
+    captureError(error, { componentStack: errorInfo?.componentStack });
     this.props.onError?.(error, errorInfo);
   }
 
@@ -38,13 +40,13 @@ export default class ErrorBoundary extends React.Component<Props, State> {
 
       return (
         <View style={styles.container}>
-          <Ionicons name="alert-circle-outline" size={64} color="#FF3B30" />
+          <Ionicons name="alert-circle-outline" size={64} color={colors.danger} />
           <Text style={styles.title}>Something went wrong</Text>
           <Text style={styles.message}>
             {this.state.error?.message ?? 'An unexpected error occurred'}
           </Text>
-          <TouchableOpacity style={styles.button} onPress={this.handleReset}>
-            <Ionicons name="refresh" size={18} color="#FFFFFF" />
+          <TouchableOpacity style={styles.button} onPress={this.handleReset} accessibilityLabel="Try again" accessibilityRole="button">
+            <Ionicons name="refresh" size={18} color={colors.textOnPrimary} />
             <Text style={styles.buttonText}>Try Again</Text>
           </TouchableOpacity>
         </View>
@@ -61,17 +63,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 16,
   },
   message: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
     marginTop: 8,
     lineHeight: 20,
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 24,
     paddingVertical: 12,
     borderRadius: 24,
@@ -87,7 +89,7 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 16,
     fontWeight: '600',
   },

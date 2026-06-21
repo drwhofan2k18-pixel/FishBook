@@ -1,5 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import { supabase } from './supabase';
+import { captureError } from './crash-reporting';
 import {
   getSyncQueue,
   removeSyncQueueItem,
@@ -115,7 +116,7 @@ export async function processSyncQueue() {
         removeSyncQueueItem(item.id as number);
       } catch (err) {
         incrementSyncRetry(item.id as number);
-        console.error('Sync failed for item', item.id, err);
+        captureError(err instanceof Error ? err : new Error(String(err)), { syncItemId: item.id });
       }
     }
 

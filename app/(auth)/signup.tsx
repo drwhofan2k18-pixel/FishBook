@@ -14,6 +14,7 @@ import {
 import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/lib/auth-context';
+import { colors } from '@/lib/theme';
 
 export default function SignupScreen() {
   const { signUp, isLoading } = useAuth();
@@ -60,7 +61,7 @@ export default function SignupScreen() {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.confirmationContainer}>
-          <Ionicons name="mail-unread-outline" size={64} color="#007AFF" />
+          <Ionicons name="mail-unread-outline" size={64} color={colors.primary} />
           <Text style={styles.confirmationTitle}>Check Your Email</Text>
           <Text style={styles.confirmationText}>
             We've sent a confirmation link to {email}. Please check your inbox and tap the link to activate your account.
@@ -84,7 +85,7 @@ export default function SignupScreen() {
       >
         <ScrollView contentContainerStyle={styles.scrollContent}>
           <View style={styles.header}>
-            <Ionicons name="fish" size={48} color="#007AFF" />
+            <Ionicons name="fish" size={48} color={colors.primary} />
             <Text style={styles.title}>Join FishBook</Text>
             <Text style={styles.subtitle}>Create your angler profile</Text>
           </View>
@@ -92,11 +93,11 @@ export default function SignupScreen() {
           <View style={styles.form}>
             <View>
               <View style={[styles.inputContainer, errors.username ? styles.inputError : null]}>
-                <Ionicons name="person-outline" size={20} color="#8E8E93" style={styles.inputIcon} />
+                <Ionicons name="person-outline" size={20} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Username"
-                  placeholderTextColor="#8E8E93"
+                  placeholderTextColor={colors.textSecondary}
                   value={username}
                   onChangeText={(t) => { setUsername(t); setErrors({}); }}
                   autoCapitalize="none"
@@ -108,11 +109,11 @@ export default function SignupScreen() {
 
             <View>
               <View style={[styles.inputContainer, errors.email ? styles.inputError : null]}>
-                <Ionicons name="mail-outline" size={20} color="#8E8E93" style={styles.inputIcon} />
+                <Ionicons name="mail-outline" size={20} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Email"
-                  placeholderTextColor="#8E8E93"
+                  placeholderTextColor={colors.textSecondary}
                   value={email}
                   onChangeText={(t) => { setEmail(t); setErrors({}); }}
                   keyboardType="email-address"
@@ -125,11 +126,11 @@ export default function SignupScreen() {
 
             <View>
               <View style={[styles.inputContainer, errors.password ? styles.inputError : null]}>
-                <Ionicons name="lock-closed-outline" size={20} color="#8E8E93" style={styles.inputIcon} />
+                <Ionicons name="lock-closed-outline" size={20} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Password"
-                  placeholderTextColor="#8E8E93"
+                  placeholderTextColor={colors.textSecondary}
                   value={password}
                   onChangeText={(t) => { setPassword(t); setErrors({}); }}
                   secureTextEntry
@@ -140,11 +141,11 @@ export default function SignupScreen() {
 
             <View>
               <View style={[styles.inputContainer, errors.confirmPassword ? styles.inputError : null]}>
-                <Ionicons name="lock-closed-outline" size={20} color="#8E8E93" style={styles.inputIcon} />
+                <Ionicons name="lock-closed-outline" size={20} color={colors.textSecondary} style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
                   placeholder="Confirm Password"
-                  placeholderTextColor="#8E8E93"
+                  placeholderTextColor={colors.textSecondary}
                   value={confirmPassword}
                   onChangeText={(t) => { setConfirmPassword(t); setErrors({}); }}
                   secureTextEntry
@@ -161,7 +162,7 @@ export default function SignupScreen() {
               disabled={isLoading}
             >
               {isLoading ? (
-                <ActivityIndicator color="#FFFFFF" />
+                <ActivityIndicator color={colors.textOnPrimary} />
               ) : (
                 <Text style={styles.buttonText}>Create Account</Text>
               )}
@@ -185,7 +186,7 @@ export default function SignupScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
   },
   keyboardView: {
     flex: 1,
@@ -203,12 +204,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 12,
   },
   subtitle: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 4,
   },
   form: {
@@ -217,14 +218,14 @@ const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     paddingHorizontal: 16,
     height: 52,
   },
   inputError: {
     borderWidth: 1,
-    borderColor: '#FF3B30',
+    borderColor: colors.danger,
   },
   inputIcon: {
     marginRight: 12,
@@ -232,21 +233,21 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   fieldError: {
-    color: '#FF3B30',
+    color: colors.danger,
     fontSize: 12,
     marginTop: 4,
     marginLeft: 4,
   },
   errorText: {
-    color: '#FF3B30',
+    color: colors.danger,
     fontSize: 14,
     textAlign: 'center',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     height: 52,
     justifyContent: 'center',
@@ -257,7 +258,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   buttonText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 17,
     fontWeight: '600',
   },
@@ -267,10 +268,10 @@ const styles = StyleSheet.create({
   },
   linkText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   linkTextBold: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '600',
   },
   confirmationContainer: {
@@ -282,12 +283,12 @@ const styles = StyleSheet.create({
   confirmationTitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 16,
   },
   confirmationText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
     marginTop: 12,
     lineHeight: 22,

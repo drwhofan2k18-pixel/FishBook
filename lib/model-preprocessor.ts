@@ -1,4 +1,4 @@
-import { ImageManipulator, type ImageRef } from 'expo-image-manipulator';
+import { ImageManipulator, SaveFormat, type ImageRef } from 'expo-image-manipulator';
 
 const INPUT_SIZE = 224;
 
@@ -7,10 +7,10 @@ export async function preprocessImage(photoUri: string): Promise<Float32Array> {
     .resize({ width: INPUT_SIZE, height: INPUT_SIZE })
     .renderAsync();
 
-  // In SDK 56, use the instance methods on ImageRef
-  const result = await (image as any).toBase64Async({ format: 'jpeg', quality: 1 });
+  // In SDK 56, ImageRef.saveAsync returns ImageResult with optional base64 field
+  const result = await image.saveAsync({ format: SaveFormat.JPEG, compress: 1, base64: true });
 
-  const rawBytes = base64ToBytes(result);
+  const rawBytes = base64ToBytes(result.base64!);
   const normalized = normalizeImageNet(rawBytes);
 
   return normalized;

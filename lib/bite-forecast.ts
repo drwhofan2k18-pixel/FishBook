@@ -2,6 +2,7 @@ import { SPECIES_BEHAVIORS, type SpeciesBehaviorProfile } from './species-behavi
 import { getForecast, getCurrentWeather, type ForecastDay, type WeatherConditions } from './weather';
 import { getUserStats } from './stats-aggregation';
 import { supabase } from './supabase';
+import { colors } from './theme';
 
 export type TimeWindow = 'early_morning' | 'morning' | 'midday' | 'afternoon' | 'evening' | 'night';
 
@@ -234,10 +235,10 @@ export async function generateBiteForecast(
 
 export function getRatingColor(rating: 'excellent' | 'good' | 'fair' | 'poor'): string {
   switch (rating) {
-    case 'excellent': return '#34C759';
-    case 'good': return '#007AFF';
-    case 'fair': return '#FF9500';
-    case 'poor': return '#FF3B30';
+    case 'excellent': return colors.success;
+    case 'good': return colors.primary;
+    case 'fair': return colors.warning;
+    case 'poor': return colors.danger;
   }
 }
 

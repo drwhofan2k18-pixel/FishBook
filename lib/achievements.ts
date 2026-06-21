@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import { getUserStats } from './stats-aggregation';
+import { captureError } from './crash-reporting';
 
 export interface Achievement {
   id: number;
@@ -48,7 +49,7 @@ export async function seedAchievements(): Promise<void> {
 
   const { error } = await supabase.from('achievements').insert(ACHIEVEMENT_SEEDS);
   if (error) {
-    console.error('Failed to seed achievements:', error.message);
+    captureError(error, { context: 'seed-achievements' });
   }
 }
 

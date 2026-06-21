@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker, type Region } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '@/lib/theme';
 
 interface CatchLocation {
   id: string;
@@ -46,14 +47,14 @@ export default function CatchMap({ locations, height = 250 }: MapViewComponentPr
   if (locations.length === 0) {
     return (
       <View style={[styles.emptyContainer, { height }]}>
-        <Ionicons name="map-outline" size={32} color="#C7C7CC" />
+        <Ionicons name="map-outline" size={32} color={colors.textTertiary} />
         <Text style={styles.emptyText}>No catch locations yet</Text>
       </View>
     );
   }
 
   return (
-    <View style={[styles.container, { height }]}>
+    <View style={[styles.container, { height }]} accessibilityLabel={`Catch location map: ${locations.length} catches`} accessibilityRole="image">
       <MapView style={styles.map} initialRegion={region}>
         {locations.map((loc) => (
           <Marker
@@ -79,14 +80,14 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emptyContainer: {
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
   emptyText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 8,
   },
 });

@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import { colors } from './theme';
 
 export interface Regulation {
   id: number;
@@ -53,7 +54,7 @@ export function checkCompliance(
       message: 'No regulation data available for this species in your area. Check local rules.',
       regulation: null,
       icon: 'help-circle-outline',
-      color: '#8E8E93',
+      color: colors.textSecondary,
     };
   }
 
@@ -64,7 +65,7 @@ export function checkCompliance(
       message: `Season closed. Open ${getMonthName(regulation.season_open_month!)} - ${getMonthName(regulation.season_close_month!)}. Catch & release only.`,
       regulation,
       icon: 'calendar-outline',
-      color: '#FF3B30',
+      color: colors.danger,
     };
   }
 
@@ -75,7 +76,7 @@ export function checkCompliance(
       message: `Below minimum size (${regulation.min_length_cm} cm). Must be released.`,
       regulation,
       icon: 'resize-outline',
-      color: '#FF3B30',
+      color: colors.danger,
     };
   }
 
@@ -86,7 +87,7 @@ export function checkCompliance(
       message: `Above maximum slot size (${regulation.max_length_cm} cm). Must be released (trophy fish).`,
       regulation,
       icon: 'resize-outline',
-      color: '#FF9500',
+      color: colors.warning,
     };
   }
 
@@ -97,7 +98,7 @@ export function checkCompliance(
       message: `Daily limit reached (${regulation.daily_limit}/day). Catch & release only.`,
       regulation,
       icon: 'alert-circle-outline',
-      color: '#FF3B30',
+      color: colors.danger,
     };
   }
 
@@ -109,7 +110,7 @@ export function checkCompliance(
       : 'Legal to keep.',
     regulation,
     icon: 'checkmark-circle',
-    color: '#34C759',
+    color: colors.success,
   };
 }
 

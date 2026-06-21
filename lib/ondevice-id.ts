@@ -2,6 +2,7 @@ import type { IdentificationMatch } from './catch-store';
 import { isModelDownloaded, getModelPath, downloadModel, getModelVersion } from './model-downloader';
 import { preprocessImage } from './model-preprocessor';
 import { mapOutputToSpecies, getLabelCount } from './model-mapper';
+import { captureError } from './crash-reporting';
 
 export { isModelDownloaded, onDownloadProgress, type DownloadProgress, deleteModel } from './model-downloader';
 
@@ -71,7 +72,7 @@ export async function loadOnDeviceModel(): Promise<boolean> {
 
     return true;
   } catch (err) {
-    console.error('Failed to load on-device model:', err);
+    captureError(err instanceof Error ? err : new Error(String(err)), { context: 'ondevice-model-load' });
     modelInfo = {
       isLoaded: false,
       speciesCount: 0,

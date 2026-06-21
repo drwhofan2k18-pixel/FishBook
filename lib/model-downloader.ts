@@ -1,4 +1,5 @@
 import { File, Directory, Paths } from 'expo-file-system';
+import { captureError } from './crash-reporting';
 
 const MODEL_DIR_NAME = 'models';
 const MODEL_FILE_NAME = 'fish-classifier.tflite';
@@ -127,7 +128,7 @@ export async function downloadModel(
 
     return true;
   } catch (err) {
-    console.error('Model download failed:', err);
+    captureError(err instanceof Error ? err : new Error(String(err)), { context: 'model-download' });
     return false;
   }
 }

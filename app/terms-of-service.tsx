@@ -1,14 +1,14 @@
-import React from 'react';
 import { ScrollView, Text, StyleSheet, SafeAreaView, TouchableOpacity, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import { colors } from '@/lib/theme';
 
 export default function TermsOfServiceScreen() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#007AFF" />
+          <Ionicons name="arrow-back" size={24} color={colors.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Terms of Service</Text>
         <View style={styles.backButton} />
@@ -89,13 +89,13 @@ export default function TermsOfServiceScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F2F2F7' },
-  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 12, backgroundColor: '#FFFFFF', borderBottomWidth: 1, borderBottomColor: '#E5E5EA' },
+  container: { flex: 1, backgroundColor: colors.surface },
+  header: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16, paddingVertical: 12, backgroundColor: colors.background, borderBottomWidth: 1, borderBottomColor: colors.divider },
   backButton: { width: 40 },
-  headerTitle: { fontSize: 17, fontWeight: '600', color: '#1C1C1E' },
+  headerTitle: { fontSize: 17, fontWeight: '600', color: colors.textPrimary },
   content: { padding: 16, paddingBottom: 40 },
-  lastUpdated: { fontSize: 13, color: '#8E8E93', marginBottom: 20 },
-  heading: { fontSize: 18, fontWeight: '700', color: '#1C1C1E', marginTop: 20, marginBottom: 8 },
-  paragraph: { fontSize: 15, color: '#3C3C43', lineHeight: 22, marginBottom: 8 },
-  bullet: { fontSize: 15, color: '#3C3C43', lineHeight: 22, paddingLeft: 8, marginBottom: 4 },
+  lastUpdated: { fontSize: 13, color: colors.textSecondary, marginBottom: 20 },
+  heading: { fontSize: 18, fontWeight: '700', color: colors.textPrimary, marginTop: 20, marginBottom: 8 },
+  paragraph: { fontSize: 15, color: colors.textBody, lineHeight: 22, marginBottom: 8 },
+  bullet: { fontSize: 15, color: colors.textBody, lineHeight: 22, paddingLeft: 8, marginBottom: 4 },
 });

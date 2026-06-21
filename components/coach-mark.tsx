@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { colors } from '@/lib/theme';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const STORAGE_KEY = 'fishbook_coachmarks_seen';
@@ -54,7 +55,7 @@ export default function CoachMark({ steps, visible, onComplete }: CoachMarkProps
       <View style={styles.overlay}>
         <View style={styles.card}>
           <View style={styles.iconCircle}>
-            <Ionicons name={step.icon} size={32} color="#007AFF" />
+            <Ionicons name={step.icon} size={32} color={colors.primary} />
           </View>
           <Text style={styles.title}>{step.title}</Text>
           <Text style={styles.description}>{step.description}</Text>
@@ -66,10 +67,10 @@ export default function CoachMark({ steps, visible, onComplete }: CoachMarkProps
               ))}
             </View>
             <View style={styles.buttons}>
-              <TouchableOpacity onPress={handleSkip}>
+              <TouchableOpacity onPress={handleSkip} accessibilityLabel="Skip tutorial" accessibilityRole="button">
                 <Text style={styles.skipText}>Skip</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+              <TouchableOpacity style={styles.nextButton} onPress={handleNext} accessibilityLabel={currentStep === steps.length - 1 ? 'Finish tutorial' : 'Next step'} accessibilityRole="button">
                 <Text style={styles.nextText}>
                   {currentStep === steps.length - 1 ? 'Got it!' : 'Next'}
                 </Text>
@@ -168,7 +169,7 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 20,
     padding: 24,
     width: '100%',
@@ -184,7 +185,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#E8F0FE',
+    backgroundColor: colors.cardBg,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 16,
@@ -192,13 +193,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     textAlign: 'center',
     marginBottom: 8,
   },
   description: {
     fontSize: 15,
-    color: '#3C3C43',
+    color: colors.textBody,
     textAlign: 'center',
     lineHeight: 22,
     marginBottom: 24,
@@ -216,11 +217,11 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   dotActive: {
     width: 24,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
   },
   buttons: {
     flexDirection: 'row',
@@ -229,17 +230,17 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 15,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   nextButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 24,
     paddingVertical: 10,
     borderRadius: 20,
   },
   nextText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 15,
     fontWeight: '600',
   },

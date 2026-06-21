@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getTackleAdvice, getConditionsSummary, type TackleRecommendation } from '@/lib/tackle-advisor';
+import { colors } from '@/lib/theme';
 
 interface TackleSuggestionProps {
   speciesName: string;
@@ -10,9 +11,9 @@ interface TackleSuggestionProps {
 }
 
 const priorityColors: Record<string, string> = {
-  primary: '#007AFF',
-  secondary: '#34C759',
-  situational: '#FF9500',
+  primary: colors.primary,
+  secondary: colors.success,
+  situational: colors.warning,
 };
 
 const priorityLabels: Record<string, string> = {
@@ -37,14 +38,14 @@ export default function TackleSuggestion({ speciesName, tempC, windKph }: Tackle
   if (!speciesName) return null;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} accessibilityLabel={`Tackle suggestions for ${speciesName}`} accessibilityRole="summary">
       <View style={styles.header}>
-        <Ionicons name="fish" size={18} color="#007AFF" />
+        <Ionicons name="fish" size={18} color={colors.primary} />
         <Text style={styles.title}>What to Throw</Text>
       </View>
 
       <View style={styles.conditionsRow}>
-        <Ionicons name={conditions.icon as keyof typeof Ionicons.glyphMap} size={14} color="#8E8E93" />
+        <Ionicons name={conditions.icon as keyof typeof Ionicons.glyphMap} size={14} color={colors.textSecondary} />
         <Text style={styles.conditionsText}>{conditions.label}</Text>
       </View>
 
@@ -61,7 +62,7 @@ export default function TackleSuggestion({ speciesName, tempC, windKph }: Tackle
             <Text style={styles.lureName}>{rec.lure_name}</Text>
             <Text style={styles.lureType}>{rec.lure_type} · {rec.color}</Text>
             <View style={styles.techniqueRow}>
-              <Ionicons name="flash-outline" size={12} color="#8E8E93" />
+              <Ionicons name="flash-outline" size={12} color={colors.textSecondary} />
               <Text style={styles.technique}>{rec.technique}</Text>
             </View>
             <Text style={styles.reason}>{rec.reason}</Text>
@@ -74,7 +75,7 @@ export default function TackleSuggestion({ speciesName, tempC, windKph }: Tackle
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 14,
     marginBottom: 12,
@@ -93,20 +94,20 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   conditionsRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
     marginBottom: 12,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 8,
     padding: 8,
   },
   conditionsText: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     flex: 1,
   },
   cardsRow: {
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   },
   card: {
     width: 160,
-    backgroundColor: '#FAFAFA',
+    backgroundColor: colors.cardSurface,
     borderRadius: 10,
     padding: 10,
     borderLeftWidth: 3,
@@ -130,17 +131,17 @@ const styles = StyleSheet.create({
   priorityText: {
     fontSize: 10,
     fontWeight: '700',
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     textTransform: 'uppercase',
   },
   lureName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   lureType: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   techniqueRow: {
@@ -151,12 +152,12 @@ const styles = StyleSheet.create({
   },
   technique: {
     fontSize: 11,
-    color: '#3C3C43',
+    color: colors.textBody,
     flex: 1,
   },
   reason: {
     fontSize: 10,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontStyle: 'italic',
     marginTop: 4,
   },

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,7 @@ import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requestLocationPermission } from '@/lib/location';
 import { requestNotificationPermission } from '@/lib/notifications';
+import { colors } from '@/lib/theme';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -137,7 +138,7 @@ export default function OnboardingScreen() {
         renderItem={({ item }) => (
           <View style={styles.stepContainer}>
             <View style={styles.iconCircle}>
-              <Ionicons name={item.icon} size={64} color="#007AFF" />
+              <Ionicons name={item.icon} size={64} color={colors.primary} />
             </View>
             <Text style={styles.stepTitle}>{item.title}</Text>
             <Text style={styles.stepDescription}>{item.description}</Text>
@@ -177,24 +178,24 @@ export default function OnboardingScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FFFFFF' },
+  container: { flex: 1, backgroundColor: colors.background },
   skipButton: { alignSelf: 'flex-end', padding: 16 },
-  skipText: { fontSize: 16, color: '#8E8E93', fontWeight: '500' },
+  skipText: { fontSize: 16, color: colors.textSecondary, fontWeight: '500' },
   stepContainer: { width: SCREEN_WIDTH, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 40 },
   iconCircle: {
-    width: 120, height: 120, borderRadius: 60, backgroundColor: '#E8F0FE',
+    width: 120, height: 120, borderRadius: 60, backgroundColor: colors.cardBg,
     justifyContent: 'center', alignItems: 'center', marginBottom: 32,
   },
-  stepTitle: { fontSize: 28, fontWeight: '700', color: '#1C1C1E', textAlign: 'center', marginBottom: 12 },
-  stepDescription: { fontSize: 16, color: '#8E8E93', textAlign: 'center', lineHeight: 24 },
+  stepTitle: { fontSize: 28, fontWeight: '700', color: colors.textPrimary, textAlign: 'center', marginBottom: 12 },
+  stepDescription: { fontSize: 16, color: colors.textSecondary, textAlign: 'center', lineHeight: 24 },
   bottomSection: { paddingHorizontal: 32, paddingBottom: 40 },
   dots: { flexDirection: 'row', justifyContent: 'center', gap: 8, marginBottom: 24 },
-  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: '#E5E5EA' },
-  dotActive: { backgroundColor: '#007AFF', width: 24 },
+  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: colors.divider },
+  dotActive: { backgroundColor: colors.primary, width: 24 },
   buttonRow: { flexDirection: 'row', gap: 12 },
-  primaryButton: { flex: 1, backgroundColor: '#007AFF', borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
-  primaryButtonText: { color: '#FFFFFF', fontSize: 17, fontWeight: '600' },
-  secondaryButton: { flex: 1, backgroundColor: '#F2F2F7', borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
-  secondaryButtonText: { color: '#8E8E93', fontSize: 17, fontWeight: '500' },
-  fullButton: { backgroundColor: '#007AFF', borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
+  primaryButton: { flex: 1, backgroundColor: colors.primary, borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
+  primaryButtonText: { color: colors.textOnPrimary, fontSize: 17, fontWeight: '600' },
+  secondaryButton: { flex: 1, backgroundColor: colors.surface, borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
+  secondaryButtonText: { color: colors.textSecondary, fontSize: 17, fontWeight: '500' },
+  fullButton: { backgroundColor: colors.primary, borderRadius: 28, paddingVertical: 16, alignItems: 'center' },
 });

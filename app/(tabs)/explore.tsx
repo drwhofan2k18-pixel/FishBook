@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CommunityHeatmap from '@/components/community-heatmap';
+import { colors } from '@/lib/theme';
 
 export default function ExploreScreen() {
   const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
@@ -45,11 +46,11 @@ export default function ExploreScreen() {
       <View style={styles.legend}>
         <Text style={styles.legendTitle}>Activity Level</Text>
         <View style={styles.legendRow}>
-          <LegendItem color="#FF3B30" label="Hot" />
-          <LegendItem color="#FF9500" label="Active" />
-          <LegendItem color="#FFD60A" label="Moderate" />
-          <LegendItem color="#34C759" label="Light" />
-          <LegendItem color="#8E8E93" label="Low" />
+          <LegendItem color={colors.danger} label="Hot" />
+          <LegendItem color={colors.warning} label="Active" />
+          <LegendItem color="colors.gold" label="Moderate" />
+          <LegendItem color={colors.success} label="Light" />
+          <LegendItem color={colors.textSecondary} label="Low" />
         </View>
       </View>
     </SafeAreaView>
@@ -68,7 +69,7 @@ function LegendItem({ color, label }: { color: string; label: string }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   header: {
     paddingHorizontal: 16,
@@ -78,11 +79,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   subtitle: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   filterRow: {
@@ -96,18 +97,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   filterChipActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
   },
   filterText: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   filterTextActive: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
   },
   mapContainer: {
     flex: 1,
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
   legendTitle: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   legendRow: {
@@ -141,6 +142,6 @@ const styles = StyleSheet.create({
   },
   legendLabel: {
     fontSize: 11,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
 });

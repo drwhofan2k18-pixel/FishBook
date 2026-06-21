@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   View,
   Text,
@@ -14,15 +14,13 @@ import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useCatch, useUpdateCatch, useDeleteCatch, type CatchRecord } from '@/lib/catches';
 import { shareCatch } from '@/lib/share-catch';
-import { shareDeepLink } from '@/lib/deep-linking';
-import { formatWeight, formatLength, useUnitStore } from '@/lib/units';
+import { colors } from '@/lib/theme';
 
 export default function CatchDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: catchData, isLoading, isError, refetch } = useCatch(id ?? '');
   const updateMutation = useUpdateCatch();
   const deleteMutation = useDeleteCatch();
-  const units = useUnitStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editNotes, setEditNotes] = useState('');
   const [editWeight, setEditWeight] = useState('');
@@ -72,7 +70,7 @@ export default function CatchDetailScreen() {
   if (isLoading) {
     return (
       <View style={styles.centerContent}>
-        <ActivityIndicator size="large" color="#007AFF" />
+        <ActivityIndicator size="large" color={colors.primary} />
       </View>
     );
   }
@@ -80,7 +78,7 @@ export default function CatchDetailScreen() {
   if (isError || !catchData) {
     return (
       <View style={styles.centerContent}>
-        <Ionicons name="alert-circle-outline" size={48} color="#FF3B30" />
+        <Ionicons name="alert-circle-outline" size={48} color={colors.danger} />
         <Text style={styles.errorText}>Failed to load catch</Text>
         <TouchableOpacity style={styles.retryButton} onPress={() => refetch()}>
           <Text style={styles.retryText}>Retry</Text>
@@ -103,7 +101,7 @@ export default function CatchDetailScreen() {
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color="#007AFF" />
+          <Ionicons name="arrow-back" size={24} color={colors.primary} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Catch Details</Text>
         <TouchableOpacity onPress={handleEdit}>
@@ -115,7 +113,7 @@ export default function CatchDetailScreen() {
         <Image source={{ uri: catchData.photo_url }} style={styles.photo} resizeMode="cover" />
       ) : (
         <View style={styles.photoPlaceholder}>
-          <Ionicons name="camera-outline" size={48} color="#C7C7CC" />
+          <Ionicons name="camera-outline" size={48} color={colors.textTertiary} />
         </View>
       )}
 
@@ -134,7 +132,7 @@ export default function CatchDetailScreen() {
           )}
           {catchData.is_released && (
             <View style={styles.releasedBadge}>
-              <Ionicons name="return-up-back" size={14} color="#2E7D32" />
+              <Ionicons name="return-up-back" size={14} color="colors.positiveText" />
               <Text style={styles.releasedText}>Released</Text>
             </View>
           )}
@@ -148,7 +146,7 @@ export default function CatchDetailScreen() {
             <TextInput
               style={styles.editInput}
               placeholder="Weight (kg)"
-              placeholderTextColor="#C7C7CC"
+              placeholderTextColor={colors.textTertiary}
               value={editWeight}
               onChangeText={setEditWeight}
               keyboardType="decimal-pad"
@@ -156,7 +154,7 @@ export default function CatchDetailScreen() {
             <TextInput
               style={styles.editInput}
               placeholder="Length (cm)"
-              placeholderTextColor="#C7C7CC"
+              placeholderTextColor={colors.textTertiary}
               value={editLength}
               onChangeText={setEditLength}
               keyboardType="decimal-pad"
@@ -192,7 +190,7 @@ export default function CatchDetailScreen() {
         <Text style={styles.cardTitle}>Location</Text>
         {catchData.latitude && catchData.longitude ? (
           <View style={styles.mapPlaceholder}>
-            <Ionicons name="location-outline" size={32} color="#8E8E93" />
+            <Ionicons name="location-outline" size={32} color={colors.textSecondary} />
             <Text style={styles.mapText}>
               {catchData.latitude.toFixed(4)}, {catchData.longitude.toFixed(4)}
             </Text>
@@ -218,7 +216,7 @@ export default function CatchDetailScreen() {
           <TextInput
             style={[styles.editInput, styles.editNotesInput]}
             placeholder="Add notes..."
-            placeholderTextColor="#C7C7CC"
+            placeholderTextColor={colors.textTertiary}
             value={editNotes}
             onChangeText={setEditNotes}
             multiline
@@ -239,7 +237,7 @@ export default function CatchDetailScreen() {
             disabled={updateMutation.isPending}
           >
             {updateMutation.isPending ? (
-              <ActivityIndicator color="#FFFFFF" />
+              <ActivityIndicator color={colors.textOnPrimary} />
             ) : (
               <Text style={styles.saveButtonText}>Save Changes</Text>
             )}
@@ -253,21 +251,21 @@ export default function CatchDetailScreen() {
       {!isEditing && (
         <View style={styles.actions}>
           <TouchableOpacity style={styles.editActionButton} onPress={handleEdit}>
-            <Ionicons name="create-outline" size={20} color="#007AFF" />
+            <Ionicons name="create-outline" size={20} color={colors.primary} />
             <Text style={styles.editActionText}>Edit</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.shareActionButton}
             onPress={() => catchData && shareCatch(catchData as CatchRecord)}
           >
-            <Ionicons name="share-outline" size={20} color="#34C759" />
+            <Ionicons name="share-outline" size={20} color={colors.success} />
             <Text style={styles.shareActionText}>Share</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.deleteActionButton}
             onPress={handleDelete}
           >
-            <Ionicons name="trash-outline" size={20} color="#FF3B30" />
+            <Ionicons name="trash-outline" size={20} color={colors.danger} />
             <Text style={styles.deleteActionText}>Delete</Text>
           </TouchableOpacity>
         </View>
@@ -279,7 +277,7 @@ export default function CatchDetailScreen() {
 function DetailRow({ icon, label, value }: { icon: keyof typeof Ionicons.glyphMap; label: string; value: string }) {
   return (
     <View style={styles.detailRow}>
-      <Ionicons name={icon} size={18} color="#8E8E93" />
+      <Ionicons name={icon} size={18} color={colors.textSecondary} />
       <Text style={styles.detailLabel}>{label}</Text>
       <Text style={styles.detailValue}>{value}</Text>
     </View>
@@ -289,7 +287,7 @@ function DetailRow({ icon, label, value }: { icon: keyof typeof Ionicons.glyphMa
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
   },
   scrollContent: {
     paddingBottom: 32,
@@ -302,18 +300,18 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 16,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   retryButton: {
     marginTop: 16,
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 24,
     paddingVertical: 10,
     borderRadius: 10,
   },
   retryText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontWeight: '600',
   },
   header: {
@@ -322,7 +320,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
   },
   backButton: {
     width: 40,
@@ -330,11 +328,11 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 17,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   editHeaderText: {
     fontSize: 16,
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '500',
   },
   photo: {
@@ -344,12 +342,12 @@ const styles = StyleSheet.create({
   photoPlaceholder: {
     width: '100%',
     height: 300,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
     justifyContent: 'center',
     alignItems: 'center',
   },
   card: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
@@ -367,28 +365,28 @@ const styles = StyleSheet.create({
   speciesName: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   scientificName: {
     fontSize: 14,
     fontStyle: 'italic',
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   badge: {
-    backgroundColor: '#E8F5E9',
+    backgroundColor: 'colors.positiveBg',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
   },
   badgeText: {
     fontSize: 12,
-    color: '#2E7D32',
+    color: 'colors.positiveText',
     fontWeight: '500',
   },
   releasedBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#E8F5E9',
+    backgroundColor: 'colors.positiveBg',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
@@ -396,13 +394,13 @@ const styles = StyleSheet.create({
   },
   releasedText: {
     fontSize: 12,
-    color: '#2E7D32',
+    color: 'colors.positiveText',
     fontWeight: '500',
   },
   cardTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 12,
   },
   measurementRow: {
@@ -416,21 +414,21 @@ const styles = StyleSheet.create({
   measurementValue: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#007AFF',
+    color: colors.primary,
   },
   measurementLabel: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 4,
   },
   measurementDivider: {
     width: 1,
     height: 40,
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   methodBadge: {
     alignSelf: 'center',
-    backgroundColor: '#FFF3E0',
+    backgroundColor: 'colors.infoBg',
     paddingHorizontal: 12,
     paddingVertical: 4,
     borderRadius: 12,
@@ -438,12 +436,12 @@ const styles = StyleSheet.create({
   },
   methodText: {
     fontSize: 12,
-    color: '#E65100',
+    color: 'colors.infoText',
     fontWeight: '500',
   },
   mapPlaceholder: {
     height: 120,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 8,
     justifyContent: 'center',
     alignItems: 'center',
@@ -451,17 +449,17 @@ const styles = StyleSheet.create({
   },
   mapText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 4,
   },
   locationName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   locationDetail: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   detailRow: {
@@ -472,21 +470,21 @@ const styles = StyleSheet.create({
   },
   detailLabel: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     width: 70,
   },
   detailValue: {
     flex: 1,
     fontSize: 14,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   editInput: {
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     borderRadius: 10,
     paddingHorizontal: 12,
     height: 44,
     fontSize: 16,
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginBottom: 8,
   },
   editNotesInput: {
@@ -496,7 +494,7 @@ const styles = StyleSheet.create({
   },
   notesText: {
     fontSize: 15,
-    color: '#3C3C43',
+    color: colors.textBody,
     lineHeight: 22,
   },
   actions: {
@@ -511,7 +509,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: '#007AFF',
+    borderColor: colors.primary,
     borderRadius: 12,
     padding: 14,
     gap: 6,
@@ -519,7 +517,7 @@ const styles = StyleSheet.create({
   editActionText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#007AFF',
+    color: colors.primary,
   },
   deleteActionButton: {
     flex: 1,
@@ -527,7 +525,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: '#FF3B30',
+    borderColor: colors.danger,
     borderRadius: 12,
     padding: 14,
     gap: 6,
@@ -535,7 +533,7 @@ const styles = StyleSheet.create({
   deleteActionText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#FF3B30',
+    color: colors.danger,
   },
   shareActionButton: {
     flex: 1,
@@ -543,7 +541,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1.5,
-    borderColor: '#34C759',
+    borderColor: colors.success,
     borderRadius: 12,
     padding: 14,
     gap: 6,
@@ -551,7 +549,7 @@ const styles = StyleSheet.create({
   shareActionText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#34C759',
+    color: colors.success,
   },
   editActions: {
     marginHorizontal: 16,
@@ -559,13 +557,13 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   saveButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
   },
   saveButtonText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 16,
     fontWeight: '600',
   },
@@ -574,7 +572,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cancelButtonText: {
-    color: '#8E8E93',
+    color: colors.textSecondary,
     fontSize: 15,
   },
   buttonDisabled: {

@@ -1,4 +1,5 @@
 import NetInfo from '@react-native-community/netinfo';
+import { colors } from './theme';
 
 const WEATHER_API_BASE = 'https://api.openweathermap.org/data/2.5';
 const WEATHER_API_KEY = process.env.EXPO_PUBLIC_OPENWEATHER_API_KEY ?? '';
@@ -160,9 +161,9 @@ function degreesToDirection(degrees: number): string {
 
 export function fishingRatingColor(rating: 'good' | 'fair' | 'poor'): string {
   switch (rating) {
-    case 'good': return '#34C759';
-    case 'fair': return '#FF9500';
-    case 'poor': return '#FF3B30';
+    case 'good': return colors.success;
+    case 'fair': return colors.warning;
+    case 'poor': return colors.danger;
   }
 }
 

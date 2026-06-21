@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { CameraView, useCameraPermissions, type CameraCapturedPicture } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
+import { captureError } from '@/lib/crash-reporting';
+import { colors } from '@/lib/theme';
 
 interface PhotoCaptureProps {
   onPhotoTaken: (uri: string) => void;
@@ -36,7 +38,7 @@ export default function PhotoCapture({ onPhotoTaken, onRetake, photoUri }: Photo
         onPhotoTaken(photo.uri);
       }
     } catch (err) {
-      console.error('Failed to take picture:', err);
+      captureError(err instanceof Error ? err : new Error(String(err)), { context: 'photo-capture' });
     }
   };
 
@@ -45,7 +47,7 @@ export default function PhotoCapture({ onPhotoTaken, onRetake, photoUri }: Photo
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>
-          <Ionicons name="camera-outline" size={48} color="#C7C7CC" />
+          <Ionicons name="camera-outline" size={48} color={colors.textTertiary} />
           <Text style={styles.placeholderText}>Camera initializing...</Text>
         </View>
       </View>
@@ -57,20 +59,22 @@ export default function PhotoCapture({ onPhotoTaken, onRetake, photoUri }: Photo
     return (
       <View style={styles.container}>
         <View style={styles.placeholder}>
-          <Ionicons name="close-circle-outline" size={48} color="#FF3B30" />
+          <Ionicons name="close-circle-outline" size={48} color={colors.danger} />
           <Text style={styles.permissionTitle}>Camera Access Needed</Text>
           <Text style={styles.permissionText}>
             FishBook needs camera access to identify and log your catches.
           </Text>
           <View style={styles.permissionButtons}>
             {permission.canAskAgain && (
-              <TouchableOpacity style={styles.permitButton} onPress={requestPermission}>
+              <TouchableOpacity style={styles.permitButton} onPress={requestPermission} accessibilityLabel="Grant camera access" accessibilityRole="button">
                 <Text style={styles.permitButtonText}>Grant Access</Text>
               </TouchableOpacity>
             )}
             <TouchableOpacity
               style={styles.settingsButton}
               onPress={() => Linking.openSettings()}
+              accessibilityLabel="Open device settings"
+              accessibilityRole="button"
             >
               <Text style={styles.settingsButtonText}>Open Settings</Text>
             </TouchableOpacity>
@@ -91,8 +95,10 @@ export default function PhotoCapture({ onPhotoTaken, onRetake, photoUri }: Photo
             onPress={() => {
               onRetake?.();
             }}
+            accessibilityLabel="Retake photo"
+            accessibilityRole="button"
           >
-            <Ionicons name="refresh" size={20} color="#FF3B30" />
+            <Ionicons name="refresh" size={20} color={colors.danger} />
             <Text style={styles.retakeText}>Retake</Text>
           </TouchableOpacity>
         </View>
@@ -148,7 +154,7 @@ const styles = StyleSheet.create({
     height: 320,
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: '#1C1C1E',
+    backgroundColor: colors.textPrimary,
   },
   camera: {
     flex: 1,
@@ -157,23 +163,23 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
     padding: 24,
   },
   placeholderText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 12,
   },
   permissionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
     marginTop: 12,
   },
   permissionText: {
     fontSize: 14,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     textAlign: 'center',
     marginTop: 8,
     lineHeight: 20,
@@ -184,13 +190,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   permitButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: colors.primary,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 10,
   },
   permitButtonText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontWeight: '600',
     fontSize: 15,
   },
@@ -199,10 +205,10 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#007AFF',
+    borderColor: colors.primary,
   },
   settingsButtonText: {
-    color: '#007AFF',
+    color: colors.primary,
     fontWeight: '600',
     fontSize: 15,
   },
@@ -217,14 +223,14 @@ const styles = StyleSheet.create({
   retakeButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 20,
     gap: 6,
   },
   retakeText: {
-    color: '#FF3B30',
+    color: colors.danger,
     fontWeight: '600',
     fontSize: 14,
   },
@@ -251,7 +257,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   guideText: {
-    color: '#FFFFFF',
+    color: colors.textOnPrimary,
     fontSize: 13,
     fontWeight: '500',
     textShadowColor: 'rgba(0,0,0,0.5)',
@@ -262,7 +268,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 24,
     height: 24,
-    borderColor: '#FFFFFF',
+    borderColor: colors.white,
   },
   cornerTL: {
     top: 0,
@@ -301,7 +307,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: '#FFFFFF',
+    borderColor: colors.white,
   },
   captureButtonDisabled: {
     opacity: 0.5,
@@ -310,6 +316,6 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 26,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
   },
 });

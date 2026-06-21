@@ -12,6 +12,7 @@ import { loadOnDeviceModel } from '@/lib/ondevice-id';
 import { useUnitStore } from '@/lib/units';
 import { initDeepLinking } from '@/lib/deep-linking';
 import { scheduleCatchReminder } from '@/lib/notifications';
+import { colors } from '@/lib/theme';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +41,7 @@ function RootLayoutNav() {
   if (isLoading || onboarded === null) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <ActivityIndicator size="large" color="#007AFF" accessibilityLabel="Loading" />
+        <ActivityIndicator size="large" color={colors.primary} accessibilityLabel="Loading" />
       </View>
     );
   }

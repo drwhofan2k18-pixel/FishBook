@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { CatchRecord } from '@/lib/catches';
+import { colors } from '@/lib/theme';
 
 interface CatchCardProps {
   catchItem: CatchRecord;
@@ -29,7 +30,7 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
           {catchItem.photo_thumbnail_url ? (
             <Image source={{ uri: catchItem.photo_thumbnail_url }} style={styles.thumbImage} />
           ) : (
-            <Ionicons name="fish-outline" size={24} color="#C7C7CC" />
+            <Ionicons name="fish-outline" size={24} color={colors.textTertiary} />
           )}
         </View>
         <View style={styles.listInfo}>
@@ -40,10 +41,10 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
         </View>
         <View style={styles.listBadge}>
           {catchItem.is_released && (
-            <Ionicons name="return-up-back" size={16} color="#34C759" />
+            <Ionicons name="return-up-back" size={16} color={colors.success} />
           )}
         </View>
-        <Ionicons name="chevron-forward" size={18} color="#C7C7CC" />
+        <Ionicons name="chevron-forward" size={18} color={colors.textTertiary} />
       </TouchableOpacity>
     );
   }
@@ -61,7 +62,7 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
           <Image source={{ uri: catchItem.photo_thumbnail_url }} style={styles.gridImage} />
         ) : (
           <View style={styles.gridImagePlaceholder}>
-            <Ionicons name="fish-outline" size={32} color="#C7C7CC" />
+            <Ionicons name="fish-outline" size={32} color={colors.textTertiary} />
           </View>
         )}
       </View>
@@ -74,7 +75,7 @@ export default function CatchCard({ catchItem, onPress, variant = 'grid' }: Catc
       </View>
       {catchItem.is_released && (
         <View style={styles.releaseDot}>
-          <Ionicons name="return-up-back" size={12} color="#34C759" />
+          <Ionicons name="return-up-back" size={12} color={colors.success} />
         </View>
       )}
     </TouchableOpacity>
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   // Grid variant
   gridCard: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     overflow: 'hidden',
     marginBottom: 10,
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E5E5EA',
+    backgroundColor: colors.divider,
   },
   gridInfo: {
     padding: 10,
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
   gridName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   gridMetaRow: {
     flexDirection: 'row',
@@ -124,13 +125,13 @@ const styles = StyleSheet.create({
   },
   gridMeta: {
     fontSize: 12,
-    color: '#8E8E93',
+    color: colors.textSecondary,
   },
   releaseDot: {
     position: 'absolute',
     top: 8,
     right: 8,
-    backgroundColor: '#E8F5E9',
+    backgroundColor: 'colors.positiveBg',
     borderRadius: 10,
     width: 22,
     height: 22,
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
   listCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: colors.background,
     borderRadius: 12,
     padding: 12,
     marginBottom: 8,
@@ -156,7 +157,7 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 8,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: colors.surface,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
@@ -172,11 +173,11 @@ const styles = StyleSheet.create({
   listName: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1C1C1E',
+    color: colors.textPrimary,
   },
   listMeta: {
     fontSize: 13,
-    color: '#8E8E93',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   listBadge: {
