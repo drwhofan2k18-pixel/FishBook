@@ -46,3 +46,4 @@ yarn-error.*
 *.tflite
 .tmp-build/
 FishBook.tar.gz
+.omo/
