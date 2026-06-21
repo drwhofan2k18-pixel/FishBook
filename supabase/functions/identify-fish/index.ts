@@ -23,128 +23,178 @@ interface IdentifyResponse {
 }
 
 const INATURALIST_API = 'https://api.inaturalist.org/v1/computervision/score_image';
+const MAX_URL_LENGTH = 2048;
+const ALLOWED_HOSTS = [
+  'supabase.co',
+  'tybkfzdkjvedashszsjc.supabase.co',
+];
+const RATE_LIMIT = 15;
+const RATE_WINDOW = 60;
+
+function getClientIp(req: Request): string {
+  return req.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    ?? req.headers.get('x-real-ip')
+    ?? '0.0.0.0';
+}
+
+async function checkRateLimit(
+  supabaseUrl: string,
+  serviceKey: string,
+  ip: string,
+  endpoint: string,
+  maxRequests: number,
+): Promise<boolean> {
+  try {
+    const resp = await fetch(`${supabaseUrl}/rest/v1/rpc/check_rate_limit`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': serviceKey,
+        'Authorization': `Bearer ${serviceKey}`,
+      },
+      body: JSON.stringify({
+        p_ip: ip,
+        p_endpoint: endpoint,
+        p_max_requests: maxRequests,
+        p_window_seconds: RATE_WINDOW,
+      }),
+    });
+    const result = await resp.json();
+    return result === true;
+  } catch {
+    return true;
+  }
+}
+
+function validatePhotoUrl(urlStr: string): string | null {
+  if (!urlStr || typeof urlStr !== 'string') return 'photoUrl is required';
+  if (urlStr.length > MAX_URL_LENGTH) return 'photoUrl too long';
+
+  let url: URL;
+  try {
+    url = new URL(urlStr);
+  } catch {
+    return 'Invalid URL format';
+  }
+
+  if (url.protocol !== 'https:') return 'Only HTTPS URLs allowed';
+  const host = url.hostname.toLowerCase();
+  const isAllowed = ALLOWED_HOSTS.some(h => host === h || host.endsWith('.' + h));
+  if (!isAllowed) return 'URL host not in allowlist';
+
+  return null;
+}
 
 serve(async (req: Request) => {
   try {
-    const { photoUrl } = (await req.json()) as IdentifyRequest;
+    const body = await req.json() as IdentifyRequest;
+    const { photoUrl } = body;
 
-    if (!photoUrl) {
-      return new Response(JSON.stringify({ matches: [], error: 'photoUrl is required' }), {
+    const urlError = validatePhotoUrl(photoUrl);
+    if (urlError) {
+      return new Response(JSON.stringify({ error: urlError }), {
         status: 400,
         headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    // Download image from Supabase Storage
-    const imageResponse = await fetch(photoUrl);
-    if (!imageResponse.ok) {
-      return new Response(
-        JSON.stringify({ matches: [], error: 'Failed to download image from storage' }),
-        { status: 400, headers: { 'Content-Type': 'application/json' } },
-      );
-    }
-
-    const imageBlob = await imageResponse.blob();
-    const base64 = await blobToBase64(imageBlob);
-
-    // Call iNaturalist CV API
-    const inaturalistResponse = await fetch(INATURALIST_API, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        image: base64,
-      }),
-    });
-
-    if (!inaturalistResponse.ok) {
-      const errorText = await inaturalistResponse.text();
-      console.error('iNaturalist API error:', inaturalistResponse.status, errorText);
-      return new Response(
-        JSON.stringify({
-          matches: [],
-          error: `iNaturalist API returned ${inaturalistResponse.status}`,
-        }),
-        { status: 502, headers: { 'Content-Type': 'application/json' } },
-      );
-    }
-
-    const inaturalistData = await inaturalistResponse.json();
-
-    if (!inaturalistData?.results || !Array.isArray(inaturalistData.results)) {
-      return new Response(
-        JSON.stringify({ matches: [], error: 'Unexpected response from iNaturalist API' }),
-        { status: 502, headers: { 'Content-Type': 'application/json' } },
-      );
-    }
-
-    // Extract top results and map to local species
     const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? '';
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+    const clientIp = getClientIp(req);
 
-    const matches: MatchResult[] = [];
-
-    for (const result of inaturalistData.results.slice(0, 5)) {
-      const taxon = result.taxon;
-      if (!taxon) continue;
-
-      const scientificName = taxon.name;
-      const commonName = taxon.preferred_common_name ?? taxon.name;
-
-      // Try to match to local species table
-      let speciesId: number | null = null;
-      try {
-        const { data: speciesData } = await supabase
-          .from('species')
-          .select('id')
-          .eq('scientific_name', scientificName)
-          .maybeSingle();
-
-        if (speciesData) {
-          speciesId = speciesData.id;
-        }
-      } catch {
-        // Species matching is best-effort
-      }
-
-      matches.push({
-        species_id: speciesId,
-        common_name: commonName,
-        scientific_name: scientificName,
-        confidence: result.score ?? 0,
-        iNaturalistTaxonId: taxon.id,
-        image_url: taxon?.default_photo?.medium_url ?? '',
+    const allowed = await checkRateLimit(supabaseUrl, serviceKey, clientIp, 'identify-fish', RATE_LIMIT);
+    if (!allowed) {
+      return new Response(JSON.stringify({ error: 'Rate limit exceeded. Try again later.' }), {
+        status: 429,
+        headers: { 'Content-Type': 'application/json' },
       });
     }
 
-    const response: IdentifyResponse = {
-      matches,
-      error: null,
-    };
+    const inatKey = Deno.env.get('INATURALIST_API_KEY') ?? '';
+    if (!inatKey) {
+      return new Response(JSON.stringify({ error: 'iNaturalist API key not configured' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
 
+    const imageResp = await fetch(photoUrl);
+    if (!imageResp.ok) {
+      return new Response(JSON.stringify({ error: 'Could not fetch image from URL' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+    const imageBuffer = await imageResp.arrayBuffer();
+
+    if (imageBuffer.byteLength > 10 * 1024 * 1024) {
+      return new Response(JSON.stringify({ error: 'Image exceeds 10MB limit' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const formData = new FormData();
+    formData.append('image', new Blob([imageBuffer]), 'photo.jpg');
+    formData.append('locale', 'en');
+
+    const inatResp = await fetch(INATURALIST_API, {
+      method: 'POST',
+      headers: { 'Authorization': inatKey },
+      body: formData,
+    });
+
+    if (!inatResp.ok) {
+      const errorText = await inatResp.text();
+      console.error(`iNaturalist API error: ${inatResp.status} - ${errorText}`);
+      return new Response(JSON.stringify({ error: 'Fish identification service unavailable' }), {
+        status: 502,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const inatData = await inatResp.json();
+    const supabase = createClient(supabaseUrl, Deno.env.get('SUPABASE_ANON_KEY') ?? '');
+
+    const topResults = (inatData.results ?? []).slice(0, 5);
+    const matches: MatchResult[] = [];
+
+    for (const r of topResults) {
+      const taxon = r.taxon;
+      if (!taxon) continue;
+
+      const scientificName = taxon.name ?? '';
+      const commonName = taxon.preferred_common_name ?? taxon.name ?? 'Unknown';
+      const confidence = r.combined_score ?? r.vision_score ?? 0;
+      const taxonId = taxon.id;
+      const imageUrl = taxon.default_photo?.medium_url ?? taxon.default_photo?.url ?? '';
+
+      const { data: species } = await supabase
+        .from('species')
+        .select('id, common_name, scientific_name')
+        .or(`scientific_name.eq.${scientificName},common_name.ilike.%${commonName}%`)
+        .limit(1)
+        .single();
+
+      matches.push({
+        species_id: species?.id ?? null,
+        common_name: species?.common_name ?? commonName,
+        scientific_name: species?.scientific_name ?? scientificName,
+        confidence,
+        iNaturalistTaxonId: taxonId,
+        image_url: imageUrl,
+      });
+    }
+
+    const response: IdentifyResponse = { matches, error: null };
     return new Response(JSON.stringify(response), {
-      status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (err) {
-    const message = err instanceof Error ? err.message : 'Unknown error';
-    console.error('identify-fish error:', message);
-    return new Response(JSON.stringify({ matches: [], error: message }), {
+    console.error('identify-fish error:', err);
+    return new Response(JSON.stringify({ error: 'Internal server error' }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 });
-
-async function blobToBase64(blob: Blob): Promise<string> {
-  const arrayBuffer = await blob.arrayBuffer();
-  const bytes = new Uint8Array(arrayBuffer);
-  let binary = '';
-  for (let i = 0; i < bytes.length; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  }
-  return btoa(binary);
-}
