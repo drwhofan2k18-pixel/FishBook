@@ -10,10 +10,13 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import CommunityHeatmap from '@/components/community-heatmap';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 import { getCurrentPosition } from '@/lib/location';
 import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-water';
 
 export default function ExploreScreen() {
+
+  const { colors } = useTheme();
   const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
   const [waterConditions, setWaterConditions] = useState<WaterConditions | null>(null);
 

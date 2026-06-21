@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import type { SpeciesCount } from '@/lib/stats-aggregation';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface StatsChartProps {
   data: SpeciesCount[];
@@ -13,6 +14,8 @@ const BAR_COLORS: Record<string, string> = {
 };
 
 export default function StatsChart({ data }: StatsChartProps) {
+
+  const { colors } = useTheme();
   if (!data || data.length === 0) {
     return (
       <View style={styles.emptyContainer}>

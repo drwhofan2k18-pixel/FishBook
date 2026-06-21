@@ -4,6 +4,7 @@ import MapView, { Circle, type Region } from 'react-native-maps';
 import { fetchCommunityHeatmap, getHeatColor, getHeatOpacity, type HeatmapCell, type HeatmapBounds } from '@/lib/community-map';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface CommunityHeatmapProps {
   initialRegion?: Region;
@@ -19,6 +20,8 @@ const DEFAULT_REGION: Region = {
 };
 
 export default function CommunityHeatmap({ initialRegion, speciesFilter, height = 400 }: CommunityHeatmapProps) {
+
+  const { colors } = useTheme();
   const [cells, setCells] = useState<HeatmapCell[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCell, setSelectedCell] = useState<HeatmapCell | null>(null);

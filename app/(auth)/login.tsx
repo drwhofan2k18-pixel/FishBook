@@ -14,8 +14,11 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/lib/auth-context';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function LoginScreen() {
+
+  const { colors } = useTheme();
   const { signIn, isLoading } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

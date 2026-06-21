@@ -11,6 +11,7 @@ import { CameraView, useCameraPermissions, type CameraCapturedPicture } from 'ex
 import { Ionicons } from '@expo/vector-icons';
 import { captureError } from '@/lib/crash-reporting';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface PhotoCaptureProps {
   onPhotoTaken: (uri: string) => void;
@@ -19,6 +20,8 @@ interface PhotoCaptureProps {
 }
 
 export default function PhotoCapture({ onPhotoTaken, onRetake, photoUri }: PhotoCaptureProps) {
+
+  const { colors } = useTheme();
   const cameraRef = useRef<CameraView>(null);
   const [permission, requestPermission] = useCameraPermissions();
   const [isCameraReady, setIsCameraReady] = useState(false);

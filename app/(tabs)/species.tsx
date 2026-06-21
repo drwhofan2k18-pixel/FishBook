@@ -13,6 +13,7 @@ import { router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '@/lib/supabase';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface Species {
   id: number;
@@ -25,6 +26,8 @@ interface Species {
 }
 
 export default function SpeciesGuideScreen() {
+
+  const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
   const [species, setSpecies] = useState<Species[]>([]);

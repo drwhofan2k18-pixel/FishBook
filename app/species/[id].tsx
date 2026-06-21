@@ -18,6 +18,7 @@ import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-wate
 import { isStockableSpecies, getStockingSeason, getStockingInfoUrl, getSupportedStockingStates } from '@/lib/fish-stocking';
 import { searchSpeciesInfo, type SearchResult } from '@/lib/brave-search';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface SpeciesData {
   id: number;
@@ -44,6 +45,8 @@ interface UserCatch {
 }
 
 export default function SpeciesDetailScreen() {
+
+  const { colors } = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { user } = useAuth();
   const units = useUnitStore();

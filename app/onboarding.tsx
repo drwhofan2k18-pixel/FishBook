@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { requestLocationPermission } from '@/lib/location';
 import { requestNotificationPermission } from '@/lib/notifications';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -39,6 +40,8 @@ export async function markOnboardingComplete() {
 }
 
 export default function OnboardingScreen() {
+
+  const { colors } = useTheme();
   const [currentStep, setCurrentStep] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 

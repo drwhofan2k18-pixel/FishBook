@@ -2,8 +2,11 @@ import { ScrollView, Text, StyleSheet, SafeAreaView, TouchableOpacity, View } fr
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function PrivacyPolicyScreen() {
+
+  const { colors } = useTheme();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>

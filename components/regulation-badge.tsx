@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { checkCompliance, getRegulation, getDailyCatchCount, type ComplianceResult } from '@/lib/regulations';
 import { useAuth } from '@/lib/auth-context';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface RegulationBadgeProps {
   speciesName: string;
@@ -12,6 +13,8 @@ interface RegulationBadgeProps {
 }
 
 export default function RegulationBadge({ speciesName, lengthCm, isReleased }: RegulationBadgeProps) {
+
+  const { colors } = useTheme();
   const { user } = useAuth();
   const [result, setResult] = useState<ComplianceResult | null>(null);
   const [loading, setLoading] = useState(true);

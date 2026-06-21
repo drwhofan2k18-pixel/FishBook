@@ -25,8 +25,11 @@ import StatsChart from '@/components/stats-chart';
 import CatchMap from '@/components/map-view';
 import { captureError } from '@/lib/crash-reporting';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function ProfileScreen() {
+
+  const { colors } = useTheme();
   const { user, signOut } = useAuth();
   const userId = user?.id ?? '';
   const username = (user?.user_metadata as Record<string, string> | undefined)?.username ?? 'Angler';

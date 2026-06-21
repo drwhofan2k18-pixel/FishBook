@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import type { CatchRecord } from '@/lib/catches';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface CatchCardProps {
   catchItem: CatchRecord;
@@ -11,6 +12,8 @@ interface CatchCardProps {
 }
 
 export default function CatchCard({ catchItem, onPress, variant = 'grid' }: CatchCardProps) {
+
+  const { colors } = useTheme();
   const speciesName = catchItem.species?.common_name ?? 'Unknown Species';
   const weight = catchItem.weight_kg ? `${catchItem.weight_kg} kg` : null;
   const date = catchItem.caught_at

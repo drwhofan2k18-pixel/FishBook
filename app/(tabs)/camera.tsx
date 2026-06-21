@@ -30,8 +30,11 @@ import RegulationBadge from '@/components/regulation-badge';
 import TackleSuggestion from '@/components/tackle-suggestion';
 import CoachMark, { CAMERA_COACH_STEPS, hasSeenCoachMarks } from '@/components/coach-mark';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function CameraScreen() {
+
+  const { colors } = useTheme();
   const { user } = useAuth();
   const store = useCatchStore();
   const saveCatch = useSaveCatch();

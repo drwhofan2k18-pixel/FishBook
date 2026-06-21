@@ -15,8 +15,11 @@ import { Ionicons } from '@expo/vector-icons';
 import { useCatch, useUpdateCatch, useDeleteCatch, type CatchRecord } from '@/lib/catches';
 import { shareCatch } from '@/lib/share-catch';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function CatchDetailScreen() {
+
+  const { colors } = useTheme();
   const { id } = useLocalSearchParams<{ id: string }>();
   const { data: catchData, isLoading, isError, refetch } = useCatch(id ?? '');
   const updateMutation = useUpdateCatch();

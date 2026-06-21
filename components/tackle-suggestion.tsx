@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { getTackleAdvice, getConditionsSummary, type TackleRecommendation } from '@/lib/tackle-advisor';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface TackleSuggestionProps {
   speciesName: string;
@@ -23,6 +24,8 @@ const priorityLabels: Record<string, string> = {
 };
 
 export default function TackleSuggestion({ speciesName, tempC, windKph }: TackleSuggestionProps) {
+
+  const { colors } = useTheme();
   const hour = new Date().getHours();
 
   const recommendations = useMemo(

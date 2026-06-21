@@ -14,6 +14,7 @@ import { supabase } from '@/lib/supabase';
 import type { IdentificationMatch } from '@/lib/catch-store';
 import { captureError } from '@/lib/crash-reporting';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface Species {
   id: number;
@@ -29,6 +30,8 @@ interface SpeciesPickerProps {
 }
 
 export default function SpeciesPicker({ visible, onClose, onSelect }: SpeciesPickerProps) {
+
+  const { colors } = useTheme();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Species[]>([]);
   const [isLoading, setIsLoading] = useState(false);

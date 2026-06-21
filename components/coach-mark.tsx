@@ -11,6 +11,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 const STORAGE_KEY = 'fishbook_coachmarks_seen';
@@ -30,6 +31,8 @@ interface CoachMarkProps {
 }
 
 export default function CoachMark({ steps, visible, onComplete }: CoachMarkProps) {
+
+  const { colors } = useTheme();
   const [currentStep, setCurrentStep] = useState(0);
 
   const handleNext = () => {

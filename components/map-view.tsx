@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import MapView, { Marker, type Region } from 'react-native-maps';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 interface CatchLocation {
   id: string;
@@ -19,6 +20,8 @@ interface MapViewComponentProps {
 }
 
 export default function CatchMap({ locations, height = 250 }: MapViewComponentProps) {
+
+  const { colors } = useTheme();
   const region = useMemo<Region>(() => {
     if (locations.length === 0) {
       return {

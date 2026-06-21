@@ -18,10 +18,13 @@ import { getPendingSyncCount } from '@/lib/offline-db';
 import { clusterCatchLocations, getUserCatchLocations, type SpotCluster } from '@/lib/recommendations';
 import { useAuth } from '@/lib/auth-context';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 type SortOption = 'date' | 'weight' | 'species';
 
 export default function LibraryScreen() {
+
+  const { colors } = useTheme();
   const { user } = useAuth();
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [search, setSearch] = useState('');

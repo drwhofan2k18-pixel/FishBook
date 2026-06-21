@@ -15,6 +15,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@/lib/auth-context';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 import {
   getTournaments,
   createTournament,
@@ -31,6 +32,8 @@ import {
 type Tab = 'active' | 'upcoming' | 'completed';
 
 export default function TournamentsScreen() {
+
+  const { colors } = useTheme();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState<Tab>('active');
   const [tournaments, setTournaments] = useState<Tournament[]>([]);

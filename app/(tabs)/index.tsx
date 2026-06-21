@@ -20,8 +20,11 @@ import { getNearestTideStation, getTidePredictions, getNextTide, type TidePredic
 import { getMoonPhase, getSolunarPeriods, isInSolunarPeriod } from '@/lib/moon-phase';
 import BiteForecastWidget from '@/components/bite-forecast-widget';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 
 export default function HomeScreen() {
+
+  const { colors } = useTheme();
   const { user } = useAuth();
   const userId = user?.id ?? '';
   const username = (user?.user_metadata as Record<string, string> | undefined)?.username ?? 'Angler';

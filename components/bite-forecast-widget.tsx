@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '@/lib/theme';
+import { useTheme } from '@/lib/theme-context';
 import {
   type DayBiteForecast,
   type BiteForecast,
@@ -15,6 +16,8 @@ interface BiteForecastWidgetProps {
 }
 
 export default function BiteForecastWidget({ forecast }: BiteForecastWidgetProps) {
+
+  const { colors } = useTheme();
   if (!forecast || forecast.length === 0) return null;
 
   const today = forecast[0];
