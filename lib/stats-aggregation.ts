@@ -171,7 +171,7 @@ export async function getRecentCatches(userId: string, limit = 5) {
 
 export async function updateProfile(
   userId: string,
-  updates: { display_name?: string; bio?: string; home_waters?: string },
+  updates: { display_name?: string; bio?: string; home_waters?: string; avatar_url?: string },
 ) {
   const { error } = await supabase.from('profiles').update(updates).eq('id', userId);
   if (error) throw new Error(error.message);

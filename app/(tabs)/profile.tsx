@@ -10,10 +10,14 @@ import {
   Alert,
   ActivityIndicator,
   Modal,
+  Image,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
+import * as ImagePicker from 'expo-image-picker';
+import * as FileSystem from 'expo-file-system';
 import { useAuth } from '@/lib/auth-context';
+import { supabase } from '@/lib/supabase';
 import { getUserStats, getSpeciesBreakdown, updateProfile } from '@/lib/stats-aggregation';
 import { checkAchievements, seedAchievements, type AchievementProgress } from '@/lib/achievements';
 import { getUserCatchLocations, type CatchLocation } from '@/lib/recommendations';
@@ -35,6 +39,8 @@ export default function ProfileScreen() {
   const [displayName, setDisplayName] = useState('');
   const [bio, setBio] = useState('');
   const [homeWaters, setHomeWaters] = useState('');
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+  const [uploadingAvatar, setUploadingAvatar] = useState(false);
 
   const loadData = useCallback(async () => {
     if (!userId) return;
@@ -59,6 +65,52 @@ export default function ProfileScreen() {
   }, [userId]);
 
   useEffect(() => { loadData(); }, [loadData]);
+
+  useEffect(() => {
+    if (!userId) return;
+    const { data } = supabase.storage.from('avatars').getPublicUrl(`${userId}/avatar.jpg`);
+    if (data?.publicUrl) setAvatarUrl(data.publicUrl + '?t=' + Date.now());
+  }, [userId]);
+
+  const handlePickAvatar = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      Alert.alert('Permission Required', 'Photo library access is needed to set your avatar.');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.7,
+    });
+
+    if (result.canceled || !result.assets[0]) return;
+
+    setUploadingAvatar(true);
+    try {
+      const uri = result.assets[0].uri;
+      const base64 = await FileSystem.readAsStringAsync(uri, { encoding: FileSystem.EncodingType.Base64 });
+      const fileBuffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0));
+
+      const filePath = `${userId}/avatar.jpg`;
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, fileBuffer, { contentType: 'image/jpeg', upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+      if (data?.publicUrl) setAvatarUrl(data.publicUrl + '?t=' + Date.now());
+
+      await updateProfile(userId, { avatar_url: data?.publicUrl });
+    } catch (err) {
+      Alert.alert('Upload Failed', err instanceof Error ? err.message : 'Unknown error');
+    } finally {
+      setUploadingAvatar(false);
+    }
+  };
 
   const handleSaveProfile = async () => {
     try {
@@ -96,9 +148,18 @@ export default function ProfileScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.profileHeader}>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarText}>{initial}</Text>
-          </View>
+          <TouchableOpacity style={styles.avatar} onPress={handlePickAvatar} disabled={uploadingAvatar} accessibilityLabel="Change profile photo" accessibilityRole="button">
+            {uploadingAvatar ? (
+              <ActivityIndicator size="large" color="#FFFFFF" />
+            ) : avatarUrl ? (
+              <Image source={{ uri: avatarUrl }} style={{ width: 80, height: 80, borderRadius: 40 }} />
+            ) : (
+              <Text style={styles.avatarText}>{initial}</Text>
+            )}
+            <View style={{ position: 'absolute', bottom: 0, right: 0, backgroundColor: '#007AFF', borderRadius: 12, padding: 4 }}>
+              <Ionicons name="camera" size={14} color="#FFFFFF" />
+            </View>
+          </TouchableOpacity>
           <Text style={styles.displayName}>
             {(user?.user_metadata as Record<string, string> | undefined)?.display_name ?? username}
           </Text>
