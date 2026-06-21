@@ -1,19 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import CommunityHeatmap from '@/components/community-heatmap';
 import { colors } from '@/lib/theme';
+import { getCurrentPosition } from '@/lib/location';
+import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-water';
 
 export default function ExploreScreen() {
   const [selectedSpecies, setSelectedSpecies] = useState<string | null>(null);
+  const [waterConditions, setWaterConditions] = useState<WaterConditions | null>(null);
 
   const speciesFilters = ['All Species', 'Largemouth Bass', 'Rainbow Trout', 'Channel Catfish'];
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const pos = await getCurrentPosition();
+        if (pos) {
+          const water = await getNearestWaterConditions(pos.latitude, pos.longitude);
+          setWaterConditions(water);
+        }
+      } catch {}
+    })();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -21,6 +37,18 @@ export default function ExploreScreen() {
         <Text style={styles.title}>Explore</Text>
         <Text style={styles.subtitle}>Community catch zones — blurred for privacy</Text>
       </View>
+
+      {waterConditions && (waterConditions.water_temp_c != null || waterConditions.flow_rate_cfs != null) && (
+        <View style={styles.waterBar}>
+          <Ionicons name="water-outline" size={16} color={colors.primary} />
+          <Text style={styles.waterText} numberOfLines={1}>
+            {waterConditions.site_name}
+            {waterConditions.water_temp_c != null ? ` · ${waterConditions.water_temp_c}°C` : ''}
+            {waterConditions.flow_rate_cfs != null ? ` · ${waterConditions.flow_rate_cfs} cfs` : ''}
+          </Text>
+          <Text style={styles.waterSource}>USGS</Text>
+        </View>
+      )}
 
       <View style={styles.filterRow}>
         {speciesFilters.map((s) => (
@@ -48,7 +76,7 @@ export default function ExploreScreen() {
         <View style={styles.legendRow}>
           <LegendItem color={colors.danger} label="Hot" />
           <LegendItem color={colors.warning} label="Active" />
-          <LegendItem color="colors.gold" label="Moderate" />
+          <LegendItem color={colors.gold} label="Moderate" />
           <LegendItem color={colors.success} label="Light" />
           <LegendItem color={colors.textSecondary} label="Low" />
         </View>
@@ -85,6 +113,28 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.textSecondary,
     marginTop: 2,
+  },
+  waterBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginHorizontal: 16,
+    marginBottom: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: colors.chipBg,
+    borderRadius: 10,
+  },
+  waterText: {
+    flex: 1,
+    fontSize: 12,
+    fontWeight: '500',
+    color: colors.textPrimary,
+  },
+  waterSource: {
+    fontSize: 9,
+    color: colors.textTertiary,
+    fontWeight: '600',
   },
   filterRow: {
     flexDirection: 'row',

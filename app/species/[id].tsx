@@ -12,6 +12,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { supabase } from '@/lib/supabase';
 import { useAuth } from '@/lib/auth-context';
 import { formatWeight, formatLength, useUnitStore } from '@/lib/units';
+import { getCurrentPosition } from '@/lib/location';
+import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-water';
+import { isStockableSpecies, getStockingSeason, getStockingInfoUrl, getSupportedStockingStates } from '@/lib/fish-stocking';
 import { colors } from '@/lib/theme';
 
 interface SpeciesData {
@@ -45,6 +48,7 @@ export default function SpeciesDetailScreen() {
   const [species, setSpecies] = useState<SpeciesData | null>(null);
   const [userCatches, setUserCatches] = useState<UserCatch[]>([]);
   const [loading, setLoading] = useState(true);
+  const [waterConditions, setWaterConditions] = useState<WaterConditions | null>(null);
 
   const loadData = useCallback(async () => {
     if (!id) return;
@@ -67,6 +71,14 @@ export default function SpeciesDetailScreen() {
           .limit(20);
         setUserCatches((catches ?? []) as UserCatch[]);
       }
+
+      try {
+        const pos = await getCurrentPosition();
+        if (pos) {
+          const water = await getNearestWaterConditions(pos.latitude, pos.longitude);
+          setWaterConditions(water);
+        }
+      } catch {}
     } catch {} finally {
       setLoading(false);
     }
@@ -140,8 +152,8 @@ export default function SpeciesDetailScreen() {
           </View>
         )}
         {species.is_game_fish && (
-          <View style={[styles.pill, { backgroundColor: 'colors.gold20' }]}>
-            <Text style={[styles.pillText, { color: 'colors.goldDark' }]}>Game Fish</Text>
+          <View style={[styles.pill, { backgroundColor: colors.gold + '20' }]}>
+            <Text style={[styles.pillText, { color: colors.goldDark }]}>Game Fish</Text>
           </View>
         )}
       </View>
@@ -178,8 +190,50 @@ export default function SpeciesDetailScreen() {
         </View>
       )}
 
+      {waterConditions && (waterConditions.water_temp_c != null || waterConditions.flow_rate_cfs != null) && (
+        <View style={styles.card}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <Ionicons name="water-outline" size={20} color={colors.primary} />
+            <Text style={styles.cardTitle}>Water Conditions — {waterConditions.site_name}</Text>
+          </View>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            {waterConditions.water_temp_c != null && (
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={{ fontSize: 11, color: colors.textSecondary }}>Temperature</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>{waterConditions.water_temp_c}°C</Text>
+              </View>
+            )}
+            {waterConditions.flow_rate_cfs != null && (
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={{ fontSize: 11, color: colors.textSecondary }}>Flow Rate</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>{waterConditions.flow_rate_cfs} cfs</Text>
+              </View>
+            )}
+            {waterConditions.gauge_height_ft != null && (
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <Text style={{ fontSize: 11, color: colors.textSecondary }}>Gauge Height</Text>
+                <Text style={{ fontSize: 18, fontWeight: '700', color: colors.textPrimary }}>{waterConditions.gauge_height_ft} ft</Text>
+              </View>
+            )}
+          </View>
+          <Text style={{ fontSize: 10, color: colors.textTertiary, marginTop: 8, textAlign: 'right' }}>Source: USGS Water Services</Text>
+        </View>
+      )}
+
+      {isStockableSpecies(species.common_name) && (
+        <View style={styles.card}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <Ionicons name="leaf-outline" size={20} color={colors.success} />
+            <Text style={styles.cardTitle}>Fish Stocking</Text>
+          </View>
+          <Text style={styles.description}>{getStockingSeason(species.common_name)}</Text>
+          <Text style={{ fontSize: 12, color: colors.textSecondary, marginTop: 8 }}>
+            Supported states: {getSupportedStockingStates().join(', ')}
+          </Text>
+        </View>
+      )}
+
       <View style={styles.card}>
-        <Text style={styles.cardTitle}>Your Catches</Text>
         <View style={styles.yourCatchesRow}>
           <Ionicons name="fish" size={24} color={colors.primary} />
           <Text style={styles.yourCatchesText}>

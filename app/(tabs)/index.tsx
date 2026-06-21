@@ -15,6 +15,9 @@ import { getUserStats, getRecentCatches } from '@/lib/stats-aggregation';
 import { getCurrentWeather, type WeatherConditions, fishingRatingColor, fishingRatingLabel } from '@/lib/weather';
 import { getCurrentPosition } from '@/lib/location';
 import { generateBiteForecast, type DayBiteForecast } from '@/lib/bite-forecast';
+import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-water';
+import { getNearestTideStation, getTidePredictions, getNextTide, type TidePrediction, isNearCoast } from '@/lib/noaa-tides';
+import { getMoonPhase, getSolunarPeriods, isInSolunarPeriod } from '@/lib/moon-phase';
 import BiteForecastWidget from '@/components/bite-forecast-widget';
 import { colors } from '@/lib/theme';
 
@@ -26,6 +29,10 @@ export default function HomeScreen() {
   const [recentCatches, setRecentCatches] = useState<Awaited<ReturnType<typeof getRecentCatches>>>([]);
   const [weather, setWeather] = useState<WeatherConditions | null>(null);
   const [biteForecast, setBiteForecast] = useState<DayBiteForecast[]>([]);
+  const [waterConditions, setWaterConditions] = useState<WaterConditions | null>(null);
+  const [nextTide, setNextTide] = useState<TidePrediction | null>(null);
+  const [moonPhase] = useState(() => getMoonPhase());
+  const [solunar, setSolunar] = useState<ReturnType<typeof isInSolunarPeriod> | null>(null);
   const [loading, setLoading] = useState(true);
 
   const loadData = useCallback(async () => {
@@ -40,12 +47,25 @@ export default function HomeScreen() {
       setRecentCatches(r);
 
       if (pos) {
-        const [w, bf] = await Promise.all([
+        const [w, bf, water] = await Promise.all([
           getCurrentWeather(pos.latitude, pos.longitude),
           generateBiteForecast(pos.latitude, pos.longitude),
+          getNearestWaterConditions(pos.latitude, pos.longitude),
         ]);
         setWeather(w);
         setBiteForecast(bf);
+        setWaterConditions(water);
+
+        const sol = isInSolunarPeriod(new Date(), getSolunarPeriods(new Date(), pos.longitude));
+        setSolunar(sol);
+
+        if (isNearCoast(pos.latitude, pos.longitude)) {
+          const station = await getNearestTideStation(pos.latitude, pos.longitude);
+          if (station) {
+            const tide = await getNextTide(station.id);
+            setNextTide(tide);
+          }
+        }
       }
     } catch {
     } finally {
@@ -101,6 +121,87 @@ export default function HomeScreen() {
             )}
 
             <BiteForecastWidget forecast={biteForecast} />
+
+            {solunar && (
+              <View style={styles.infoCard}>
+                <View style={styles.infoCardHeader}>
+                  <Ionicons name="moon-outline" size={20} color={colors.warning} />
+                  <Text style={styles.infoCardTitle}>{moonPhase.emoji} {moonPhase.phase}</Text>
+                </View>
+                <View style={styles.infoCardRow}>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Illumination</Text>
+                    <Text style={styles.infoCardValue}>{Math.round(moonPhase.illumination * 100)}%</Text>
+                  </View>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Solunar</Text>
+                    <Text style={[styles.infoCardValue, solunar.inMajor && { color: colors.success }]}>
+                      {solunar.inMajor ? 'MAJOR' : solunar.inMinor ? 'Minor' : 'Quiet'}
+                    </Text>
+                  </View>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Strength</Text>
+                    <Text style={styles.infoCardValue}>{Math.round(solunar.strength * 100)}%</Text>
+                  </View>
+                </View>
+              </View>
+            )}
+
+            {waterConditions && (
+              <View style={styles.infoCard}>
+                <View style={styles.infoCardHeader}>
+                  <Ionicons name="water-outline" size={20} color={colors.primary} />
+                  <Text style={styles.infoCardTitle}>Water — {waterConditions.site_name}</Text>
+                </View>
+                <View style={styles.infoCardRow}>
+                  {waterConditions.water_temp_c != null && (
+                    <View style={styles.infoCardItem}>
+                      <Text style={styles.infoCardLabel}>Temp</Text>
+                      <Text style={styles.infoCardValue}>{waterConditions.water_temp_c}°C</Text>
+                    </View>
+                  )}
+                  {waterConditions.flow_rate_cfs != null && (
+                    <View style={styles.infoCardItem}>
+                      <Text style={styles.infoCardLabel}>Flow</Text>
+                      <Text style={styles.infoCardValue}>{waterConditions.flow_rate_cfs} cfs</Text>
+                    </View>
+                  )}
+                  {waterConditions.gauge_height_ft != null && (
+                    <View style={styles.infoCardItem}>
+                      <Text style={styles.infoCardLabel}>Gauge</Text>
+                      <Text style={styles.infoCardValue}>{waterConditions.gauge_height_ft} ft</Text>
+                    </View>
+                  )}
+                </View>
+                <Text style={styles.infoCardFooter}>Source: USGS Water Services</Text>
+              </View>
+            )}
+
+            {nextTide && (
+              <View style={styles.infoCard}>
+                <View style={styles.infoCardHeader}>
+                  <Ionicons name="boat-outline" size={20} color={colors.warning} />
+                  <Text style={styles.infoCardTitle}>Next Tide</Text>
+                </View>
+                <View style={styles.infoCardRow}>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Type</Text>
+                    <Text style={styles.infoCardValue}>{nextTide.type === 'high' ? '🔺 High' : '🔻 Low'}</Text>
+                  </View>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Time</Text>
+                    <Text style={styles.infoCardValue}>
+                      {new Date(nextTide.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    </Text>
+                  </View>
+                  <View style={styles.infoCardItem}>
+                    <Text style={styles.infoCardLabel}>Height</Text>
+                    <Text style={styles.infoCardValue}>{nextTide.height_m}m</Text>
+                  </View>
+                </View>
+                <Text style={styles.infoCardFooter}>Source: NOAA Tides & Currents</Text>
+              </View>
+            )}
 
             <View style={styles.statsRow}>
               <View style={styles.statCard}>
@@ -337,5 +438,52 @@ const styles = StyleSheet.create({
     color: colors.textTertiary,
     marginTop: 4,
     textAlign: 'center',
+  },
+  infoCard: {
+    backgroundColor: colors.background,
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  infoCardHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  infoCardTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.textPrimary,
+    flex: 1,
+  },
+  infoCardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  infoCardItem: {
+    alignItems: 'center',
+    flex: 1,
+  },
+  infoCardLabel: {
+    fontSize: 11,
+    color: colors.textSecondary,
+    marginBottom: 4,
+  },
+  infoCardValue: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: colors.textPrimary,
+  },
+  infoCardFooter: {
+    fontSize: 10,
+    color: colors.textTertiary,
+    marginTop: 8,
+    textAlign: 'right',
   },
 });
