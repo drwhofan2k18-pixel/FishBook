@@ -158,3 +158,89 @@ export const TOURNAMENT_COACH_STEPS: CoachStep[] = [
     icon: 'podium-outline',
   },
 ];
+
+const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.6)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  card: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 20,
+    padding: 24,
+    width: '100%',
+    maxWidth: 340,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 8,
+  },
+  iconCircle: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    backgroundColor: '#E8F0FE',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#1C1C1E',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
+  description: {
+    fontSize: 15,
+    color: '#3C3C43',
+    textAlign: 'center',
+    lineHeight: 22,
+    marginBottom: 24,
+  },
+  footer: {
+    width: '100%',
+  },
+  dots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 16,
+  },
+  dot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#E5E5EA',
+  },
+  dotActive: {
+    width: 24,
+    backgroundColor: '#007AFF',
+  },
+  buttons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  skipText: {
+    fontSize: 15,
+    color: '#8E8E93',
+    fontWeight: '500',
+  },
+  nextButton: {
+    backgroundColor: '#007AFF',
+    paddingHorizontal: 24,
+    paddingVertical: 10,
+    borderRadius: 20,
+  },
+  nextText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+});

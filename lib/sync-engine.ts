@@ -99,10 +99,16 @@ export async function processSyncQueue() {
             photo_url: payload.photo_url || null,
           });
         } else if (item.operation === 'update' && item.table_name === 'catches') {
-          const { error } = await supabase.from('catches').update(payload).eq('id', item.record_id);
+          const userId = supabase.auth.getUser ? (await supabase.auth.getUser()).data.user?.id : null;
+          let q = supabase.from('catches').update(payload).eq('id', item.record_id);
+          if (userId) q = q.eq('user_id', userId);
+          const { error } = await q;
           if (error) throw error;
         } else if (item.operation === 'delete' && item.table_name === 'catches') {
-          const { error } = await supabase.from('catches').delete().eq('id', item.record_id);
+          const userId = supabase.auth.getUser ? (await supabase.auth.getUser()).data.user?.id : null;
+          let q = supabase.from('catches').delete().eq('id', item.record_id);
+          if (userId) q = q.eq('user_id', userId);
+          const { error } = await q;
           if (error) throw error;
         }
 
