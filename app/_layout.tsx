@@ -12,6 +12,8 @@ import { loadOnDeviceModel } from '@/lib/ondevice-id';
 import { useUnitStore } from '@/lib/units';
 import { initDeepLinking } from '@/lib/deep-linking';
 import { scheduleCatchReminder } from '@/lib/notifications';
+import { ThemeProvider, useTheme } from '@/lib/theme-context';
+import { checkForOTAUpdate } from '@/lib/ota-updates';
 import { colors } from '@/lib/theme';
 
 const queryClient = new QueryClient({
@@ -26,6 +28,7 @@ const queryClient = new QueryClient({
 
 function RootLayoutNav() {
   const { isLoading, isAuthenticated } = useAuth();
+  const { mode } = useTheme();
   const [onboarded, setOnboarded] = useState<boolean | null>(null);
 
   useEffect(() => {
@@ -35,12 +38,13 @@ function RootLayoutNav() {
     useUnitStore.getState().loadPreferences();
     const removeDeepLink = initDeepLinking();
     scheduleCatchReminder(7);
+    checkForOTAUpdate();
     return () => removeDeepLink();
   }, []);
 
   if (isLoading || onboarded === null) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: mode === 'dark' ? '#000000' : '#FFFFFF' }}>
         <ActivityIndicator size="large" color={colors.primary} accessibilityLabel="Loading" />
       </View>
     );
@@ -48,7 +52,7 @@ function RootLayoutNav() {
 
   return (
     <>
-      <StatusBar style="auto" />
+      <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
       <Stack screenOptions={{ headerShown: false }}>
         {!isAuthenticated ? (
           <Stack.Screen name="(auth)" options={{ animation: 'fade' }} />
@@ -66,9 +70,11 @@ export default function RootLayout() {
   return (
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <RootLayoutNav />
-        </AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <RootLayoutNav />
+          </AuthProvider>
+        </ThemeProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   );

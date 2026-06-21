@@ -6,6 +6,7 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Linking,
 } from 'react-native';
 import { useLocalSearchParams, router } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -15,6 +16,7 @@ import { formatWeight, formatLength, useUnitStore } from '@/lib/units';
 import { getCurrentPosition } from '@/lib/location';
 import { getNearestWaterConditions, type WaterConditions } from '@/lib/usgs-water';
 import { isStockableSpecies, getStockingSeason, getStockingInfoUrl, getSupportedStockingStates } from '@/lib/fish-stocking';
+import { searchSpeciesInfo, type SearchResult } from '@/lib/brave-search';
 import { colors } from '@/lib/theme';
 
 interface SpeciesData {
@@ -49,6 +51,7 @@ export default function SpeciesDetailScreen() {
   const [userCatches, setUserCatches] = useState<UserCatch[]>([]);
   const [loading, setLoading] = useState(true);
   const [waterConditions, setWaterConditions] = useState<WaterConditions | null>(null);
+  const [externalInfo, setExternalInfo] = useState<SearchResult[]>([]);
 
   const loadData = useCallback(async () => {
     if (!id) return;
@@ -77,6 +80,13 @@ export default function SpeciesDetailScreen() {
         if (pos) {
           const water = await getNearestWaterConditions(pos.latitude, pos.longitude);
           setWaterConditions(water);
+        }
+      } catch {}
+
+      try {
+        if (sp) {
+          const search = await searchSpeciesInfo(sp.common_name);
+          setExternalInfo(search.results.slice(0, 3));
         }
       } catch {}
     } catch {} finally {
@@ -230,6 +240,31 @@ export default function SpeciesDetailScreen() {
           <Text style={{ fontSize: 12, color: colors.textSecondary, marginTop: 8 }}>
             Supported states: {getSupportedStockingStates().join(', ')}
           </Text>
+        </View>
+      )}
+
+      {externalInfo.length > 0 && (
+        <View style={styles.card}>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <Ionicons name="globe-outline" size={20} color={colors.primary} />
+            <Text style={styles.cardTitle}>More Info</Text>
+          </View>
+          {externalInfo.map((r, i) => (
+            <TouchableOpacity
+              key={i}
+              style={{ paddingVertical: 8, borderBottomWidth: i < externalInfo.length - 1 ? 1 : 0, borderBottomColor: colors.divider }}
+              onPress={() => Linking.openURL(r.url)}
+              accessibilityLabel={`Open ${r.title}`}
+              accessibilityRole="link"
+            >
+              <Text style={{ fontSize: 14, fontWeight: '600', color: colors.primary }} numberOfLines={2}>
+                {r.title}
+              </Text>
+              <Text style={{ fontSize: 12, color: colors.textSecondary, marginTop: 2 }} numberOfLines={2}>
+                {r.description}
+              </Text>
+            </TouchableOpacity>
+          ))}
         </View>
       )}
 

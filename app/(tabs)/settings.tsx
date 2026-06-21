@@ -19,6 +19,7 @@ import { exportAndShareCSV } from '@/lib/export-data';
 import { exportAnonymizedData, exportToGBIF } from '@/lib/citizen-science';
 import { requestNotificationPermission, cancelAllNotifications } from '@/lib/notifications';
 import { router } from 'expo-router';
+import { useTheme } from '@/lib/theme-context';
 import { colors } from '@/lib/theme';
 
 export default function SettingsScreen() {
@@ -26,6 +27,7 @@ export default function SettingsScreen() {
   const userId = user?.id ?? '';
   const { t, language, setLanguage, supportedLanguages } = useTranslation();
   const units = useUnitStore();
+  const { preference, setPreference, colors } = useTheme();
   const [modelDownloaded, setModelDownloaded] = useState(false);
   const [downloading, setDownloading] = useState(false);
   const [downloadProgress, setDownloadProgress] = useState(0);
@@ -101,6 +103,31 @@ export default function SettingsScreen() {
               {i < supportedLanguages.length - 1 && <View style={styles.divider} />}
             </React.Fragment>
           ))}
+        </View>
+
+        <Text style={styles.sectionLabel}>Appearance</Text>
+        <View style={styles.card}>
+          <View style={styles.row}>
+            <View style={styles.rowLeft}>
+              <Ionicons name={preference === 'dark' ? 'moon' : preference === 'light' ? 'sunny' : 'phone-portrait-outline'} size={20} color={colors.primary} />
+              <Text style={styles.rowLabel}>Theme</Text>
+            </View>
+          </View>
+          <View style={[styles.unitOptions, { paddingHorizontal: 16, paddingBottom: 12 }]}>
+            {(['auto', 'light', 'dark'] as const).map((opt) => (
+              <TouchableOpacity
+                key={opt}
+                style={[styles.unitOption, preference === opt && styles.unitOptionActive]}
+                onPress={() => setPreference(opt)}
+                accessibilityLabel={`${opt} theme`}
+                accessibilityRole="button"
+              >
+                <Text style={[styles.unitOptionText, preference === opt && styles.unitOptionTextActive]}>
+                  {opt === 'auto' ? 'Auto' : opt.charAt(0).toUpperCase() + opt.slice(1)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
         </View>
 
         <Text style={styles.sectionLabel}>Units</Text>
@@ -224,7 +251,7 @@ export default function SettingsScreen() {
           </TouchableOpacity>
         </View>
 
-        <Text style={styles.version}>FishBook v1.0.0</Text>
+        <Text style={styles.version}>FishBook v1.2.4</Text>
       </ScrollView>
     </SafeAreaView>
   );
